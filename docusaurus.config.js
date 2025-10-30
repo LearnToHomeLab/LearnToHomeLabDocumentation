@@ -20,12 +20,12 @@ const config = {
   },
 
   // Production URL and base URL
-  url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
+  url: 'https://LearntoHomeLab.github.io',
+  baseUrl: '/LearnToHomeLab/LearnToHomeLabDocumentation/',
 
   // GitHub pages deployment config
-  organizationName: 'facebook', // Usually GitHub org/user name.
-  projectName: 'docusaurus', // Usually repo name.
+  organizationName: 'LearnToHomeLab', // Usually GitHub org/user name.
+  projectName: 'LearnToHomeLabDocumentation', // Usually repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
