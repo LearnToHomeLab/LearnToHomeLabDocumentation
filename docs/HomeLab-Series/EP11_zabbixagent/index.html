@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Zabbix Agent install on a VM (Linux) | Learn To HomeLab</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" name="twitter:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" property="og:url" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP11_zabbixagent"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Zabbix Agent install on a VM (Linux) | Learn To HomeLab"><meta data-rh="true" name="description" content="Introduction"><meta data-rh="true" property="og:description" content="Introduction"><link data-rh="true" rel="icon" href="/LearnToHomeLabDocumentation/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP11_zabbixagent"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP11_zabbixagent" hreflang="en"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP11_zabbixagent" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"How to Build a HomeLab","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/category/how-to-build-a-homelab"},{"@type":"ListItem","position":2,"name":"Zabbix Agent install on a VM (Linux)","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP11_zabbixagent"}]}</script><link rel="alternate" type="application/rss+xml" href="/LearnToHomeLabDocumentation/blog/rss.xml" title="Learn To HomeLab RSS Feed">
-<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.5a40a043.css">
-<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.6b8e56c4.js" defer="defer"></script>
-<script src="/LearnToHomeLabDocumentation/assets/js/main.facc7b3b.js" defer="defer"></script>
+<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.e8a05178.css">
+<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.37f4d741.js" defer="defer"></script>
+<script src="/LearnToHomeLabDocumentation/assets/js/main.c4a274a6.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -32,7 +32,7 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-by-step-guide">Step by step guide<a href="#step-by-step-guide" class="hash-link" aria-label="Direct link to Step by step guide" title="Direct link to Step by step guide" translate="no">​</a></h2>
 <p>Now go ahead and login to your select VM/Machine(s)</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">ssh username@ip_address_of_machine</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>We are going to start installing the Zabbix Agent using the commands found from our getting started section step 1. In this case we are installing 7.0 for the following commands:</p>
 <p>Make you a super user:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">sudo -s</span><br></span></code></pre></div></div>
@@ -48,7 +48,7 @@
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">systemctl restart zabbix-agent</span><br></span></code></pre></div></div>
 <p>and</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">systemctl enable zabbix-agent</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="configure-the-zabbix-agent-config-file">Configure the Zabbix Agent Config file<a href="#configure-the-zabbix-agent-config-file" class="hash-link" aria-label="Direct link to Configure the Zabbix Agent Config file" title="Direct link to Configure the Zabbix Agent Config file" translate="no">​</a></h2>
 <p>Now we need to change two entries in our config file. We need to point our AGENT AT the IP address of our <strong>Zabbix SERVER!</strong></p>
 <p>That will be done with the following commands:</p>
@@ -62,26 +62,26 @@
 <p>Change <strong>serveractive=(your server IP)</strong></p>
 </li>
 </ol>
-<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>AND</p>
-<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.4.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.4.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="check-the-status-of-your-zabbix-agent">Check the Status of Your Zabbix Agent<a href="#check-the-status-of-your-zabbix-agent" class="hash-link" aria-label="Direct link to Check the Status of Your Zabbix Agent" title="Direct link to Check the Status of Your Zabbix Agent" translate="no">​</a></h2>
 <p>Now you can verify your Agent is running with the following commands and will run after a VM reboot:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">sudo systemctl enable zabbix-agent</span><br></span></code></pre></div></div>
 <p>Verify the setting:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">systemctl is-enabled zabbix-agent</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.5.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.3.5.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="adding-an-agent-to-your-zabbix-server">Adding an Agent to your Zabbix Server<a href="#adding-an-agent-to-your-zabbix-server" class="hash-link" aria-label="Direct link to Adding an Agent to your Zabbix Server" title="Direct link to Adding an Agent to your Zabbix Server" translate="no">​</a></h2>
 <p>Now we need to add an agent on the far right under Monitoring / Hosts.</p>
 <p>On the far right you will see a blue create hosts button.</p>
 <p>Give the device a hostname, grab the correct template in our case it is the <strong>Linux by Zabbix agent</strong> NOT the Agent Live one.</p>
 <p>Then input the IP address of your VM/machine you just installed your Agent on and click add.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.4.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.4.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now wait about 30 seconds to 5 minutes for the Availability ZBX sign to go green, and you will know its working. Red means its not, and gray is unknown (usually shown when you first add them).</p>
 <p>You can also click the Latest data tab to see what information it can gather or is gathering. This can take a couple hours to grab more specific data if the machine is even offering that type of data.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.4.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.4.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Picture showing data it is currently pulling:</p>
-<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.4.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP11_zabbixagent/Still 2025-01-08 081514_1.4.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="closing-thoughts">Closing thoughts<a href="#closing-thoughts" class="hash-link" aria-label="Direct link to Closing thoughts" title="Direct link to Closing thoughts" translate="no">​</a></h2>
 <p>That is it! Pretty simple right? Now in another episode we will cover how to add these hosts to data panels on your dashboard but Zabbix is so extensive I would recommend you Google around yourself and find what you want and add them that way.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-us-on-social-media">Follow Us on Social Media<a href="#follow-us-on-social-media" class="hash-link" aria-label="Direct link to Follow Us on Social Media" title="Direct link to Follow Us on Social Media" translate="no">​</a></h2>

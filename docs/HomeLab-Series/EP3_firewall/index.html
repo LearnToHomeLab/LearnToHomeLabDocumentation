@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">How to set up a Pfsense/OPNsense firewall | Learn To HomeLab</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" name="twitter:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" property="og:url" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP3_firewall"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="How to set up a Pfsense/OPNsense firewall | Learn To HomeLab"><meta data-rh="true" name="description" content="Remember this video/device/article is not required to be successful in this series. Having an enterprise-grade firewall will allow you hands-on experience to talk to in an interview and potentially unlock capabilities you may find yourself needing in the future as your homelab/home network expands."><meta data-rh="true" property="og:description" content="Remember this video/device/article is not required to be successful in this series. Having an enterprise-grade firewall will allow you hands-on experience to talk to in an interview and potentially unlock capabilities you may find yourself needing in the future as your homelab/home network expands."><link data-rh="true" rel="icon" href="/LearnToHomeLabDocumentation/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP3_firewall"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP3_firewall" hreflang="en"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP3_firewall" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"How to Build a HomeLab","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/category/how-to-build-a-homelab"},{"@type":"ListItem","position":2,"name":"How to set up a Pfsense/OPNsense firewall","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP3_firewall"}]}</script><link rel="alternate" type="application/rss+xml" href="/LearnToHomeLabDocumentation/blog/rss.xml" title="Learn To HomeLab RSS Feed">
-<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.5a40a043.css">
-<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.6b8e56c4.js" defer="defer"></script>
-<script src="/LearnToHomeLabDocumentation/assets/js/main.facc7b3b.js" defer="defer"></script>
+<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.e8a05178.css">
+<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.37f4d741.js" defer="defer"></script>
+<script src="/LearnToHomeLabDocumentation/assets/js/main.c4a274a6.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -21,7 +21,7 @@
 <p>LTH handles teaching very differently from other industry standards. This is because we believe they truly lack in teaching you. There will be very lengthy commands, and for the sake of time, go ahead and copy and paste those commands. HOWEVER, please read what the command does, or you will never learn. Linux is notorious for using abbreviations; without reading what it does, you will never understand what you are configuring.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="topology">Topology<a href="#topology" class="hash-link" aria-label="Direct link to Topology" title="Direct link to Topology" translate="no">​</a></h2>
 <p>A network topology is the physical and logical arrangement of nodes and connections in a network:</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/firewall_topology.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/firewall_topology.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="required-items">Required Items:<a href="#required-items" class="hash-link" aria-label="Direct link to Required Items:" title="Direct link to Required Items:" translate="no">​</a></h2>
 <p>The firewall being used in this guide: <a href="https://tinyurl.com/ynvvvdrw" target="_blank" rel="noopener noreferrer" class="">firewall</a><br>
 <!-- -->Alternative: <a href="https://amzn.to/3PloqUa" target="_blank" rel="noopener noreferrer" class="">Beelink U59 dual ethernet</a><br>
@@ -37,62 +37,62 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-1-download-opnsense">Step 1 Download OPNsense<a href="#step-1-download-opnsense" class="hash-link" aria-label="Direct link to Step 1 Download OPNsense" title="Direct link to Step 1 Download OPNsense" translate="no">​</a></h2>
 <p>Download either PFsense or OPNsense (the process will be the same but for the purpose of this tutorial we will be using OPNsense). For Opnsense leave all the download selections as shown in the image. For PFsense you will select Architecture: AMD64 (64-bit) Installer: DVD Image (ISO) Installer.</p>
 <p>1 - Go to either <a href="https://opnsense.org/download/" target="_blank" rel="noopener noreferrer" class="">Opnsense.org/Downloads</a> or <a href="https://www.pfsense.org/download/" target="_blank" rel="noopener noreferrer" class="">Pfsense.org/Downloads</a></p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opnsense_1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opnsense_1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>2 - Next go to the folder where OPNsense or PfSense was downloaded <kbd>right click</kbd> details tab, and then copy the file name.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opnsense_2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opnsense_2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>3 - You will then use the following command to verify the SHA256 hash, as seen in step 1 right below the download button. <strong>!Remember that the SHA256 value will change with every update, so verify it against what is currently showing on their website!</strong></p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">certUtil -hashfile (the file path of your ISO file) SHA256</span><br></span></code></pre></div></div>
 <p>Example</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">certUtil -hashfile C:\Users\TechTouch\Downloads\OPNsense-24.1-vga-amd64.img.bz2 SHA256</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opnsense_3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opnsense_3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now move on to Step 2: Downloading Etcher and create a bootable USB flash drive.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-2-download-7-zipinstall--extract-opnsense">Step 2 Download 7-zip/Install &amp; Extract OPNsense<a href="#step-2-download-7-zipinstall--extract-opnsense" class="hash-link" aria-label="Direct link to Step 2 Download 7-zip/Install &amp; Extract OPNsense" title="Direct link to Step 2 Download 7-zip/Install &amp; Extract OPNsense" translate="no">​</a></h2>
 <p>First go ahead and install 7-Zip after you downloaded it. Then open it up!</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/7zip step 1_1.2.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/7zip step 1_1.2.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Here you can see we went to our users download folder. <code>C:\Users\learn\downloads\</code> you will then select the <em>zipped</em> folder and click the blue bar extract button at the top.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/7zip step 2_1.2.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/7zip step 2_1.2.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You will be prompted with this window, you are totally okay with extracting it into the downloads folder.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/7zip step 3_1.2.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/7zip step 3_1.2.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3-download-etcher-bootable-usb-application">Step 3 Download Etcher (bootable USB application)<a href="#step-3-download-etcher-bootable-usb-application" class="hash-link" aria-label="Direct link to Step 3 Download Etcher (bootable USB application)" title="Direct link to Step 3 Download Etcher (bootable USB application)" translate="no">​</a></h2>
 <p>1 - Etcher allows us to create a bootable flash drive, this is how we will get OPNsense on to the firewall appliance. Download Etcher <a href="https://etcher.balena.io/" target="_blank" rel="noopener noreferrer" class="">here</a>.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>2 - Pick the correct download for your operating system.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>3 - Select <em>flash from file</em></p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>4 - Select your OPNsense or PfSense download.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_4.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_4.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>5 - Now select the USB thumb drive. <strong>!WARNING THIS WILL DELETE EVERYTHING ON THE THUMB DRIVE!</strong></p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_5.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_5.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>6 - You can now remove the thumb drive from your device and plug it into your firewall appliance <strong>!MAKE SURE YOUR APPLIANCE IS CURRENTLY TURNED OFF!</strong></p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_6.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/etcher_6.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-4-boot-to-opnsense-on-your-firewall-client">Step 4 (boot to OPNsense on your firewall client)<a href="#step-4-boot-to-opnsense-on-your-firewall-client" class="hash-link" aria-label="Direct link to Step 4 (boot to OPNsense on your firewall client)" title="Direct link to Step 4 (boot to OPNsense on your firewall client)" translate="no">​</a></h2>
 <p>After you have plugged the USB drive into your firewall appliance turn it on while tapping the <kbd>Del</kbd> (delete) key until the BIOS comes up.</p>
 <p>1 - use your <strong>arrow keys</strong> and get to the BIOS tab, select your USB device, then move over to the exit tab, <strong>save changes and exit.</strong></p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/bios.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/bios.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>2 - After your device is booted you should see this screen with the IP address of your device. <strong>!YOU WILL NEED TO BE DIRECTLY CONNECTED TO THIS DEVICE OVER ETHERNET AND THEN GO TO THAT IP ADDRESS!</strong></p>
 <p>Take note: the below image shows (vtnet0) this is the port that is being used for the LAN interface, because your appliance has multiple ethernet switchports you may need to plug into each until you can access the website at that IP address.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opnsense_start.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opnsense_start.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>3 - After you have connected to that IP you will see this screen. Follow the wizard.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>4 - We are going to use Cloudflare DNS servers, they are usually much faster than ones provided by your ISP.</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">1.1.1.1</span><br></span></code></pre></div></div>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">1.0.0.1</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>5 - Pick your respective time zone.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>6 - If your internet service provider (ISP) uses MAC address security and want to avoid calling their support to give them your new MAC address you can simply copy your old router&#x27;s MAC into the MAC address field. If you get a static IP address from your ISP you will also input that here.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_4.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_4.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>7 - Here, you can pick whatever private IP range you like; default is fine, too. If you want a list of private IP ranges, you can find that <a href="https://en.wikipedia.org/wiki/Private_network" target="_blank" rel="noopener noreferrer" class="">here</a>.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_5.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_5.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>8 - Set a strong password here.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_6.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_6.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>9 - You are all done, go ahead and reload!</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_7.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_7.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>10 - <kbd>left click</kbd> and go to your dashboard.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_8.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_8.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>11 - You are all set, Opnsense/Pfsense is now setup and ready for use! Future videos will dive more into OPNsense configurations based on setting up our homelab, but you can find their documentation <a href="https://docs.opnsense.org/index.html" target="_blank" rel="noopener noreferrer" class="">here</a></p>
-<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_9.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP2_firewall/opn_9.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-us-on-social-media">Follow Us on Social Media<a href="#follow-us-on-social-media" class="hash-link" aria-label="Direct link to Follow Us on Social Media" title="Direct link to Follow Us on Social Media" translate="no">​</a></h2>
 <p><a href="https://www.youtube.com/@learntohomelab" target="_blank" rel="noopener noreferrer" class="">YouTube</a></p>
 <p><a href="https://discord.gg/6MsHSJWZpH" target="_blank" rel="noopener noreferrer" class="">Discord</a></p>

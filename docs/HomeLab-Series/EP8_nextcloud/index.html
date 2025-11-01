@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">NextCloud Setup inside of Proxmox | Learn To HomeLab</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" name="twitter:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" property="og:url" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP8_nextcloud"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="NextCloud Setup inside of Proxmox | Learn To HomeLab"><meta data-rh="true" name="description" content="In this episode, we are going to cover how to set up a NextCloud server (container) within Proxmox Virtual environment in just a few clicks using TurnKey."><meta data-rh="true" property="og:description" content="In this episode, we are going to cover how to set up a NextCloud server (container) within Proxmox Virtual environment in just a few clicks using TurnKey."><link data-rh="true" rel="icon" href="/LearnToHomeLabDocumentation/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP8_nextcloud"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP8_nextcloud" hreflang="en"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP8_nextcloud" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"How to Build a HomeLab","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/category/how-to-build-a-homelab"},{"@type":"ListItem","position":2,"name":"NextCloud Setup inside of Proxmox","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP8_nextcloud"}]}</script><link rel="alternate" type="application/rss+xml" href="/LearnToHomeLabDocumentation/blog/rss.xml" title="Learn To HomeLab RSS Feed">
-<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.5a40a043.css">
-<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.6b8e56c4.js" defer="defer"></script>
-<script src="/LearnToHomeLabDocumentation/assets/js/main.facc7b3b.js" defer="defer"></script>
+<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.e8a05178.css">
+<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.37f4d741.js" defer="defer"></script>
+<script src="/LearnToHomeLabDocumentation/assets/js/main.c4a274a6.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -25,77 +25,77 @@
 <li class="">/ <em>CT Templates</em> / <em>Templates</em></li>
 </ol>
 <p>and then search for Nextcloud and select download! Wait for that <em>Task OK</em> and move on with the next steps!</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.3.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.3.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now we are going to click create CT on the top right of our environment and follow the creation wizard for our container.</p>
 <p>The general tab password is for the containers root user. The container default username is root and then the password you set.</p>
 <p>I am not going to show every tab, but you can see from the image below there is general, templates, etc. We are concerned about the templates tab where you will select nextcloud, the <em>Disks</em> tab SET THIS AS HIGH AS YOU CAN. This determines how many pictures you can save., and then under the network tab we need to set a static IP address for our machine. We need to ensure in OPNsense or your router that the IP you are assigning has not already been issued to another machine.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.4.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.4.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>We can verify what FREE IP addresses we have by opening OPNsense and going to (Services / ISC DHCPv4 / [LAN] &amp; Leases) tabs. As long as you do not see either one of those tabs with the IP you want to use, you are good to assign the container that address.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.7.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.7.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Going back to Proxmox we can see we have moved all the way to the Network Tab. AGAIN, do not forget to assign the proper disk space to save images and the other CPU and memory tab could be left default if you want.</p>
 <p>Now assign the IPv4 address you have chosen and ensure you add your networks CIDR notation to the end. 99% of you it will be a /24 for a basic home network.</p>
 <p>Then assign the gateway which is the IP of your home router or OPNsense box.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.8.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.8.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Here is an overview of my Containers settings. Disk is not shown but again make sure you make that nice and big so you can save loads of images. You will probably want somewhere in the ballpark of 100Gbs+.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.8.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.8.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="nextcloud-install-wizard">Nextcloud Install Wizard<a href="#nextcloud-install-wizard" class="hash-link" aria-label="Direct link to Nextcloud Install Wizard" title="Direct link to Nextcloud Install Wizard" translate="no">​</a></h2>
 <p>Select your container from the right menu, you will notice containers sit above Virtual Machines so make sure you aren&#x27;t missing it!</p>
 <p>Under the console tab click start, and after boot login with:</p>
 <p>Username: Root<br>
 <!-- -->Password: (the one you set on the general tabs page of container creation)</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Login screen image:</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Soon as you login you will be prompted by the NextCloud install wizard.</p>
 <p>Follow the wizard through, it is very explanatory, and you are really creating passwords for accounts.</p>
 <p>Keep these account passwords stored in your notes for later!</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Nextcloud Admin (YOU WILL LOGIN WITH THIS ONE!)</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.4.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.4.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You can skip this one, we are not going to access Nextcloud with a URL.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.5.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.5.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>We are not going to use Turnkey backup so you can click your tab key twice and then enter for skip.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.6.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.6.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You can enter an email here for notifications if you&#x27;d like.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.7.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.7.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Always ensure you have the latest security updates so click install.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.8.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.9.8.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>At this point you have reached the end, copy this info into your notes and then you can do <kbd>ctrl</kbd> + <kbd>enter</kbd> to exit the menu.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.10.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.10.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Going to the Nextcloud IP address in our browser we can see there is a security feature that prevents us from accessing it:</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>If click documentation we are taken to this page that gives us some insight on how to fix this.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>We need to go into the following settings directory to make the correct changes.</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">nano /var/www/nextcloud/config/config.php</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You will be presented with the following file and we are going to edit the following &#x27;trusted_domains&#x27; section.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.4.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.4.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>We want to make that section in ours look like this:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">&#x27;trusted_domains&#x27; =&gt;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">array (</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">0 =&gt; &#x27;localhost&#x27;,</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">1 =&gt; &#x27;192.168.50.20&#x27;,</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">),</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.5.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.5.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now we can go back to the site and login:</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.6.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.11.6.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Before we continue, we need to set the static IP address of our NextCloud container in OPnsense.</p>
 <p>First let&#x27;s grab the Mac address of our container under our container network settings location. Select the network card and click edit, then copy the MAC.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.16.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.16.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now go over to OPNsense and we can create a static listing under Services / ISC DHCPv4 / [LAN] and selecting the + button.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.12.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.12.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now we can take that MAC address and our IP address and add it into our static assignment. Then click save.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.16.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.16.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Going back over to Nextcloud after you logged in, we can use the <em>new</em> button to create new folders or upload a file to the current folder you are in.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.16.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.16.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="login-on-your-phone">Login on your phone<a href="#login-on-your-phone" class="hash-link" aria-label="Direct link to Login on your phone" title="Direct link to Login on your phone" translate="no">​</a></h2>
 <p>Download the NextCloud app and you can connect to your server using that IP address just like you did in your browser.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.17.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.17.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Select yes on the certificate, we trust it because it&#x27;s our certificate!</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.17.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.17.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Then you can login.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.17.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.17.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now you&#x27;re connected, go back over to your app to use NextCloud.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.18.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.18.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Then we can use the + button just like the site and upload pictures or create folders.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.20.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP8_nextcloud/Still 2024-12-30 112738_1.20.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="closing-comments">Closing comments<a href="#closing-comments" class="hash-link" aria-label="Direct link to Closing comments" title="Direct link to Closing comments" translate="no">​</a></h2>
 <p>That is it, I hope you guys enjoyed! In a later episode we will cover Tailscale and how to access your NextCloud from outside your network.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-us-on-social-media">Follow Us on Social Media<a href="#follow-us-on-social-media" class="hash-link" aria-label="Direct link to Follow Us on Social Media" title="Direct link to Follow Us on Social Media" translate="no">​</a></h2>

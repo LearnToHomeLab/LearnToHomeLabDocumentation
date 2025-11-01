@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Installing Tailscale on Proxmox | Learn To HomeLab</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" name="twitter:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" property="og:url" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP9_tailscale"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Installing Tailscale on Proxmox | Learn To HomeLab"><meta data-rh="true" name="description" content="Introduction"><meta data-rh="true" property="og:description" content="Introduction"><link data-rh="true" rel="icon" href="/LearnToHomeLabDocumentation/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP9_tailscale"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP9_tailscale" hreflang="en"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP9_tailscale" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"How to Build a HomeLab","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/category/how-to-build-a-homelab"},{"@type":"ListItem","position":2,"name":"Installing Tailscale on Proxmox","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP9_tailscale"}]}</script><link rel="alternate" type="application/rss+xml" href="/LearnToHomeLabDocumentation/blog/rss.xml" title="Learn To HomeLab RSS Feed">
-<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.5a40a043.css">
-<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.6b8e56c4.js" defer="defer"></script>
-<script src="/LearnToHomeLabDocumentation/assets/js/main.facc7b3b.js" defer="defer"></script>
+<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.e8a05178.css">
+<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.37f4d741.js" defer="defer"></script>
+<script src="/LearnToHomeLabDocumentation/assets/js/main.c4a274a6.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -21,17 +21,17 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tailscale-introduction">Tailscale introduction<a href="#tailscale-introduction" class="hash-link" aria-label="Direct link to Tailscale introduction" title="Direct link to Tailscale introduction" translate="no">​</a></h2>
 <p>Tailscale is a secure, open-source Virtual Private Network</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">curl -fsSL https://tailscale.com/install.sh | sh</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.6.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.6.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Type that command into your VM to install Tailscale</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.7.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.7.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>After the install is complete, we need to run the command</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">sudo tailscale up</span><br></span></code></pre></div></div>
 <p>Which will present us with our URL to login/create an account for our Tailscale network.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.9.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.9.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Use whatever method you prefer to make your account</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.10.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.10.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>In our case we are going to use for personal use (which is true) but it is also free for three users and 100 devices.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.10.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.10.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="make-tailscale-an-exit-node-for-lan-access">Make Tailscale an Exit Node for LAN access<a href="#make-tailscale-an-exit-node-for-lan-access" class="hash-link" aria-label="Direct link to Make Tailscale an Exit Node for LAN access" title="Direct link to Make Tailscale an Exit Node for LAN access" translate="no">​</a></h2>
 <p>There is one more step we need to perform by SSHing into our Tailscale server. We need to make it an exit node, this allows your remote connections to exit your Tailscale VM and access the other VMs on your home network.</p>
 <p>There are three commands we need to type in to make our Tailscale VM the exit node:</p>
@@ -47,11 +47,11 @@
 <li class="">Then we need to advertise our route including your networks CIDR notation:</li>
 </ol>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">sudo tailscale up --advertise-routes=&lt;your LAN network IP range&gt;/24 --reset</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2025-01-04 172122_1.12.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2025-01-04 172122_1.12.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>After that you need to go login to Tailscales site and find your VM now assigned as an exit node, click the three dots <kbd>...</kbd> and select <strong>Edit route settings</strong></p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2025-01-04 172122_1.12.4.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2025-01-04 172122_1.12.4.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>After that, just select the two boxes and you have set up your exit node.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2025-01-04 172122_1.12.5.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2025-01-04 172122_1.12.5.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="adding-other-devices-to-your-mesh-network-for-remote-access">Adding other devices to your MESH network for remote access<a href="#adding-other-devices-to-your-mesh-network-for-remote-access" class="hash-link" aria-label="Direct link to Adding other devices to your MESH network for remote access" title="Direct link to Adding other devices to your MESH network for remote access" translate="no">​</a></h2>
 <p>Now you need to add a device that will create your mesh Tailscale network. In our example we have downloaded Tailscale on our phone and will connect back to our network through Tailscale to upload pictures to our Nextcloud backup server.</p>
 <ol>
@@ -59,19 +59,19 @@
 <li class="">Tailscale for Iphones can be found <a href="https://apps.apple.com/us/app/tailscale/id1470499037" target="_blank" rel="noopener noreferrer" class="">here</a></li>
 <li class="">Tailscale for Windows/MacOS can be found <a href="https://tailscale.com/download/windows" target="_blank" rel="noopener noreferrer" class="">here</a></li>
 </ol>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.11.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.11.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="connecting-to-our-home-network-remotely-using-tailscale">Connecting to our home network remotely using Tailscale<a href="#connecting-to-our-home-network-remotely-using-tailscale" class="hash-link" aria-label="Direct link to Connecting to our home network remotely using Tailscale" title="Direct link to Connecting to our home network remotely using Tailscale" translate="no">​</a></h2>
 <p>On our phone we have installed the Tailscale app and logged into the same account that we used when creating our server.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.12.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.12.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You will then be able to see all the devices connected to your mesh network as well as the ability to turn Tailscale on or off.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.13.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.13.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now your phone is just like being on your home network. We can open the Nextcloud app and put the LOCAL IP address of our Nextcloud backup server and connect to it as if we were on our home network.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.15.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.15.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Look at that, now you have a way to upload your very important vacation images to your home NAS/Nextcloud backup server remotely!</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.16.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.16.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="managing-tailscale-machines">Managing Tailscale machines<a href="#managing-tailscale-machines" class="hash-link" aria-label="Direct link to Managing Tailscale machines" title="Direct link to Managing Tailscale machines" translate="no">​</a></h2>
 <p>Lastly, you can also login to your Tailscale account and manage your devices and see what devices have access to your mesh network.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.19.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP9_tailscale/Still 2024-12-31 194421_1.19.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h2>
 <p>Now you are able to access ANY device on your local home network via your Tailscale server, this means your NAS, game servers, Plex server, etc. Tailscale is like your computer or phone being on your home network where you can browse to anything locally.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-us-on-social-media">Follow Us on Social Media<a href="#follow-us-on-social-media" class="hash-link" aria-label="Direct link to Follow Us on Social Media" title="Direct link to Follow Us on Social Media" translate="no">​</a></h2>

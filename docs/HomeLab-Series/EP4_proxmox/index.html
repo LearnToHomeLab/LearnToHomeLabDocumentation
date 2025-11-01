@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Proxmox Installation Guide | Learn To HomeLab</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" name="twitter:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" property="og:url" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP4_proxmox"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Proxmox Installation Guide | Learn To HomeLab"><meta data-rh="true" name="description" content="Introduction:"><meta data-rh="true" property="og:description" content="Introduction:"><link data-rh="true" rel="icon" href="/LearnToHomeLabDocumentation/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP4_proxmox"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP4_proxmox" hreflang="en"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP4_proxmox" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"How to Build a HomeLab","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/category/how-to-build-a-homelab"},{"@type":"ListItem","position":2,"name":"Proxmox Installation Guide","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP4_proxmox"}]}</script><link rel="alternate" type="application/rss+xml" href="/LearnToHomeLabDocumentation/blog/rss.xml" title="Learn To HomeLab RSS Feed">
-<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.5a40a043.css">
-<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.6b8e56c4.js" defer="defer"></script>
-<script src="/LearnToHomeLabDocumentation/assets/js/main.facc7b3b.js" defer="defer"></script>
+<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.e8a05178.css">
+<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.37f4d741.js" defer="defer"></script>
+<script src="/LearnToHomeLabDocumentation/assets/js/main.c4a274a6.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -17,7 +17,7 @@
 <p>In this episode, we will cover the installation of Proxmox on your server, mini-PC, SBC, etc. (whatever you have chosen to use as your device to host your services).</p>
 <div style="display:flex;justify-content:center;align-items:center;height:100%"><iframe width="560" height="315" src="https://www.youtube.com/embed/sB_7MeaqaI0?si=r6qT3PRIZkEBnCJh" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="topology">Topology<a href="#topology" class="hash-link" aria-label="Direct link to Topology" title="Direct link to Topology" translate="no">​</a></h2>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/topology_proxmox.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/topology_proxmox.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="required-items">Required Items:<a href="#required-items" class="hash-link" aria-label="Direct link to Required Items:" title="Direct link to Required Items:" translate="no">​</a></h2>
 <p>The Proxmox machine being used in this guide: <a href="https://amzn.to/49Ul82n" target="_blank" rel="noopener noreferrer" class="">N95 mini pc</a> (I highly recommend you go with something that has 16gb of RAM or more) Servers are RAM heavy, the more you have the better!.</p>
 <p>Recommended: <a href="https://amzn.to/3vdgbTe" target="_blank" rel="noopener noreferrer" class="">Beelink Mini PC SER5</a></p>
@@ -34,41 +34,41 @@
 <p>The start of the tutorial:</p>
 <p>Go to Proxmox.com and download the latest ISO installer <a href="https://www.proxmox.com/en/downloads" target="_blank" rel="noopener noreferrer" class="">here</a>.<br>
 <!-- -->Note: copy the SHA256SUM to a .txt file to compare against in a later step.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Next go to where the file is downloaded <kbd>right click</kbd>, <strong>properties</strong>.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Copy and paste the location of the file into the same .txt document.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Use the following command with your respective version of Proxmox to validate the integrity of the file against their good known hash.</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">certUtil -hashfile C:\Users\learn\Downloads\proxmox-ve_8.1-2.iso SHA256</span><br></span></code></pre></div></div>
 <p>Use:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">certUtil -hashfile (your file path here) SHA256</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p4.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p4.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now open etcher (was previously downloaded in EP 1 how to install OPNsense or PFsense firewall). You can also download etcher from <a href="https://etcher.balena.io/#download-etcher" target="_blank" rel="noopener noreferrer" class="">here</a>.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p5.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p5.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>After you clicked <strong>flash from file</strong> select your Proxmox .iso, then select open.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p6.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p6.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now click <strong>select target</strong> and then choose the USB drive you want to write to. <strong>!REMEMBER THIS WILL DELETE EVERYTHING ON THE USB DRIVE!</strong></p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p7.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p7.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now click flash and wait for Etcher to finish creating the bootable USB device.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p8.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p8.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="installing-proxmox-on-servermini-pc">Installing Proxmox on Server/Mini PC<a href="#installing-proxmox-on-servermini-pc" class="hash-link" aria-label="Direct link to Installing Proxmox on Server/Mini PC" title="Direct link to Installing Proxmox on Server/Mini PC" translate="no">​</a></h2>
 <p>After that has completed, plug the USB device into your mini pc/server/SBC, whatever you are going to use to as your virtualization host <strong>WHILE IT IS TURNED OFF</strong>. Then turn the device on while continuously clicking your delete key until the BIOS appears.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p9.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p9.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Use your arrow keys and move over to the boot tab, under boot option #1 select the USB device with Proxmox on it.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p10.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p10.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Use the arrow keys again and go to the <strong>save and exit</strong> tab and select <strong>save changes and exit</strong>.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p11.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p11.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now allow for your device to boot, you will see the Proxmox graphical user interface (GUI) appear. Follow the install instructions, it is very basic, time zone, password, where you want to install to, etc. <strong>!STOP ON THE LAST PAGE WHERE IT SAYS ISNTALLATION SUCCESSFUL!</strong> read the next step.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p12.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p12.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>When you get to the last step as seen below, when you select <strong>reboot</strong> you need to remove the USB device right after or it will take you back to the installation wizard.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p14.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p14.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Now we have successfully installed Proxmox, go to your web browser and go to the IP address listed from your Proxmox device. In our case the IP is 192.168.1.50.216:8006.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p15.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p15.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You will use <strong>root</strong> as the username, and then you will use whatever password you created during the setup wizard.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p16.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p16.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You have now succesfully installed Proxmox for server and container virtualization! Please move to EP 5 where we will cover setting up a your first virtual machine.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p17.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP3_proxmox/p17.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-us-on-social-media">Follow Us on Social Media<a href="#follow-us-on-social-media" class="hash-link" aria-label="Direct link to Follow Us on Social Media" title="Direct link to Follow Us on Social Media" translate="no">​</a></h2>
 <p><a href="https://www.youtube.com/@learntohomelab" target="_blank" rel="noopener noreferrer" class="">YouTube</a></p>
 <p><a href="https://discord.gg/6MsHSJWZpH" target="_blank" rel="noopener noreferrer" class="">Discord</a></p>

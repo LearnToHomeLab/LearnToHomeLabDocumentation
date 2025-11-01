@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Zabbix Server Install | Learn To HomeLab</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" name="twitter:image" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/social-card.png.jpg"><meta data-rh="true" property="og:url" content="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP10_zabbixserver"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Zabbix Server Install | Learn To HomeLab"><meta data-rh="true" name="description" content="Zabbix is an open-source monitoring tool that monitors IT infrastructure, including:"><meta data-rh="true" property="og:description" content="Zabbix is an open-source monitoring tool that monitors IT infrastructure, including:"><link data-rh="true" rel="icon" href="/LearnToHomeLabDocumentation/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP10_zabbixserver"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP10_zabbixserver" hreflang="en"><link data-rh="true" rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP10_zabbixserver" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"How to Build a HomeLab","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/category/how-to-build-a-homelab"},{"@type":"ListItem","position":2,"name":"Zabbix Server Install","item":"https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/docs/HomeLab-Series/EP10_zabbixserver"}]}</script><link rel="alternate" type="application/rss+xml" href="/LearnToHomeLabDocumentation/blog/rss.xml" title="Learn To HomeLab RSS Feed">
-<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.5a40a043.css">
-<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.6b8e56c4.js" defer="defer"></script>
-<script src="/LearnToHomeLabDocumentation/assets/js/main.facc7b3b.js" defer="defer"></script>
+<link rel="alternate" type="application/atom+xml" href="/LearnToHomeLabDocumentation/blog/atom.xml" title="Learn To HomeLab Atom Feed"><link rel="stylesheet" href="/LearnToHomeLabDocumentation/assets/css/styles.e8a05178.css">
+<script src="/LearnToHomeLabDocumentation/assets/js/runtime~main.37f4d741.js" defer="defer"></script>
+<script src="/LearnToHomeLabDocumentation/assets/js/main.c4a274a6.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -18,9 +18,9 @@
 <p>In this episode we will cover how to setup the server side of Zabbix and in the following episode/article we will show you the agent side.</p>
 <div style="display:flex;justify-content:center;align-items:center;height:100%"><iframe width="560" height="315" src="https://www.youtube.com/embed/Ax3h24kXR1M?si=EnQw5wDNpi3ImpXW" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="our-homelab-topology">Our Homelab Topology<a href="#our-homelab-topology" class="hash-link" aria-label="Direct link to Our Homelab Topology" title="Direct link to Our Homelab Topology" translate="no">​</a></h2>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Untitled Diagram.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Untitled Diagram.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-order-of-commands">The Order of Commands<a href="#the-order-of-commands" class="hash-link" aria-label="Direct link to The Order of Commands" title="Direct link to The Order of Commands" translate="no">​</a></h2>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/_second picture of zabbix steps.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/_second picture of zabbix steps.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="list-of-commands-used">List of commands used<a href="#list-of-commands-used" class="hash-link" aria-label="Direct link to List of commands used" title="Direct link to List of commands used" translate="no">​</a></h2>
 <div style="display:flex;align-items:center;background-color:#e4141e;color:white;padding:20px;border-radius:10px;margin-bottom:20px"><div style="width:50px;height:50px;border-radius:50%;background-color:white;display:flex;justify-content:center;align-items:center;font-size:28px;margin-right:15px;flex-shrink:0;line-height:50px;text-align:center"><span style="display:inline-block;line-height:1;vertical-align:middle">⚠️</span></div><div><p>Some commands MAY change usually just step 2 based on the current version of Zabbix. All other commands should work though.</p></div></div>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="install-zabbix-commands">Install zabbix Commands:<a href="#install-zabbix-commands" class="hash-link" aria-label="Direct link to Install zabbix Commands:" title="Direct link to Install zabbix Commands:" translate="no">​</a></h2>
@@ -59,33 +59,33 @@
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">quit;</span><br></span></code></pre></div></div>
 <p>Now edit config file:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">nano /etc/zabbix/zabbix_server.conf</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.6.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.6.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Look for the <code>DBuser=zabbix</code> section and edit the <code>DBPassword=</code> section with the password you just set earlier.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.6.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.6.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Save and exit with <kbd>ctrl + X</kbd>, then <kbd>Y</kbd>, then <kbd>Enter</kbd>.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.6.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.6.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Start services:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">systemctl restart zabbix-server zabbix-agent apache2</span><br></span></code></pre></div></div>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">systemctl enable zabbix-server zabbix-agent apache2</span><br></span></code></pre></div></div>
 <p>Go to your browser to visit:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">http://host_machine_ip/zabbix</span><br></span></code></pre></div></div>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.7.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.7.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You will be presented with the landing page, click next.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.8.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.8.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Make sure everything has a green ok so you know you did it right.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.8.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.8.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Ensure you add the database user password you just set in that config file so Zabbix&#x27;s panel can access it.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.8.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.8.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Set your server name and timezone.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.9.1.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.9.1.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Ensure all settings have been filled out or go back and fix them.</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.9.2.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.9.2.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>Login, remember the login for username and password is case sensitive! It is Admin NOT admin.</p>
 <p>User: Admin<br>
 <!-- -->Pass: zabbix</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.9.3.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.9.3.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <p>You are in, stay tuned for next episode on how to setup an agent on your servers, VMs, firewalls, etc!</p>
-<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.9.4.png" alt="Description of your image" class="">
+<img src="/LearnToHomeLabDocumentation/images/EP10_zabbixserver/Still 2025-01-05 093020_1.9.4.png" alt="Description of your image" class="" style="cursor:pointer;max-width:100%">
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-us-on-social-media">Follow Us on Social Media<a href="#follow-us-on-social-media" class="hash-link" aria-label="Direct link to Follow Us on Social Media" title="Direct link to Follow Us on Social Media" translate="no">​</a></h2>
 <p><a href="https://www.youtube.com/@learntohomelab" target="_blank" rel="noopener noreferrer" class="">YouTube</a></p>
 <p><a href="https://discord.gg/6MsHSJWZpH" target="_blank" rel="noopener noreferrer" class="">Discord</a></p>
