@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/blog</id>
+    <id>https://LearntoHomeLab.com/blog</id>
     <title>Learn To HomeLab Blog</title>
     <updated>2025-10-30T20:03:07.414Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/blog"/>
+    <link rel="alternate" href="https://LearntoHomeLab.com/blog"/>
     <subtitle>Learn To HomeLab Blog</subtitle>
-    <icon>https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/img/favicon.ico</icon>
+    <icon>https://LearntoHomeLab.com/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[New Site!]]></title>
-        <id>https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/blog/welcome</id>
-        <link href="https://LearntoHomeLab.github.io/LearnToHomeLabDocumentation/blog/welcome"/>
+        <id>https://LearntoHomeLab.com/blog/welcome</id>
+        <link href="https://LearntoHomeLab.com/blog/welcome"/>
         <updated>2025-10-30T20:03:07.414Z</updated>
         <summary type="html"><![CDATA[Welcome to the new site]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="welcome-to-the-new-site">Welcome to the new site<a href="https://learntohomelab.github.io/LearnToHomeLabDocumentation/blog/welcome#welcome-to-the-new-site" class="hash-link" aria-label="Direct link to Welcome to the new site" title="Direct link to Welcome to the new site" translate="no">​</a></h2>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="welcome-to-the-new-site">Welcome to the new site<a href="https://learntohomelab.com/blog/welcome#welcome-to-the-new-site" class="hash-link" aria-label="Direct link to Welcome to the new site" title="Direct link to Welcome to the new site" translate="no">​</a></h2>
 <p>Hey guys, Abe here!</p>
 <p>I just wanted to be the first person to welcome you to the latest revision of the website.</p>
 <p>We personally knew that the old website just didn't meet our standards, it was also more limiting in the capabilities we could output with it. The new site uses a much more robust backend that will allow us to introduce more features into our content and tutorials.</p>
