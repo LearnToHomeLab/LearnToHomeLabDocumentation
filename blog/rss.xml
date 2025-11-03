@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>Learn To HomeLab Blog</title>
-        <link>https://LearnToHomeLab.github.io/blog</link>
+        <link>https://LearnToHomeLab.github.io/LearnToHomeLabDocumentation/blog</link>
         <description>Learn To HomeLab Blog</description>
         <lastBuildDate>Thu, 30 Oct 2025 20:03:07 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
@@ -10,11 +10,11 @@
         <language>en</language>
         <item>
             <title><![CDATA[New Site!]]></title>
-            <link>https://LearnToHomeLab.github.io/blog/welcome</link>
-            <guid>https://LearnToHomeLab.github.io/blog/welcome</guid>
+            <link>https://LearnToHomeLab.github.io/LearnToHomeLabDocumentation/blog/welcome</link>
+            <guid>https://LearnToHomeLab.github.io/LearnToHomeLabDocumentation/blog/welcome</guid>
             <pubDate>Thu, 30 Oct 2025 20:03:07 GMT</pubDate>
             <description><![CDATA[Welcome to the new site]]></description>
-            <content:encoded><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="welcome-to-the-new-site">Welcome to the new site<a href="https://learntohomelab.github.io/blog/welcome#welcome-to-the-new-site" class="hash-link" aria-label="Direct link to Welcome to the new site" title="Direct link to Welcome to the new site" translate="no">​</a></h2>
+            <content:encoded><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="welcome-to-the-new-site">Welcome to the new site<a href="https://learntohomelab.github.io/LearnToHomeLabDocumentation/blog/welcome#welcome-to-the-new-site" class="hash-link" aria-label="Direct link to Welcome to the new site" title="Direct link to Welcome to the new site" translate="no">​</a></h2>
 <p>Hey guys, Abe here!</p>
 <p>I just wanted to be the first person to welcome you to the latest revision of the website.</p>
 <p>We personally knew that the old website just didn't meet our standards, it was also more limiting in the capabilities we could output with it. The new site uses a much more robust backend that will allow us to introduce more features into our content and tutorials.</p>
