@@ -1,0 +1,120 @@
+---
+sidebar_position: 8
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Unbound DNS and Network Wide Ad Blocking!
+
+## Overview
+
+This article covers the advantages of using OPNsense with Unbound DNS and Blocklists for network-wide ad blocking, offering a faster and more streamlined experience than Pi-Hole.
+
+## Benefits
+
+Using Unbound DNS with ad blocking offers several advantages over Cloudflare DNS:
+
+1. **Enhanced privacy:** Unbound removes the need for third-party DNS services, preventing data collection and sale by providers like Cloudflare.
+
+2. **Recursive resolution:** Unbound performs DNS queries starting from root servers, improving privacy through qname minimisation, revealing less about browsing habits.
+
+3. **Local control:** Running Unbound locally gives you full control without reliance on external DNS infrastructure.
+
+4. **Improved caching:** Efficient caching and pre-fetching speed up DNS resolution.
+
+5. **Reduced tracking:** Eliminates tracking opportunities from third-party DNS providers.
+
+6. **DNSSEC validation:** Protects from DNS spoofing and cache poisoning.
+
+7. **Compatibility with ad blocking:** Integrates easily with solutions such as Pi-hole.
+
+## Check Out Our Video on This Topic
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/NdvKIAMfnUM?si=2jkWow2Hcy5Y3ept"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Guide to Setup Unbound DNS + Ad Blocking
+
+1. Log in to your OPNsense machine, navigate to **Services > Unbound DNS > General**.  
+2. Check **Enable Unbound** and click **Apply**.
+
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.3.1.png" alt="Enable Unbound DNS" />
+
+3. Go to **Services > Unbound DNS > Blocklist**.  
+4. Enable blocklists, choose blocklist type (e.g., Steven Blacklist).  
+5. Click **Apply**.
+
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.3.3.png" alt="Blocklist settings" />
+
+6. Change DNS settings in two places to assign your OPNsense IP as DNS resolver:
+
+- **Services > ISC DHCPv4 > LAN**  
+- **System > Settings > General**
+
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.3.4.png" alt="DHCP DNS setting" />
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.3.5.png" alt="System DNS setting" />
+
+## Getting User Stats for Unbound
+
+1. Navigate to **Reporting > Unbound DNS**.  
+2. Click **Go to the reporting configuration.**
+
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.3.6.png" alt="Reporting configuration" />
+
+3. Enable **local gather of Statistics**.
+
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.3.7.png" alt="Enable statistics" />
+
+## Clearing DNS Records on Windows
+
+Flush and renew your DNS cache:
+```
+ipconfig /flushdns
+ipconfig /renew
+```
+
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.4.1.png" alt="Flush dns command" />
+
+## Ad Blocking Test
+
+Perform an adblocking test at [AdminForge](https://test.adminforge.de/adblock.html).  
+
+> Example result: 41% block rate with a single blocklist; adding more will increase effectiveness.
+
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.5.1.png" alt="Ad block test results" />
+
+<WarningBox emoji="⚠️" title="Note">
+Remember, adding many blocklists may interfere with your browsing experience or block access to desired sites.
+</WarningBox>
+
+## Verify Blocking in Unbound Reports
+
+Go to **Reporting > Unbound DNS > Details** tab to confirm blocks are happening, indicating correct setup.
+
+<DocImage folder="images/EP0_unbounddns" name="Still 2024-12-26 191805_1.5.2.png" alt="Blocking statistics" />
+
+---
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+

@@ -8,8 +8,11 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Every tutorial is designed to walk you through each step with total 
+        clarity—making complex IT topics accessible, even for true beginners. 
+        We build from the ground up and assume nothing, ensuring anyone can 
+        follow along and succeed, regardless of prior experience. Our guides 
+        are recognized for being some of the easiest to follow on the internet.
       </>
     ),
   },
@@ -18,18 +21,23 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        We focus exclusively on the essentials—empowering you through hands-on, 
+        practical IT lessons. Instead of endless slides or abstract theory, 
+        our videos immerse you in actual projects and real-world problem solving,
+        giving you experience you can use in your career or homelab right away.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Powered by the Community',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Learn To HomeLab is grounded in open source values and genuine community 
+        collaboration. Our content, business direction, and resources evolve 
+        based on the input and sweat equity of our viewers and members. Decisions
+        are shaped by your feedback, ensuring our tutorials and projects always 
+        serve the needs of the IT and homelab community.
       </>
     ),
   },

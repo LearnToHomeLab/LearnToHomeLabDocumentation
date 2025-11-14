@@ -1,0 +1,126 @@
+---
+sidebar_position: 41
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Move Proxmox VMs & Containers to a New Storage Drive
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/2pky63gridE?si=xQwIRRmXCbYaxbSn" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+</div>
+
+---
+
+### Reasons you may need to move VM & container storage:
+
+<div class="informative-section">
+  <div class="circle-emoji">!</div>
+  <p>
+    Upgrading to a larger/faster drive, running out of space, moving to SSD/NVMe for performance, replacing failing hardware, decommissioning drives, reconfiguring RAID/storage pools, consolidating storage, workload separation, improving HA/live migration with network/shared storage, preparing for maintenance/upgrades, optimizing backup or disaster recovery, balancing cluster node resources, capacity expansion, and more.
+  </p>
+</div>
+
+---
+
+## Moving Proxmox VM Storage
+
+1. **Prepare the VM:**
+
+- Shut down the VM (optional but recommended).  
+- Navigate: `VM → Hardware → Hard Disk` (e.g., `scsi0`).
+
+2. **Initiate Move Storage:**
+
+- Click the **"Disk Action"** dropdown → select **"Move Storage"**.
+
+<DocImage folder="images/EP39_MovingProxmoxVMStorage" name="image1.png" alt="Disk Action dropdown" />
+
+- In the popup, select:
+
+  - **Target Storage**: choose your local storage (e.g., `local`, `local-lvm`).
+
+<DocImage folder="images/EP39_MovingProxmoxVMStorage" name="image2.png" alt="Select Target Storage" />
+
+  - Check **Delete Source** to remove original disk after migration.  
+  - Click **"Move Disk"**.
+
+3. **Monitor Progress:**
+
+- Follow migration progress in Proxmox task log.  
+- Verify in `Hardware → Hard Disk` that disk now points to local storage.  
+- Remove any unused disk entries.
+
+<DocImage folder="images/EP39_MovingProxmoxVMStorage" name="image3.png" alt="Migration progress" />
+<DocImage folder="images/EP39_MovingProxmoxVMStorage" name="image4.png" alt="Ceph pool disk remaining" />
+
+*Note:* Ceph pool cannot be destroyed or modified until all VM/container disks are removed.
+
+---
+
+## Moving Container Storage
+
+- Turn off the container.  
+- Go to **Resources** tab (not hardware tab).  
+- Follow same move storage steps as for VMs.
+
+<DocImage folder="images/EP39_MovingProxmoxVMStorage" name="image5.png" alt="Container Resources tab" />
+
+---
+
+## Common Errors
+
+### VM is locked (snapshot) (500)
+
+<DocImage folder="images/EP39_MovingProxmoxVMStorage" name="image6.png" alt="VM locked error" />
+
+### Step-by-step unlock in Proxmox shell (main node CLI)
+
+1. Identify locked VM (note VMID):
+```
+qm list
+```
+2. Unlock VM:
+```
+qm unlock <VMID>
+```
+Example:
+```
+qm unlock 100
+```
+3. Verify unlock:
+```
+qm config <VMID>
+```
+
+No lock icon should appear next to VM name in UI.
+
+### Unable to delete snapshot volume (500)
+
+- Make sure VM is off.  
+- Unlock VM if locked:
+```
+qm unlock <VMID>
+```
+- Force delete orphaned snapshot:
+```
+qm delsnapshot <VMID> <snapshot-name> --force
+```
+
+Replace `<snapshot-name>` with actual snapshot name (e.g., `BeforeDiskUpgrade`).
+
+---
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

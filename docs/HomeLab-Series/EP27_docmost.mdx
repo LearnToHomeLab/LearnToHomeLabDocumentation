@@ -1,0 +1,250 @@
+---
+sidebar_position: 30
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install Docmost on Proxmox with SSL
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/FoFEen6DQ5g?si=ASDbGQOzS1dPw29L"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+Welcome! This video covers installing Docmost on Proxmox, including adding SSL for full feature support like websocket-enabled auto-copy code blocks. If you haven’t set up a reverse proxy with SSL yet, see episode 26.
+
+## Create a Container on Proxmox
+
+Steps covered in prior videos; in summary:
+
+1. Download Ubuntu CT template on your node local storage (if not done before).  
+2. Configure CT’s networking (DHCP or static IP).  
+3. Start the CT.  
+
+Log in via the console with:  
+- Username: `root`  
+- Password: as set during CT creation.
+
+## Installing Docker
+
+Follow official Docker instructions [here](https://docs.docker.com/engine/install/ubuntu/).
+
+Add Docker’s GPG key and repository:
+
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.6.1.png" alt="Docker repo setup" />
+
+Install Docker packages:
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.7.1.png" alt="Docker install" />
+
+Verify by running:
+```
+sudo docker run hello-world
+```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.8.1.png" alt="Docker hello-world" />
+
+## Install Docmost
+
+Create directory and download docker-compose file:
+```
+mkdir docmost
+cd docmost
+curl -O https://raw.githubusercontent.com/docmost/docmost/main/docker-compose.yml
+```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.8.2.png" alt="Download docker-compose.yml" />
+
+Generate app secret key:
+```
+openssl rand -hex 32
+```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.8.3.png" alt="Generate secret key" />
+
+Find your machine’s IP address:
+```
+ip a
+```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.8.4.png" alt="Get machine IP" />
+
+Edit `docker-compose.yml` to update:
+
+- `APP_URL` with your domain (e.g. `https://docmost.example.com`).  
+- `APP_SECRET` with the key you generated.  
+- `POSTGRES_PASSWORD` with a secure password.  
+- Matching password in `DATABASE_URL`.
+
+Open with:
+```
+nano docker-compose.yml
+```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.8.5.png" alt="Edit docker-compose.yml" />
+
+Example section:
+```
+version: "3"
+
+services:
+  docmost:
+    image: docmost/docmost:latest
+    depends_on:
+      - db
+      - redis
+    environment:
+      APP_URL: "http://localhost:3000"
+      APP_SECRET: "REPLACE_WITH_LONG_SECRET"
+      DATABASE_URL: "postgresql://docmost:STRONG_DB_PASSWORD@db:5432/docmost?schema=public"
+      REDIS_URL: "redis://redis:6379"
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - docmost:/app/data/storage
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: docmost
+      POSTGRES_USER: docmost
+      POSTGRES_PASSWORD: STRONG_DB_PASSWORD
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.2-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+volumes:
+  docmost:
+  db_data:
+  redis_data:
+  ```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.8.6.png" alt="Docker compose example" />
+
+
+## After Docmost Install
+
+Start the Services​
+
+Make sure you are inside the docmost directory which contains the docker-compose.yml file.
+
+To start the services, run:
+```
+docker compose up -d
+```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.8.6.png" alt="Docker compose example" />
+
+## Start Docmost Services
+
+Inside the `docmost` folder, run:
+
+```
+docker compose up -d
+```
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.8.7.png" alt="Start docmost" />
+
+Access Docmost via:
+
+```
+http://ip_address:3000
+```
+
+Create your user account (note: password asked only once, be sure to type it correctly).
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.13.1.png" alt="Docmost login" />
+
+## Configure and Use Docmost
+
+### Switch Theme
+
+Go to profile (top right) → My Preferences → select Dark Mode or Light Mode.
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.14.1.png" alt="Theme selection" />
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.14.2.png" alt="Dark mode selected" />
+
+### Create Spaces
+
+Organize notes into "Spaces" (like books) per topic or for access control (Settings → Spaces).
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.14.3.png" alt="Spaces feature" />
+
+Switch spaces via dropdown in notes (may require refreshing browser after creating new space).
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.17.1.png" alt="Switch spaces" />
+
+### Create Folders
+
+Drag and drop a page over another to nest it as a folder dropdown.
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.19.1.png" alt="Create folders" />
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.19.2.png" alt="Folder example" />
+
+### Add Sections / Code Blocks
+
+Type `/` to open command menu for adding blocks or sections.
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.21.1.png" alt="Add block menu" />
+
+## Adding SSL Certificate
+
+If you need an SSL certificate, refer to episode 26 or the video [here](https://www.youtube.com/watch?v=DjKom4B4USo&t=843s&ab_channel=LearnToHomeLab).
+
+<DocImage folder="images/EP27_docmost" name="SSD 1_1.24.1.png" alt="SSL certificate example" />
+
+## Updating Docmost
+
+Note: Save any work before upgrading.
+
+To upgrade, inside the Docmost directory:
+```
+docker pull docmost/docmost
+docker compose up --force-recreate --build docmost -d
+```
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+

@@ -1,0 +1,144 @@
+---
+sidebar_position: 32
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install Cockpit for Linux Server
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/V7TVWiYpWfk?si=IlzUL7dysPyqfUjL"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Manage Linux Servers With Cockpit
+
+Start by creating an Ubuntu Linux Server in your virtualization platform of choice (this tutorial uses Proxmox). Download the latest Ubuntu Server [here](https://releases.ubuntu.com/). Example: Ubuntu 24.04 LTS.
+
+## Update Ubuntu Server
+
+First, update all packages before installation:
+```
+sudo apt update && sudo apt upgrade -y
+```
+
+Reference documentation [here](https://cockpit-project.org/running.html).
+
+## Installing Cockpit
+
+The Cockpit repository is usually enabled by default. Update packages then install Cockpit:
+```
+. /etc/os-release
+sudo apt install -t ${VERSION_CODENAME}-backports cockpit
+```
+
+Access Cockpit by visiting in your browser:
+```
+https://IP_ADDRESS_OF_MACHINE:9090
+```
+
+## Software Tab
+
+Use the Software tab in Cockpit to perform any missing updates before continuing.
+
+## Fix Cache Whilst Offline Error
+
+If you see “Cannot download packages whilst offline,” fix it with steps from the [Cockpit FAQ](https://cockpit-project.org/faq.html#error-message-about-being-offline):
+
+1. Edit config:
+```
+sudo nano /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+```
+Add:
+```
+[keyfile]
+unmanaged-devices=none
+```
+
+2. Set up a dummy network interface:
+```
+sudo nmcli con add type dummy con-name fake ifname fake0 ip4 1.2.3.4/24 gw4 1.2.3.1
+```
+Reboot:
+```
+sudo reboot
+```
+
+## How to Use Cockpit
+
+### Overview
+
+See health, hardware, bugs, and config at a glance.
+
+### Logs
+
+Access logs easily for investigation and oversight.
+
+### Storage
+
+View partition usage, drive capacity, mount locations, create partitions, and change sizing/formatting via the three-dot menus.
+
+### Networking
+
+Monitor Ethernet, add VPNs, bonds, teams, bridges, and more.
+
+### Accounts
+
+Manage users, groups, recent logins, and add SSH keys directly from user profiles.
+
+### Services
+
+See running processes on the server.
+
+### Applications
+
+Manage software, containers, and virtual machines via browser. Official apps listed [here](https://cockpit-project.org/applications), community apps available online.
+
+Install VM management:
+```
+sudo apt install cockpit cockpit-machines
+```
+
+Refresh browser to see new applications.
+
+Start and enable Cockpit services:
+```
+sudo systemctl start cockpit
+sudo systemctl enable cockpit
+```
+
+### Software Updates
+
+Use this tab to update your server.
+
+### Terminal
+
+Built-in SSH access for direct command-line management.
+
+## Cockpit Server Accounts
+
+Manage multiple servers by clicking your username (top left) and adding more hosts, enabling server-switching from a single portal.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+
+

@@ -1,0 +1,193 @@
+---
+sidebar_position: 2
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install Affine Workspace Notes App in Your Homelab — Step-by-Step Tutorial
+
+## Affine Hardware Requirements
+
+1. 100 MB storage growth per 1k documents with 1k words each — plan storage accordingly (leave ~10 GB for OS/docker).  
+2. 4 CPU cores (usage varies, mostly when doing heavy tasks).  
+3. 4 GB RAM for large docs (>10k words), 2 GB for normal use.  
+4. Reverse proxy setup, recommended Nginx Proxy Manager (video [here](https://www.youtube.com/watch?v=DjKom4B4USo&ab_channel=LearnToHomeLab)).
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/oUwv6MjE6BU?si=N1G55AGJzfQjs1Gp"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+---
+
+## Create LXC on Proxmox
+
+Create an LXC container in Proxmox with the specs above.
+
+---
+
+## Install Docker and Docker Compose
+
+1. Add Docker's official GPG key and repository:
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+2. Install Docker:
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+3. Verify installation:
+```
+sudo docker run hello-world
+```
+4. Check Docker Compose version:
+```
+docker compose version
+```
+
+---
+
+## Installing Affine
+
+Create a dedicated directory for Affine:
+```
+mkdir affine
+cd affine
+```
+Download latest docker-compose file:
+```
+wget -O docker-compose.yml https://github.com/toeverything/affine/releases/latest/download/docker-compose.yml
+```
+
+Download the example .env configuration:
+```
+wget -O .env https://github.com/toeverything/affine/releases/latest/download/default.env.example
+```
+
+---
+
+## Editing the .env file
+
+Open the `.env` file to configure:
+```
+nano .env
+```
+Default content includes:
+```
+# select a revision to deploy, available values: stable, beta, canary
+AFFINE_REVISION=stable
+
+# set the port for the server container it will expose the server on
+PORT=3010
+
+# set the host for the server for outgoing links
+# AFFINE_SERVER_HTTPS=true
+# AFFINE_SERVER_HOST=affine.yourdomain.com
+# or
+# AFFINE_SERVER_EXTERNAL_URL=https://affine.yourdomain.com
+
+# position of the database data to persist
+DB_DATA_LOCATION=~/.affine/self-host/postgres/pgdata
+# position of the upload data(images, files, etc.) to persist
+UPLOAD_LOCATION=~/.affine/self-host/storage
+# position of the configuration files to persist
+CONFIG_LOCATION=~/.affine/self-host/config
+
+# database credentials
+DB_USERNAME=affine
+DB_PASSWORD=
+DB_DATABASE=affine
+```
+---
+
+## Start Affine
+
+Start or restart Affine with:
+```
+docker compose down
+docker compose up -d
+```
+
+---
+
+## Adding Affine to Nginx Proxy Manager
+
+1. Log in to Nginx Proxy Manager.  
+2. Go to **Hosts > Proxy Hosts**.  
+3. Click **Add Proxy Host** (top right).  
+4. Input domain from `.env` (`AFFINE_SERVER_HOST`).  
+5. Enter server IP and port `3010`.  
+6. Keep HTTP option as is.  
+7. Enable **websockets support**.  
+8. Add SSL certificate under SSL tab.  
+9. Save.  
+10. Click domain to access.
+
+---
+
+## Logging in to Affine
+
+Access the admin panel at:
+```
+http://<ip>:3010/admin
+```
+
+Or access the normal page without `/admin`.
+
+---
+
+## About "Accept Affine Cloud" Message
+
+The self-hosted instance stores data locally in PostgreSQL despite the message suggesting cloud sync.
+
+---
+
+## Upgrading Affine
+
+Follow official upgrade docs [here](https://docs.affine.pro/self-host-affine/install/upgrade).
+
+Full docs at [Affine Documentation](https://docs.affine.pro/index).
+
+---
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+
+
+
+
+
+
+
+

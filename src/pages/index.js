@@ -10,18 +10,19 @@ import styles from './index.module.css';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header
+      className={clsx('hero hero--primary', styles.heroBanner)}
+      style={{
+        backgroundImage: "url('/images/landingpageimage/landing-page-image.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}>
       <div className="container">
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
         </div>
       </div>
     </header>
@@ -33,7 +34,7 @@ export default function Home() {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="Learn To HomeLab is a site where we teach people important hands on skills related to information technology, cyber secuirty, network engineering, and so much more through homelabing. <head />">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

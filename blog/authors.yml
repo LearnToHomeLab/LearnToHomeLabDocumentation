@@ -1,14 +1,13 @@
-yangshun:
-  name: Yangshun Tay
-  title: Ex-Meta Staff Engineer, Co-founder GreatFrontEnd
-  url: https://linkedin.com/in/yangshun
-  image_url: https://github.com/yangshun.png
+Abe:
+  name: Abe P.
+  title: CEO and Co-founder
+  url: https://www.linkedin.com/in/abrampeterson/
+  image_url: https://media.licdn.com/dms/image/v2/D5603AQHCb-Bb93QqcA/profile-displayphoto-crop_800_800/B56ZgjUoNuG0AM-/0/1752939268338?e=1763596800&v=beta&t=jrYPihlIruh_de8AZ0UhnMai8CRscNFS3tSJH_FfEek
   page: true
   socials:
-    x: yangshunz
-    linkedin: yangshun
-    github: yangshun
-    newsletter: https://www.greatfrontend.com
+    linkedin: https://www.linkedin.com/in/abrampeterson/
+    github: https://github.com/AbramPeterson
+    newsletter: https://www.learntohomelab.com/
 
 slorber:
   name: Sébastien Lorber

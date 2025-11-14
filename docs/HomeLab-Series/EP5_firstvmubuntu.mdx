@@ -1,0 +1,203 @@
+---
+sidebar_position: 8
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Installing Your First VM (Ubuntu) on Proxmox
+
+This episode will go over how to setup your first virtual machine (VM) inside Proxmox.
+
+<InfoBox emoji="!">
+This is a beginner-friendly course, so we understand many of you may find this lesson to be a review, but these fundamental concepts are very important for beginners when using Proxmox.
+</InfoBox>
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/RJdRgJFiupo?si=PcHcDpMwlQiwQjQv" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowFullScreen
+  />
+</div>
+
+## Installing your VM
+
+Step 1. Head over to [https://ubuntu.com/download/server](https://ubuntu.com/download/server) and download Ubuntu Server 22.x (x= whatever the latest version is).
+
+<DocImage folder="images/EP4_firstvmubuntu" name="ubuntu_server_website_step_1.png" alt="Description of your image" />
+
+Step 2. After you have downloaded it, navigate to the IP address of your server or mini PC where you installed Proxmox on it. You should be presented with a screen like this:
+
+<DocImage folder="images/EP4_firstvmubuntu" name="2024-03-30_11_46_38-pve_-_proxmox_virtual_environment.png" alt="Description of your image" />
+
+Step 3. Select your server (our case pve), then local (pve), and ISO images. Upload your Ubuntu Server .iso image there.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="step_3_iso_image_proxmox.png" alt="Description of your image" />
+
+Step 4. Select *iso images*, *upload*, *select file*, and *upload*. After exit out of the pop up.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="step_4_proxmox.png" alt="Description of your image" />
+
+Step 5. We can now select *create a vm*, and follow the install process.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="2024-03-30_12-11-22.gif" alt="Description of your image" />
+
+## VM settings for Proxmox
+
+Settings:
+
+---
+
+-General Tab.  
+Node: (select whatever Proxmox server or mini-PC you want to install to (our case, it is still pve).  
+VM Id: does not matter (you can leave default).  
+Name: (Describe what you install on the Ubuntu server (Wiki.Js, ARK server, Minecraft, Zabbix, etc).
+
+---
+
+-OS Tab:  
+ISO image: select the ubuntu file we just uploaded.
+
+---
+
+-System Tab:  
+All settings can stay default here.
+
+---
+
+-Disk Tab:  
+Disk Size (GiB): (set based on the requirement of whatever software we are installing), i.e., Wiki.Js recommends at least 1gig of storage, and Ubuntu Server requires 20gigs, so we should have no less than 22gigs. (I would recommend going up at least 5 gigs for small installs and at least double for other applications where you know you will be uploading lots of content, i.e., mods, pictures, user accounts, etc.
+
+---
+
+-CPU Tab:  
+Again, this will be based on the requirements of what you are installing. Wiki.js requires 2 cores and Ubuntu Server so that we will select 2 cores.
+
+---
+
+-Memory Tab:  
+Again, based on system requirements. Wiki.js wants 2 gigs of RAM. Ubuntu Server recommends 4 gigs of RAM, but you can get away with 1-2, depending on your installation. In our case, for Wiki.js, we are going to keep 2gigs.
+
+---
+
+-Network Tab:  
+This can stay default.
+
+---
+
+-Confirm Tab:  
+Please check over all your settings and click *finish*.
+
+---
+
+## Installing Ubuntu Server on your Proxmox VM
+
+1. Now we can boot the new virtual machine by selecting the console tab and then start now.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="1_console_start.png" alt="Description of your image" />
+
+2. Select the top option, install Ubuntu Server.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="2_install_ubuntu_server.png" alt="Description of your image" />
+
+3. Now select your language.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="3_select_language.png" alt="Description of your image" />
+
+4. Pick your Keyboard layout/variant.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="4_pick_language_layout.png" alt="Description of your image" />
+
+5. We are selecting the Ubuntu Server
+
+<DocImage folder="images/EP4_firstvmubuntu" name="5_select_ubuntu_server.png" alt="Description of your image" />
+
+6. We can leave this default because most of you will use DHCP.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="6_configure_interface.png" alt="Description of your image" />
+
+7. We can skip this because we are not using a proxy.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="7_skip_click_done.png" alt="Description of your image" />
+
+8. Our Ubuntu server is testing the mirror (a way to grab updates), after the mirror connection is confirmed you can select done.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="8_checking_mirror.png" alt="Description of your image" />
+
+9. In the case of Proxmox, we are creating a virtual machine, and during the setup of our Proxmox VM, we set the disk drive size, meaning our VM can only see the virtualized partitioned disk drive (this prevents you from overwriting any other VM disk partitions on your server). You are good to go ahead and use the WHOLE disk drive in this case.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="9_use_entire_disk.png" alt="Description of your image" />
+
+10. This is just giving you a breakdown of that partitioned disk and how much space is going to each resource.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="10_file_overview.png" alt="Description of your image" />
+
+11. Your name can be set to the same as the username. The username and password is what will be used when we SSH into this (VM SO DO NOT FORGET THEM!). Setting the server name is very important, this is how your VM will appear to all other devices on your network, make is something memorable that explains what this VM is.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="11_set_your_username_nad_password.png" alt="Description of your image" />
+
+12. You can skip this and select *done*.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="12_skip_for_now_click_continue_.png" alt="Description of your image" />
+
+> 13. This part is so important, make sure you click <kbd>enter</kbd> on your keyboard and there is a 'X' in the openssh box. This allows us to SSH into your server.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="13_install_ssh.png" alt="Description of your image" />
+
+14. You can skip all this content.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="14_skip_this.png" alt="Description of your image" />
+
+15. Wait for the VM to finish installing.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="15_installing_system.png" alt="Description of your image" />
+
+16. Reboot now after that is complete.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="16_reboot_system.png" alt="Description of your image" />
+
+17. Now you can login to your VM with the credentials you made earlier, this will allow you to see the IP address of your VM so we can use Putty and SSH to control it.
+
+<DocImage folder="images/EP4_firstvmubuntu" name="17_log_in.png" alt="Description of your image" />
+
+1. If you are on Windows 11 or newer we recommend using Windows command line (CLI) to SSH into your machines, this allows you to copy and paste.
+
+2. You can also login with SSH on Linux.
+
+3. If you are on Windows 10 or prior we recommend using [Putty](https://www.putty.org/)
+
+The command to use SSH in the CLI is:
+```
+ssh username@server_ip_address
+```
+Example:
+```
+ssh learn@192.168.1.1
+```
+
+<DocImage folder="images/EP4_firstvmubuntu" name="windows11clissh.png" alt="Description of your image" />
+
+Using SSH is important for future videos because it allows you to copy and paste content into your CLI and important data from your local machine to your VM.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)
+
+[Discord](https://discord.gg/6MsHSJWZpH)
+
+[Patreon](https://www.patreon.com/c/learntohomelab)
+
+[Reddit](https://www.reddit.com/r/learntohomelab/)
+
+[Rumble](https://rumble.com/c/c-7585051)

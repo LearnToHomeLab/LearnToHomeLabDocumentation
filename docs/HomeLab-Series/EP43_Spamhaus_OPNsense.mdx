@@ -1,0 +1,69 @@
+---
+sidebar_position: 45
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Spamhaus IP Block List on OPNsense
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/pg2Z04KFRn4?si=809nt0zpScWNaUNC"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Steps:
+
+1.  Log in to your OPNsense GUI.
+2.  Before you make changes to your Firewall, always make sure you download a copy of your settings first:
+    1.  Log in to your OPNsense machine
+    2.  Select **System**
+    3.  Select **Configuration**
+    4.  Select **Backups**
+    5.  Select **Download Configuration**
+3.  Navigate to **Firewall > Aliases > (Select the + Icon bottom right).**
+4.  Click the **\+ Add** button to create a new alias.
+5.  Give the alias a descriptive name, e.g., `SpamhausBlocklist`.
+6.  Set **Type** to **URL Table (IPs)**.
+7.  In the **Content** field, enter the URL(s) of the Spamhaus or other IP blocklists. For example:
+    - Spamhaus DROP list: `https://www.spamhaus.org/drop/drop.lasso`
+    - Blocklist.de: `https://lists.blocklist.de/lists/all.txt`
+8.  Enable **Update frequency** as desired (daily, weekly, etc.) to keep the list fresh.
+9.  Click **Save** and then **Apply Changes**.
+10. Now, create firewall rules to **block** traffic matching this alias.
+    - Go to **Firewall > Rules**, select the interface, and add a rule blocking traffic from these IPs.
+        1.  Action: Block
+        2.  Interface: WAN
+        3.  Direction: in
+        4.  Source: SpamhausBlocklist
+        5.  Description SpamhausBlocklist
+11. Apply the firewall rule changes.
+
+The firewall will block incoming connections from IPs known for spam or malicious activity.
+
+
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+
+
+
+

@@ -1,0 +1,431 @@
+---
+sidebar_position: 25
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Homarr Upgrade to 1.0
+
+This episode updates episodes 13 & 14 due to Homarr's source code rewrite.
+
+## What we will cover
+
+<InfoBox emoji="!" title="Important">
+This episode is good for FRESH INSTALLS AND those UPGRADING from the old Homarr Dashboard
+</InfoBox>
+
+1. Creating a new VM for the new Homarr Dashboard  
+2. How to create an API key for Proxmox usage stats  
+3. How to install the new 1.0 Homarr dashboard  
+4. How to upgrade from the old dashboard to the new dashboard  
+5. How to add trusted certificates to your dashboard  
+6. How to edit old Proxmox integrations  
+7. How to create new Proxmox integrations in the Homarr Dashboard  
+
+## Getting started
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/Rv9Ob8M2QQI?si=XkpT897yZ-2OllqL"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Fresh Install Users
+
+Create a new Ubuntu Server VM in Proxmox with:
+
+1. OS: Ubuntu Server  
+2. 2GB RAM  
+3. 2 vcores  
+4. 32GB storage  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.5.1.png" alt="Ubuntu Server VM creation" />
+
+***During install, ensure SSH is enabled!***
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.7.1.png" alt="Enabling SSH during install" />
+
+SSH into your new Homarr VM:
+```
+ssh <username>@<VM_ipaddress>
+```
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.11.1.png" alt="SSH into Homarr VM" />
+
+Add Docker's GPG keys and repo:
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.11.2.png" alt="Docker repo added" />
+
+Install Docker:
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.11.3.png" alt="Docker installation" />
+
+Verify Docker is running:
+```
+sudo docker run hello-world
+```
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.11.4.png" alt="Docker test successful" />
+
+<details>
+<summary>If Docker hello-world fails, try this</summary>
+
+Check Docker service:
+```
+systemctl status docker.service
+```
+If failed, reload and restart:
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+Recheck status:
+```
+systemctl status docker.service
+```
+
+<DocImage folder="images/EP13_homarr" name="docker status_1.3.2.png" alt="Docker status check" />
+</details>
+
+## Install Docker Compose
+```
+sudo apt install docker-compose
+```
+Verify:
+```
+docker compose version
+```
+
+### Install Homarr
+
+Create docker-compose.yml:
+```
+nano docker-compose.yml
+```
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.11.5.png" alt="Create docker-compose file" />
+
+Paste this config:
+```
+#---------------------------------------------------------------------#
+#     Homarr - A simple, yet powerful dashboard for your server.      #
+#---------------------------------------------------------------------#
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/homarr-labs/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - ./homarr/appdata:/appdata
+    environment:
+      - SECRET_ENCRYPTION_KEY=51564af476c9eecd2efb30ed980a4b2e768efb7a558676859e2e1fbd04ce15a0
+    ports:
+      - '7575:7575'
+```
+
+Exit nano with Ctrl+X, confirm save with Y, press Enter to confirm filename.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.11.6.png" alt="Save docker-compose file" />
+
+Start Homarr:
+```
+sudo docker compose up -d
+```
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.11.7.png" alt="Start Homarr service" />
+
+Access Homarr at:
+```
+ip_address:7575
+```
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.12.1.png" alt="Homarr login page" />
+
+### Creating a Proxmox API Key
+
+1. In Proxmox portal, click Datacenter  
+2. Expand Permissions, click Groups  
+3. Click Create  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.1.png" alt="Create group" />
+
+4. Name the group (e.g., api-users)  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.2.png" alt="Group name" />
+
+5. Under Permissions, select Add → Group Permission  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.3.png" alt="Add group permission" />
+
+Set:  
+- Path: /  
+- Group: your created group  
+- Role: PVEAuditor  
+- Propagate: checked  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.4.png" alt="Group permission details" />
+
+6. Under Permissions, click Users  
+7. Click Add:  
+- User name: descriptive (e.g., api)  
+- Realm: Proxmox VE authentication server  
+- Password: create secure password  
+- Confirm password: re-enter  
+- Group: your created group  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.5.png" alt="Add user form" />
+
+8. Under Permissions, click API Tokens  
+9. Click Add:  
+- User: user from above  
+- Token ID: descriptive (e.g., homarr)  
+- Privilege Separation: unchecked  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.6.png" alt="Add API token" />
+
+10. Copy the Secret shown (only displayed once).  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.7.png" alt="API token secret" />
+
+11. Back to Permissions, click Add → API Token Permission  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.8.png" alt="Add API token permission" />
+
+Set:  
+- Path: /  
+- API Token: select token created  
+- Role: PVE Auditor  
+- Propagate: checked  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.14.9.png" alt="API token permission details" />
+
+### Adding your Certificate
+
+From the Proxmox node running Homarr:
+
+1. Select node → Certificates  
+2. Select pve-root-ca.pem  
+3. Click View certificate  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.22.1.png" alt="View certificate" />
+
+Copy to notepad and save as `certificate_name.crt`.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.23.1.png" alt="Copy cert to notepad" />
+
+Paste contents:
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.24.1.png" alt="Paste certificate text" />
+
+Save as `.crt` file:
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.25.1.png" alt="Save certificate file" />
+
+In Homarr dashboard:
+
+Go to username bubble (top right) → Manage → Tools → Certificates → Add Certificate → Select saved `.crt` file → Add.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.26.1.png" alt="Manage certificates" />
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.26.2.png" alt="Add certificate" />
+
+You should see the valid certificate listed.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.26.3.png" alt="Certificate added" />
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.26.4.png" alt="Valid certificate confirmation" />
+
+### Adding Proxmox Stats Integration
+
+Create a new app before adding integrations:
+
+Click New App.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.27.1.png" alt="New app creation" />
+
+1. Name it  
+2. Search for Proxmox icon  
+3. Enter Proxmox node IP (URL)  
+4. Click Create  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.27.2.png" alt="App details" />
+
+Go to Integrations tab:
+
+1. New Integration  
+2. Search and select Proxmox  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.27.3.png" alt="Add Proxmox integration" />
+
+This is the major change from the old Homarr panel.
+
+Get the correct Proxmox details: username, token ID, API key, and realm.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.27.4.png" alt="Proxmox credentials" />
+
+In Proxmox Data Center:
+
+1. Go to API Token to find username and token name  
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.28.1.png" alt="View API tokens" />
+
+Fill username, token ID, and API key in Homarr integration form.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.28.2.png" alt="Fill Homarr integration form" />
+
+Get realm from Datacenter → Realms; typically PVE.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.28.3.png" alt="View real realms" />
+
+Test connection and connect.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.28.4.png" alt="Test Homarr integration connection" />
+
+Return to main dashboard via Homarr logo (top left) or Boards → select your dashboard.
+
+Edit dashboard with pencil icon (top right) — it will appear differently.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.29.1.png" alt="Edit dashboard" />
+
+You will see your icons with three dots (top right) and dashboard becomes editable.
+
+Click + icon (top right), select New Item.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.30.1.png" alt="Add new item" />
+
+Select System Health Monitoring, then Add to Board.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.30.2.png" alt="Add system health monitoring" />
+
+On dashboard, find new section, click three dots → Edit Item.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.30.3.png" alt="Edit dashboard item" />
+
+Select the integration created and Save Changes.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.30.4.png" alt="Select integration for monitor" />
+
+Proxmox stats now appear on your dashboard.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.31.1.png" alt="Dashboard with Proxmox stats" />
+
+<WarningBox emoji="⚠️" title="Note">
+The fresh install tutorial is now over.
+</WarningBox>
+
+## Upgrade path for old users
+
+### Create a new Homarr VM
+
+(See Fresh Install users steps above)
+
+### Exporting your old dashboard
+
+Login to your OLD Homarr Dashboard → username (top right) → Manage → Settings → Tools → Migrate to 1.0
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.15.1.png" alt="Old dashboard migration" />
+
+Select Export Data, copy your encryption key (save it).
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.16.1.png" alt="Export data option" />
+
+Allow browser download if blocked.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.17.1.png" alt="Allow download" />
+
+On your new VM, click Import from Homarr before 1.0
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.18.1.png" alt="Import old config" />
+
+Upload the .zip, confirm import, continue.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.18.3.png" alt="Confirm import" />
+
+Paste encryption key to unzip.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.18.4.png" alt="Enter encryption key" />
+
+You may disable anonymous analytics.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.19.2.png" alt="Disable anonymous analytics" />
+
+Choose Go to default-large board.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.19.3.png" alt="Select default dashboard board" />
+
+Login with old credentials if prompted.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.19.4.png" alt="Login prompt" />
+
+Under Configure Server-Wide Home Dashboard:
+
+Select your old dashboard → click three dots → Set as Your Home Board.
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.20.1.png" alt="Configure home dashboard" />
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.20.2.png" alt="Set home board" />
+
+Your dashboard is restored!
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="Still 2025-02-23 111731_1.20.3.png" alt="Restored dashboard" />
+
+### Updating Homarr 1.0
+
+Navigate to directory with *docker-compose.yaml* (use `sudo` or become superuser).
+
+Stop Homarr:
+```
+docker compose down
+```
+Pull newest image:
+```
+docker compose pull
+```
+Start Homarr in detached mode:
+```
+docker compose up -d
+```
+Clean up old images (warning: removes unused images, not just Homarr):
+```
+docker image prune
+```
+
+<DocImage folder="images/EP22_homarr1.0upgrade" name="homarr update.png" alt="Homarr update" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+

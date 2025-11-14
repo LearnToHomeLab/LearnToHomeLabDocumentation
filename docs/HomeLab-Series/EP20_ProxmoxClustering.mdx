@@ -1,0 +1,86 @@
+---
+sidebar_position: 23
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Setup a Proxmox Cluster
+
+In this episode, we will cover how to setup a Proxmox Cluster, and in the next video, I will cover setting up Ceph pool storage for live migrations of VMs.
+
+## What is Clustering?
+
+- Allows you to manage multiple Proxmox nodes from a single interface  
+- Enables manual migration of VMs and containers between nodes  
+- Does not automatically provide failover or resource management
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/G90Ro1rDLCU?si=PMH0mj7bf6vhrXJ9"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Setting up your Proxmox Cluster
+
+1. First, ensure you have TWO Proxmox Nodes set up.  
+2. The original node CAN have VMs on it but the SECOND node CANNOT!  
+3. If you need to learn how to install Proxmox on a machine, please check out our 4th episode in this series [here](https://www.learntohomelab.com/HomeLab-Series/EP4_proxmox.mdx).
+
+---
+
+We will start with your first machine (or the one that already has VMs).
+
+Go to Datacenter, Cluster, and click "Create Cluster."
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.3.1.png" alt="Create cluster interface" />
+
+Name your cluster and ensure the IP matches your current node’s IP (found in your URL bar), then click Create.
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.3.2.png" alt="Cluster creation form" />
+
+Wait for TASK OK then click Exit on the top right.
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.3.3.png" alt="Task completion confirmation" />
+
+Select "Join Information" at the top.
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.3.4.png" alt="Join information section" />
+
+Copy the join information, then login to your SECOND node.
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.3.5.png" alt="Second node login" />
+
+On your second node, go to Datacenter, Cluster, and click "Join Cluster."
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.3.6.png" alt="Join cluster interface" />
+
+Paste the join information, enter the FIRST NODE's root password, ensure the cluster network IP matches your node’s URL, and confirm the peer IP is correct for your FIRST NODE.
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.3.7.png" alt="Join cluster form filled" />
+
+After clicking "Join Cluster", wait 1-3 minutes for the nodes to communicate before logging in. Refresh your browser, then log in.
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.3.8.png" alt="Cluster login screen" />
+
+Now you have a Proxmox Cluster allowing you to manage your machines from a single interface.
+
+<DocImage folder="images/EP20_ProxmoxClustering" name="Still 2025-02-16 102109_1.4.1.png" alt="Proxmox cluster dashboard" />
+
+## Conclusion
+
+In the next episode, we will cover creating a Ceph Pool and preparing our cluster for live migrations.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)

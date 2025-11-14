@@ -1,0 +1,168 @@
+---
+sidebar_position: 7
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Setup a Modded Minecraft Server on TrueNAS Scale with CurseForge
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/m7Kn8D47JsM?si=1V31jOStKzlr0ar-"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Setup a TrueNAS SMB Share (if you don’t have one)
+
+If no SMB share is setup and connected to your PC via file explorer, watch this video from 00:00 to 06:21:
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/mLXMLJVp1kA?si=nd8sQK8dG2lVc1Yo"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+<WarningBox>
+Now open File Explorer (<kbd>⌘ + E</kbd> on Windows) and create a folder called “Minecraft” on your SMB share.
+</WarningBox>
+
+## Installing Modded Minecraft With CurseForge Overview
+
+CurseForge is a popular Minecraft mod platform. We will use the pack "All the Mods 10".
+
+1. Download CurseForge app [here](https://www.curseforge.com/download/app)  
+2. Browse mods [here](https://www.curseforge.com/minecraft/search?page=1&pageSize=20&sortBy=relevancy)  
+3. Use the modpack [here](https://www.curseforge.com/minecraft/modpacks/all-the-mods-10)
+
+### Pick Your Mod Pack
+
+Select the pack's files tab to find server-side files (needed for TrueNAS).
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="all the mods 10 overview.png" alt="All the Mods 10 Pack Overview" />
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="files all the mods 10 overview.png" alt="Pack files tab" />
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="server files all the mods 10 overview.png" alt="Server side files" />
+
+## Setup Minecraft Server on TrueNAS
+
+Log into your TrueNAS machine:
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="truenas login page.png" alt="TrueNAS Login" />
+
+Go to **Apps > Discover Apps**, search "Minecraft", choose _Minecraft Server (Java)_ and install.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="install minecraft on truenas.png" alt="Minecraft server install" />
+
+### Configure Modded Minecraft Server
+
+Fill in these important fields:
+
+1. Application Name  
+2. Timezone  
+3. Accept EULA  
+4. Image Selector (choose Java version per modpack requirements)  
+5. Type (mod loader, e.g., NeoForge)  
+6. Version (Minecraft version required by modpack)  
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="server steps 1 through 6.png" alt="Server config steps 1-6" />
+
+7. RCON Password  
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="server steps 7.png" alt="RCON password" />
+
+8. Add environment variables:  
+   `CF_PAGE_URL` (modpack page URL),  
+   `CF_API_KEY` (from your CurseForge profile's API keys: https://console.curseforge.com/?#/api-keys)  
+9. Add memory settings `INIT_MEMORY` and `MAX_MEMORY`, e.g., 16G.  
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="server steps 8 through 9.png" alt="Env variables" />
+
+10. Set Host IPs and adjust ports as necessary.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="server steps 10.png" alt="Host IP and ports" />
+
+11. Under Storage Configuration select **Host Path**, enable ACL, and set directory to your SMB share Minecraft folder.
+
+12. Enable ACL Force Flag.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="server steps 11 through 12.png" alt="Storage config" />
+
+13. Set CPU cores (e.g., 4)  
+14. Set Memory (12-16GB, consistent with environment variables)  
+15. Save/Update.  
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="server steps 13 through 15.png" alt="CPU and memory" />
+
+Stop the server if deploying:
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="stop the minecraft deployment.png" alt="Stop server" />
+
+Empty your Minecraft folder on SMB share.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="delete smb minecraft folder contents.png" alt="Empty folder" />
+
+Extract downloaded CurseForge server files, copy highlighted files into the SMB Minecraft folder.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="extract cruseforge server files.png" alt="Extract files" />
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="open the unzipped server files folder for curseforge.png" alt="Copy server files" />
+
+Start your Minecraft server on TrueNAS:
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="start the minecraft server.png" alt="Start server" />
+
+Watch logs for errors and troubleshooting:
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="view logs.png" alt="View logs" />
+
+## Adding the Modpack to CurseForge Client
+
+In the CurseForge app, select Minecraft, search and install your modpack.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="curseforge minecraft mods.png" alt="CurseForge app" />
+
+After install, find it under **My Modpacks**.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="find client side modpack.png" alt="My Modpacks" />
+
+Click Play and login if required.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="select play minecraft.png" alt="Play modpack" />
+
+The launcher shows your modded Minecraft version, click Play.
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="click play with the modpack selected.png" alt="Play launcher" />
+
+Connect to your server on multiplayer tab with IP and port:
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="input IP and your port for minecraft.png" alt="Connect multiplayer" />
+
+Enjoy your Modded Minecraft Server!
+
+<DocImage folder="images/ModdedMinecraftOnTrueNAS" name="logged into modded minecraft on TrueNAS.png" alt="Modded Minecraft gameplay" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

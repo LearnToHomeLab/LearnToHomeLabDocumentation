@@ -1,0 +1,128 @@
+---
+sidebar_position: 43
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Upgrade OPNsense ISC DHCP to Dnsmasq and DHCP
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/AzJB6Mx3CnQ?si=Wp3TwgIquBmnOMyU"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## What this tutorial covers:
+
+Update to Dnsmasq DNS & DHCP services, replacing deprecated [translate:ISC DHCPv4/DHCPv6]. This includes disabling legacy DHCP, configuring new settings, and validating DHCP and DNS functionality.
+
+## Update OPNsense to Latest
+
+Check updates via:
+
+<DocImage folder="images/EP41_iscdhcp_dnsmasqdhcp" name="opnsense updates.png" alt="OPNsense latest updates" />
+
+After checking, follow the wizard to install updates.
+
+## Backup Your Settings
+
+Always back up before making major changes:
+
+- System > Configuration > Backups > Download Configuration
+
+## Download Static DHCP Mappings
+
+Download your static DHCP mappings from:
+
+- Services > [translate:ISC DHCPv4] > LAN
+
+Save the CSV.
+
+## Setup Dnsmasq DNS & DHCP
+
+In **Services > Dnsmasq DNS & DHCP > General**:
+
+1. Set *interfaces* to `LAN`.  
+2. Set *listen port* to `0` (allows Unbound DNS to handle all queries).  
+3. Enable *Do not forward to system defined DNS servers*.
+
+Click **Apply**.
+
+### IPv4 Settings:
+
+- **Interface**: LAN  
+- **Start address**: 192.168.1.2  
+- **End address**: 192.168.1.254  
+- **Description**: (Description for subnet)
+
+### IPv6 Settings:
+
+- **Interface**: LAN  
+- **Start address**: ::1000  
+- **End address**: ::2000  
+- **Description**: (Description for subnet)
+
+## Upload Static Mappings
+
+Go to **Hosts** tab, upload the CSV from earlier.
+
+<DocImage folder="images/EP41_iscdhcp_dnsmasqdhcp" name="importyourfile.png" alt="Upload static CSV" />
+
+## Disable Router Advertisements
+
+- Services > Router Advertisements > LAN  
+- Set to **disabled** and **Save**.
+
+<DocImage folder="images/EP41_iscdhcp_dnsmasqdhcp" name="rtad.png" alt="Disable router adv" />
+
+## Disable ISC DHCPv4 and DHCPv6
+
+In **Services > ISC DHCPv4 / DHCPv6 > LAN**:
+
+- **Uncheck** **Enabled**  
+- Hit **Save**.
+
+**Note:** Do this quickly to avoid losing DHCP lease.
+
+## Enable Dnsmasq & DHCP
+
+- Services > Dnsmasq DNS & DHCP > General
+
+- Check **Enabled** and **Apply**.
+
+## Set DHCP Reservations
+
+In **Leases**, click **+** icon for static assignments. Enter description, IP address, and save.
+
+<DocImage folder="images/EP41_iscdhcp_dnsmasqdhcp" name="importyourfile.png" alt="Upload static CSV" />
+
+## Verify DHCP & DNS
+
+Check DHCP leases and ensure DNS resolution via:
+```
+nslookup google.com
+```
+You should see your OPNsense IP resolving.
+
+<DocImage folder="images/EP41_iscdhcp_dnsmasqdhcp" name="nslookup.png" alt="nslookup output" />
+
+---
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

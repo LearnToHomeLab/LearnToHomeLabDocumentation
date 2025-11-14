@@ -17,3 +17,9 @@ hola:
   label: Hola
   permalink: /hola
   description: Hola tag description
+
+lthnews:
+  label: LTH_News
+  permalink: /lthnews
+  description: Latest news related to LTH and sister companies
+

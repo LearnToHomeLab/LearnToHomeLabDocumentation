@@ -1,0 +1,58 @@
+---
+sidebar_position: 6
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# I Made My Mikrotik AP Fully Managed by OPNsense – No More DHCP Chaos
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/5POELZHOsuU?si=xoPyL1WdjRbpvzye"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## WinBox Mikrotik AP Overview
+
+Below is an overview image showing all tabs needed for configuration in this video:
+
+<DocImage folder="images/MikrotikAPManagedByOPNsense" name="Mikrotik overview.png" alt="Mikrotik AP Overview" />
+
+## Configuring Mikrotik Wireless AP to Get DHCP Leases from OPNsense
+
+1. Login to your Mikrotik AP using Ethernet connection to your PC using MAC address and login credentials from the device sticker.  
+2. Open the **Bridge** tab.  
+3. In **Bridge**, go to the **Ports** tab.  
+4. Add all interfaces; typically add `ether1` to `bridge` if default config.  
+5. In the **Interfaces** list, ensure:  
+   - `LAN` is set to bridge.  
+   - `WAN` is set to `ether1` (connected to internet).  
+6. Open **DHCP Client** under **IP → DHCP Client**.  
+7. Set the DHCP client on the `bridge` interface.  
+8. Open **DHCP Server** under **IP → DHCP Server**.  
+9. Disable the DHCP Server.  
+10. Disable networks under the **Networks** tab in DHCP Server.  
+11. Check **Address List** under **IP → Addresses** to verify your network settings are correct.  
+12. Configure Wi-Fi settings under the **Wi-Fi** tab:  
+   - Set SSID, band, channel width, passphrase, authentication type under **Configuration**, **Channel**, and **Security** tabs.  
+
+---
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

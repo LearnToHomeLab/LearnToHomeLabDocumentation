@@ -8,10 +8,10 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-/** @type {import('@docusaurus/types').Config} */
+ /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Learn To HomeLab',
-  tagline: 'Information Technology Teaching and Reviews',
+   title: 'Learn To HomeLab',
+  // tagline: 'Information Technology Teaching and Reviews',
   favicon: 'img/favicon.ico',
 
   // Future flags
@@ -20,10 +20,10 @@ const config = {
   },
 
   // Production URL and base URL
-  url: 'https://LearntoHomeLab.github.io',
-  baseUrl: '/LearnToHomeLab/LearnToHomeLabDocumentation/',
+  url: 'http://learntohomelab.com',
+  baseUrl: '/',
 
-  // GitHub pages deployment config
+  // GitHub pages deployment config.
   organizationName: 'LearnToHomeLab', // Usually GitHub org/user name.
   projectName: 'LearnToHomeLabDocumentation', // Usually repo name.
 
@@ -43,8 +43,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // editUrl removed to disable "Edit this page"
         },
         blog: {
           showReadingTime: true,
@@ -52,8 +51,7 @@ const config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // editUrl removed to disable "Edit this page"
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
@@ -68,7 +66,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: 'img/social-card.png.jpg',
+      image: 'img/social-card.png',
       colorMode: {
         respectPrefersColorScheme: true,
       },

@@ -1,0 +1,212 @@
+---
+sidebar_position: 13
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Zabbix Server Install
+
+Zabbix is an open-source monitoring tool that monitors IT infrastructure, including:  
+Networks, Servers, Virtual machines (VMs), Cloud services, Applications, Databases, and Websites
+
+In this episode we will cover how to setup the server side of Zabbix and in the following episode/article we will show you the agent side.
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/Ax3h24kXR1M?si=EnQw5wDNpi3ImpXW" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowFullScreen
+  />
+</div>
+
+## Our Homelab Topology
+
+<DocImage folder="images/EP10_zabbixserver" name="Untitled Diagram.png" alt="Description of your image" />
+
+## The Order of Commands
+
+<DocImage folder="images/EP10_zabbixserver" name="_second picture of zabbix steps.png" alt="Description of your image" />
+
+## List of commands used
+
+<WarningBox>
+Some commands MAY change usually just step 2 based on the current version of Zabbix. All other commands should work though.
+</WarningBox>
+
+## Install zabbix Commands:
+
+Link to Zabbix's site and the commands can be found [here](https://www.zabbix.com/download?zabbix=7.0&os_distribution=ubuntu&os_version=22.04&components=server_frontend_agent&db=mysql&ws=apache)
+```
+sudo -s
+```
+```
+wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.0+ubuntu22.04_all.deb
+```
+```
+dpkg -i zabbix-release_latest_7.0+ubuntu22.04_all.deb
+```
+```
+apt update
+```
+```
+apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+```
+
+### Install SQL server
+
+Installs mySQL
+```
+sudo apt-get install mysql-server
+```
+Starts mySQL on boot
+```
+sudo systemctl start mysql
+```
+Start it
+```
+service mysql start
+```
+Then do
+```
+mysql
+```
+### Create the database
+```
+sudo mysql
+```
+
+Formats the database type to a the format Zabbix can understand (utf8mb4)
+
+```
+create database zabbix character set utf8mb4 collate utf8mb4_bin;
+```
+
+With this one the `password` section is where you assign your database password
+
+```
+create user zabbix@localhost identified by 'password';
+```
+
+
+Giving your user access to read and write to this database
+
+```
+grant all privileges on zabbix.* to zabbix@localhost;
+```
+
+Set trust for the database
+
+```
+set global log_bin_trust_function_creators = 1;
+```
+
+Exit mySQL
+
+```
+quit;
+```
+
+<WarningBox>
+Wait a couple minutes after doing the following command, the script takes awhile to work. You won't see any output for a couple minutes
+</WarningBox>
+```
+zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
+```
+
+Go back into mySQL
+
+```
+mysql
+```
+```
+set global log_bin_trust_function_creators = 0;
+```
+```
+quit;
+```
+
+Now edit config file:
+```
+nano /etc/zabbix/zabbix_server.conf
+```
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.6.1.png" alt="Description of your image" />
+
+Look for the `DBuser=zabbix` section and edit the `DBPassword=` section with the password you just set earlier.
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.6.2.png" alt="Description of your image" />
+
+Save and exit with <kbd>ctrl + X</kbd>, then <kbd>Y</kbd>, then <kbd>Enter</kbd>.
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.6.3.png" alt="Description of your image" />
+
+Start services:
+
+```
+systemctl restart zabbix-server zabbix-agent apache2
+```
+```
+systemctl enable zabbix-server zabbix-agent apache2
+```
+
+Go to your browser to visit:
+
+```
+http://host_machine_ip/zabbix
+```
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.7.1.png" alt="Description of your image" />
+
+You will be presented with the landing page, click next.
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.8.1.png" alt="Description of your image" />
+
+Make sure everything has a green ok so you know you did it right.
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.8.2.png" alt="Description of your image" />
+
+Ensure you add the database user password you just set in that config file so Zabbix's panel can access it.
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.8.3.png" alt="Description of your image" />
+
+Set your server name and timezone.
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.9.1.png" alt="Description of your image" />
+
+Ensure all settings have been filled out or go back and fix them.
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.9.2.png" alt="Description of your image" />
+
+Login, remember the login for username and password is case sensitive! It is Admin NOT admin.
+
+User: Admin  
+Pass: zabbix
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.9.3.png" alt="Description of your image" />
+
+You are in, stay tuned for next episode on how to setup an agent on your servers, VMs, firewalls, etc!
+
+<DocImage folder="images/EP10_zabbixserver" name="Still 2025-01-05 093020_1.9.4.png" alt="Description of your image" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)
+
+[Discord](https://discord.gg/6MsHSJWZpH)
+
+[Patreon](https://www.patreon.com/c/learntohomelab)
+
+[Reddit](https://www.reddit.com/r/learntohomelab/)
+
+[Rumble](https://rumble.com/c/c-7585051)

@@ -1,0 +1,223 @@
+---
+sidebar_position: 44
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# CloudPanel Install
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/d5ktpgmrD-Q?si=2Bb08K1ggGHMwi0z"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+All notes found in this video for CloudPanel come from the following documentation [here](https://www.cloudpanel.io/docs/v2/getting-started/other/)
+
+## Where to find things for the video:
+
+1.  SSL/TLS / Overview (shows the current encryption standard)
+2.  Account Home (not in zero trust) select the domain name, 3 dots, configure DNS / DNS / Records (shows the CNAME and A records for the domain)
+3.  Networks / Tunnels (Where you edit your Tunnels)
+
+## What you need for this tutorial
+
+1.  CloudFlare account with a CloudFlare owned domain name
+2.  Router/Firewall (OPNsense for example or a router that allows for local DNS setting overrides)
+3.  Virtualization (Proxmox, VMware, XCP-NG, etc.) for two virtual machines (VM’s)
+4.  Motivation to be the best homelabber you can be!
+
+## Install CloudPanel
+
+1.  Create a VM on Proxmox (or your virtualization platform)CloudPanel asks for at least 1 core and 2 gigabytes of RAM. I would say do at least 2 cores and 4 gigabytes of ram in my experience
+    
+    ---
+    
+2.  Follow the steps below to install CloudPanel after creating your VM
+
+the first step we want to do is update our machine with the following command:
+
+```
+sudo apt update && sudo apt -y upgrade && sudo apt -y install curl wget 
+sudo
+```
+
+Next we are going to use the following install command meant for Ubuntu 24.04 LTS. If you are on a different version please check their documentation with the link at the start of this article.
+
+```
+curl -sS https://installer.cloudpanel.io/ce/v2/install.sh -o install.sh; \
+echo "19cfa702e7936a79e47812ff57d9859175ea902c62a68b2c15ccd1ebaf36caeb
+install.sh" | \
+sha256sum -c && sudo DB_ENGINE=MYSQL_8.4 bash install.sh
+```
+
+## Access CloudPanel
+
+You can now access CloudPanel via Browser:
+
+```
+https://yourIpAddress:8443
+```
+
+After you create an account / Login, select SITES and + ADD SITE
+<DocImage folder="images/EP42_CloudPanel" name="add site.png" alt="adds a new site in cloudpanel" />
+
+Select CREATE A WORDPRESS SITE
+<DocImage folder="images/EP42_CloudPanel" name="site selection.png" alt="select type of site you want to make in cloudpanel" />
+
+Fill out the information seen below, the domain name will be the FQDN (example: Wordpresssite.com) of your CloudFlare owned domain name, then click create.
+<DocImage folder="images/EP42_CloudPanel" name="new word press site info.png" alt="Wordpress site info" />
+
+
+
+<WarningBox>
+  IMPORTANT
+</WarningBox>
+
+ Ensure you copy this page, you will need the wordpress login credentials!
+ <DocImage folder="images/EP42_CloudPanel" name="login credentials.png" alt="Wordpress login credentials" />
+
+ ## CloudFlare Tunnels
+
+We need to create another VM or LXC container to run CloudFlare Tunnels (THIS IS VERY important, this will allow us to BLOCK public internet access to the WordPress admin page).
+
+1.  Create a VM (IF you are installing this on a CT you will need to perform a couple commands before following their install script)
+2.  Install Ubuntu Server on it
+3.  Login to CloudFlare’s dashboard [here](https://dash.cloudflare.com/)
+4.  Select Zero Trust from the side menu
+<DocImage folder="images/EP42_CloudPanel" name="cloudflare zero trust.png" alt="CloudFlare zero trust login page" />
+
+Select NETWORKS / Tunnels
+<DocImage folder="images/EP42_CloudPanel" name="cloudlfare tunnels.png" alt="CloudFlare tunnels page" />
+
+Click “Create a tunnel”
+<DocImage folder="images/EP42_CloudPanel" name="create tunnel cloudflare.png" alt="Create a tunnel" />
+
+Select CLOUDFLARED
+<DocImage folder="images/EP42_CloudPanel" name="cloudflared.png" alt="select cloudflared" />
+
+Name your tunnel then click save tunnel
+<DocImage folder="images/EP42_CloudPanel" name="name cloudflare tunnel.png" alt="name your tunnel" />
+
+
+
+<WarningBox>
+The following commands will ONLY work for a VM, if you want to install this on a container, you will need to perform the CT commands specifically.
+(use this command within this warning box first before you perform the commands found after!!)
+```
+sudo apt-get install curl
+```
+Now you can procede with the normal install commands found below 
+</WarningBox>
+
+1. Select your operating system (we are using Debian)
+2.  Copy and paste the install script into the CLI of your CloudFlare VM
+3.  After that is done, run the second command to ensure it always starts when the VM reboots.
+
+<DocImage folder="images/EP42_CloudPanel" name="cloudflare tunnel keys.png" alt="cloudflare tunnel keys" />
+
+1.  Select your domain name you have on CloudFlare
+2.  Select the local IP address of your CloudPanel VM and the port of your service (in our case of a Wordpress site it is 443
+3.  put the FQDN of your Wordpress (or other) side in this box. A FQDN is the domain_name_.tld. Example: [Wordpresssite.com](http://Wordpresssite.com) NOT Https://[Wordpresssite.com](http://Wordpresssite.com)
+4.  ENABLE no TLS verify (we are still using TLS all the way through, this just allows for self signed certificated by CloudPanel and CA assigned certificates on CloudFlares side of the tunnel.
+<DocImage folder="images/EP42_CloudPanel" name="set cloudflare tunnel domain and tls.png" alt="set cloudflare tunnel domain and tls" />
+
+## Blocking WordPress Admin from the Public Internet
+
+Go back to our CloudPanel dashboard website click SITES, and MANAGE
+<DocImage folder="images/EP42_CloudPanel" name="cloudpanel manage site.png" alt="cloudpanel manage site" />
+
+We will add the following block of rules right after the area shown in the red box found in the VHOST tab.
+<DocImage folder="images/EP42_CloudPanel" name="vhost cloudpanel settings.png" alt="vhost cloudpanel settings" />
+
+Adding these rules will only allow our local network to access the /wp-admin page and then anyone who accesses our public domain_name.com/wp-admin will get a (403 Forbidden) error.
+<DocImage folder="images/EP42_CloudPanel" name="nginx 403 forbidden error testing.png" alt="nginx 403 forbidden error testing" />
+
+Rules to add:
+```
+
+    deny 192.168.1.0/32;    # Set to your CloudFlare VM/CT Tunnel IP
+    allow 192.168.50.0/24;  # Replace with your actual LAN subnet
+    allow 127.0.0.1;        # Allow localhost
+    deny all;               # Deny everyone else
+```
+
+Now we just need to restart NGINX on the CloudPanel VM with:
+```
+sudo systemctl restart nginx
+```
+
+## Testing our Wordpress wp-admin firewall rule
+
+To ensure we cannot access the Wordpress admin page from the public internet, go to (yourDomainName.com/wp-admin) and ensure you get that 403 forbidden error.
+
+## Getting local Wordpress wp-admin Access
+
+Now to get Wordpress wp-admin access, we are going to login to OPNsense / services / Unbound DNS / Overrides
+<DocImage folder="images/EP42_CloudPanel" name="opnsense DNS overrides.png" alt="opnsense DNS overrides" />
+
+Select the little plus icon bottom right to add a new entry
+<DocImage folder="images/EP42_CloudPanel" name="add dns override entry.png" alt="add dns override entry" />
+
+Then fill out the following settings just as the image shows:
+<DocImage folder="images/EP42_CloudPanel" name="dns override settings.png" alt="dns override settings" />
+
+Now attempt to go to your WordPress website domainName.com/wp-admin and you should be able to access it from your local network!
+
+<WarningBox>
+  You may need to flush your DNS during multiple parts of this tutorial to ensure your system is requesting the domain locally and NOT from CloudFlare Tunnel:
+
+Open your CLI on your local machine and perform the following:
+
+Start with checking where the domain name is resolving to:
+
+```
+nslookup (your domain name) (your gateway IP, ie. OPNsense IP)
+```
+
+Then flush your DNS
+
+```
+ipconfig /flushdns
+```
+
+Then you can do the following
+
+```
+nslookup (your domain name) (your gateway IP, ie. OPNsense IP)
+```
+
+then ensure you get a response with the server name, address, name, IP:
+<DocImage folder="images/EP42_CloudPanel" name="nslookup for wordpress site on local dns.png" alt="nslookup for wordpress site on local dns" />
+</WarningBox>
+
+
+
+<WarningBox>
+  You may also notice the SSL certificate shows NOT SECURE. This is due to setting the DNS override, we are no longer accessing the site internally VIA CloudFlare. If you take your phone off the local wifi, open an incognito tab and go to your domain, you will see it is still secure and trusted!
+</WarningBox>
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+
+
+
+

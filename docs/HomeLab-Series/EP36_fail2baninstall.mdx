@@ -1,0 +1,123 @@
+---
+sidebar_position: 38
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install Fail2Ban in 2025
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/JyAdPYkdqkM?si=9wm7pHwL5mWn0nCJ"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Install Fail2Ban
+
+Fail2Ban protects Linux servers from malicious attacks like brute-force login attempts by monitoring system logs and blocking offending IPs, usually by adding firewall rules.
+
+Install it with:
+```
+sudo apt install fail2ban
+```
+
+Start and enable the service:
+```
+sudo systemctl start fail2ban
+sudo systemctl enable fail2ban
+```
+Check service status:
+```
+sudo systemctl status fail2ban
+```
+<WarningBox>
+You can skip to part 5 if the default install is sufficient. For customization, see the configuration options below.
+</WarningBox>
+
+## Basic Configuration
+
+Fail2Ban uses "jails" to specify services and how to react to suspicious activity.
+
+1. Create a local config file (do **not** edit jail.conf directly):
+```
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+```
+
+Or create/edit `/etc/fail2ban/jail.local` if not existing.
+
+
+2. Edit the config:
+```
+sudo nano /etc/fail2ban/jail.local
+```
+
+Key settings to review:
+
+- `ignoreip` — IP addresses never to ban (e.g., your own).  
+- `bantime` — seconds to ban an IP (e.g., 3600 for 1 hour).  
+- `findtime` — time window for failure counts (e.g., 600 seconds).  
+- `maxretry` — number of failures before ban (e.g., 3).
+
+Example:
+```
+[DEFAULT]
+ignoreip = 127.0.0.1
+bantime = 3600
+findtime = 600
+maxretry = 3
+```
+
+3. Enable the SSH jail:
+
+Make sure these lines are present in your `jail.local`:
+```
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+bantime = 600
+findtime = 600
+```
+
+This protects SSH from brute-force attacks.
+
+4. Restart Fail2Ban:
+```
+sudo systemctl restart fail2ban
+```
+## Verify Fail2Ban Operation
+
+Check all jails:
+```
+sudo fail2ban-client status
+```
+Check specific jail (e.g., sshd):
+```
+sudo fail2ban-client status sshd
+```
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+
+
+

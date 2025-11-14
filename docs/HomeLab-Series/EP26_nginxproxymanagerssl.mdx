@@ -1,0 +1,236 @@
+---
+sidebar_position: 29
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Setup The Nginx Proxy Manager and DuckDNS for Local SSL Certificates
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/DjKom4B4USo?si=2mTOOYuxy4Zwk7-l"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Create a Virtual Machine or Container
+
+Set up a VM or CT on your preferred platform, here we create a CT on Proxmox.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="ct overview.png" alt="Proxmox container overview" />
+
+## Installing Docker
+
+Follow Docker’s official documentation [here](https://docs.docker.com/engine/install/ubuntu/).
+
+First, update your system:
+```
+sudo apt update && sudo apt upgrade -y
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 124231_1.15.1.png" alt="System update" />
+
+Set up Docker's apt repository:
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 124231_1.16.1.png" alt="Docker repo setup" />
+
+Install Docker packages:
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 124231_1.16.2.png" alt="Docker install" />
+
+Verify installation:
+```
+sudo docker run hello-world
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 124231_1.18.1.png" alt="Docker test success" />
+
+## Creating the Nginx Docker Compose File
+
+Create docker-compose.yml:
+```
+nano docker-compose.yml
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 124914_1.18.2.png" alt="Nano editor" />
+
+Paste this minimum required content:
+```
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 124914_1.19.1.png" alt="Docker compose content" />
+
+Bring up your stack:
+```
+docker-compose up -d
+
+# If using docker-compose-plugin
+docker compose up -d
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 124914_1.21.1.png" alt="Docker compose up" />
+
+## Login to Nginx Proxy Manager
+
+When running, connect to your VM/CT IP on port 81 to access the admin interface. It may take a moment to generate keys.
+
+To find your IP:
+```
+ip a
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 125654_1.23.1.png" alt="Find IP command" />
+
+Then in your browser:
+```
+http://<your VM/Container IP>:81
+```
+
+Default admin credentials:
+
+Email:  
+```
+admin@example.com
+```
+Password:  
+```
+changeme
+```
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 125654_1.25.1.png" alt="Nginx Proxy Manager login" />
+
+## Creating your DuckDNS SSL Certificate
+
+Go to [DuckDNS](https://www.duckdns.org/) and login with your Google or other account.
+
+Create a subdomain and assign your Nginx Proxy Manager IP.
+
+This is also where you get your token ID.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 130708_1.37.1.png" alt="DuckDNS subdomain setup" />
+
+On Nginx Proxy Manager, go to *SSL Certificates* → *Add SSL Certificate*.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 130624_1.39.1.png" alt="Add SSL certificate" />
+
+Enter:
+
+- Your `<subdomain>.duckdns.org`  
+- And the wildcard `*.<subdomain>.duckdns.org` (important for sub-subdomains)
+
+<WarningBox emoji="⚠️" title="Note">
+You may get a failure error after clicking SAVE due to DNS propagation delays. Wait a few minutes then try saving again.
+</WarningBox>
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 130624_1.43.1.png" alt="Wildcard SSL certificate" />
+
+After about 5 minutes, you should see a successful SSL certificate.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 131610_1.45.1.png" alt="SSL certificate successful" />
+
+On Proxy Dashboard, click *Hosts* → *Proxy Hosts* → *Add Proxy Host*.
+
+For example, add `<pve>.lthlearn.duckdns.org` using the wildcard `*`.
+
+Remember Proxmox uses HTTPS by default; select HTTP for most services in the *scheme* box.
+
+<WarningBox emoji="⚠️" title="Note">
+Enable `websockets support` if your service requires it, e.g., for code boxes that auto-copy commands.
+</WarningBox>
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 131610_1.48.1.png" alt="Add proxy host" />
+
+After saving, try clicking your domain. It may work unless blocked by firewall like OPNsense—next step needed.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="Still 2025-03-14 131610_1.49.1.png" alt="Access blocked by firewall" />
+
+## Create OPNSense Local DNS Wildcard Entry
+
+Enable Unbound DNS via Services → Unbound DNS → General Settings.
+
+Make sure Unbound DNS is enabled.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="part 1 _ OPNsense.localdomain.png" alt="Enable Unbound DNS" />
+
+Add a Wildcard DNS Override under Services → Unbound DNS → Overrides.
+
+Click + Add under Host Overrides.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="part 2 _ OPNsense.localdomain.png" alt="Add DNS override" />
+
+Set:
+
+- Host: * (wildcard for all subdomains)  
+- Domain: duckdns.org  
+- Type: A (IPv4)  
+- IP Address: internal IP of Nginx Proxy Manager server (e.g., 192.168.50.234)  
+- Description (optional): Wildcard for DuckDNS domains  
+
+Save and apply.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="part 3_ OPNsense.localdomain.png" alt="DNS override details" />
+
+Flush DNS Cache on your local machine (Windows cmd):
+```
+ipconfig /flushdns
+```
+
+## Assign More Domains to Other Services
+
+Return to Nginx Proxy Manager, click your domain, it should now work.
+
+Repeat adding proxy hosts for all services to secure SSL and eliminate unsecure warnings.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="2025-03-14 13_33_30-Nginx Proxy Manager.png" alt="Nginx Proxy Manager dashboard" />
+
+Secured websites are now working.
+
+<DocImage folder="images/EP26_nginxproxymanagerssl" name="2025-03-14 13_35_11-Nginx Proxy Manager.png" alt="Secure site example" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+

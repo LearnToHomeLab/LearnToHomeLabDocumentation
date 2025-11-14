@@ -2,46 +2,23 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Welcome to LTH
 
-Let's discover **Docusaurus in less than 5 minutes**.
+1. If this is your first time here, we have a very lively community that can be found on our Discord [here](https://discord.com/invite/6MsHSJWZpH)
+2. All our videos can be found on our YouTube channel [here](https://www.youtube.com/@learntohomelab)
 
-## Getting Started
+## Navigation
 
-Get started by **creating a new site**.
+On the left side of your screen you can see the navigation window, each series, or lack of a series can be found here. 
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## Our Mission
+LearnToHomeLab’s mission centers on educating and empowering individuals to build and operate their own home lab environments, focusing on IT, cybersecurity, and network engineering. Their goal is to provide practical, accessible learning resources (courses, videos, guides) that help beginners and professionals alike develop real-world skills relevant to IT infrastructure, self-hosting, and cybersecurity through hands-on experience.
 
-### What you'll need
+TheDataCenterProject.com, linked with the community-driven aspect, focuses on collaboratively managing and sharing data center resources via member voting and community influence. It aims to democratize data center usage and foster a cooperative model resembling employee ownership, ensuring that major decisions benefit the community rather than just centralized owners.
+### Combined Mission Insight:
+Both LearnToHomeLab and The Data Center Project promote **community empowerment through technology education and collaborative infrastructure management**. LearnToHomeLab brings IT and cybersecurity knowledge accessible to individuals building home labs, while The Data Center Project provides a framework for shared, community-influenced data center operations. Together, they foster a culture of hands-on learning, resource sharing, and collective decision-making in data center and IT environments, making advanced infrastructure and skills accessible beyond traditional enterprise settings.
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+## Our Projects
 
-## Generate a new site
+Learn To HomeLab (LTH) for short, is an organization that oversees multiple other projects. Some of the other projects we own, operate, influence, or support can be found below:
 
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.

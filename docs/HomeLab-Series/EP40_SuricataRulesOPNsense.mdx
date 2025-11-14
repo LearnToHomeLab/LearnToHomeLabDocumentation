@@ -1,0 +1,116 @@
+---
+sidebar_position: 42
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Enabling Suricata Rules on OPNsense Firewall
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/FKOIyv0okC4?si=X79eCYYruEaUS6EP"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Do You Need to Enable Your IPS? (Suricata on OPNsense)?
+
+Short answer is **no**, especially if you have no open ports or port forwarding. Suricata inspects *all* network traffic in and out of your network, providing an additional layer of security by spotting vulnerabilities and suspicious activity.
+
+## Backup Your OPNsense Firewall First
+
+Before changes, always back up:
+
+1. Log in to your OPNsense machine  
+2. Go to **System > Configuration > Backups**  
+3. Select **Download Configuration**  
+
+See the [Emerging Threats Rules](https://rules.emergingthreats.net/open/suricata-7.0.3/rules/) list to know what will be blocked.
+
+## Enable Emerging Threats (ET) Open Rules in Suricata
+
+Steps:
+
+1. Log into OPNsense Web GUI  
+2. Navigate to **Services > Intrusion Detection > Administration**  
+3. Check **Enable** at top if Suricata is off  
+4. Also check **IPS Mode**  
+5. Go to **Download** tab, under **Rule Sets**  
+6. Enable **Emerging Threats Open** rule sets (enable what you need; more rules use more resources)  
+
+Common recommended rule categories:
+
+| Category Name           | Description                         | Why Enable?                                   |
+|------------------------|-----------------------------------|----------------------------------------------|
+| emerging-exploit       | Detect exploits against vulnerabilities | Captures common attack vectors on patchable software |
+| emerging-malware       | Malware communications and payloads | Blocks malware control and payload communication     |
+| emerging-scan          | Network scanning detection         | Detects attackers probing your network       |
+| emerging-phishing      | Phishing URL and traffic detection | Prevents credential theft and social engineering     |
+| emerging-dos           | Denial-of-service attack detection | Detects volume or targeted DoS attacks        |
+| emerging-attack_response | Post-exploitation attacker behavior | Spots lateral movement or persistence        |
+| emerging-botcc*        | Botnet command & control            | Prevents infected hosts from communicating with attackers |
+| emerging-web_server    | Web server attack prevention        | Protects vulnerable web apps                  |
+| emerging-ftp/smtp/dns/pop3 | Protocol-specific attacks         | Covers common service attack vectors           |
+| emerging-snmp          | SNMP protocol abuses                | Detects infrastructure misuses                 |
+| emerging-sql           | SQL Injection and DB attacks         | Protects against database attacks              |
+
+\*If available in your rule set.
+
+7. Click **Enable selected**  
+8. Go to **Rules** tab → **Rules**, enable rules as required  
+9. Schedule automatic updates weekly under **Schedule** tab:
+
+Minutes: 0
+
+Hours: 0
+
+Day of the month: 1
+
+Months: *
+
+Days of the week: *
+
+10. Save and apply changes.
+
+## Verify Emerging Threats is Working
+
+1. Enable SSH under **System > Settings > Administration**  
+2. SSH into OPNsense:  
+```
+ssh <username>@<opnsense_ip>
+```
+3. Select option 8 for shell  
+4. Run:  
+```
+curl http://testmynids.org/uid/index.html
+```
+5. Check logs at **Services > Intrusion Detection > Administration > Alerts** in the OPNsense dashboard  
+6. Disable SSH in OPNsense dashboard if no longer needed.
+
+Suricata now monitors your traffic using community-maintained Emerging Threats Open threat signatures.
+
+---
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+
+
+
+

@@ -1,0 +1,115 @@
+---
+sidebar_position: 4
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# MineCraft on TrueNAS
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/w_Qbzbc0bWA?si=pwEfwIQCZd5ZEPDQ"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+Hey all, in today’s video, I am going to cover setting up ANY version of Minecraft on TrueNAS (Vanilla, Spigot, Bucket, Paper, Folia, Fabric, Forge, NeoForge, CurseForge, Modrinth, Feed the Beast, Pufferfish, etc.)
+
+## Installing Minecraft
+
+1. Login to your TrueNAS machine. If new, watch our setup video [here](https://www.youtube.com/watch?v=xHseIdxtugk&t=1s&ab_channel=LearnToHomeLab)  
+2. Click the **Apps** page on the left.
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="2 image.png" alt="Apps page" />
+
+3. Click **Discover Apps** (top right, blue button).
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="3 image.png" alt="Discover Apps" />
+
+4. Search for "Minecraft".
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="4 image.png" alt="Search Minecraft" />
+
+5. Select **Minecraft Server Java** or **Bedrock**.  
+- Bedrock is cross-platform, Java is PC-only but retains original experience.  
+6. Click **Install**.
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="6 image.png" alt="Install Minecraft" />
+
+## Application Settings
+
+1. Name your Minecraft server.  
+2. Select timezone.  
+3. Agree to EULA (check box).  
+4. Choose image (Java version fits modpack).  
+5. Select server type.  
+6. Choose game mode.  
+7. Name your server.
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="7 image.png" alt="Server settings" />
+
+8. Add an RCON password.
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="8 image.png" alt="RCON Password" />
+
+9. Scroll down to **Network Configuration**.  
+10. Select **Host IP** under the respective section.
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="10 image.png" alt="Network config" />
+
+11. Scroll down to **Resource Configuration**.  
+12. Set CPU cores and RAM amount.  
+13. Select **Install**.
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="13 image.png" alt="Install Minecraft Server" />
+
+## Launch Minecraft
+
+1. Launch Minecraft on your PC.  
+2. Go to **Multiplayer**.  
+3. Select **Direct Connection**.  
+4. Enter your TrueNAS IP and port **25535** (default for Java Vanilla).
+
+Your Minecraft server is now ready!
+
+## Editing Minecraft Server Files
+
+1. In **Apps** page open CLI for Minecraft app.
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="editing 1 image.png" alt="Open CLI" />
+
+2. List files:
+```
+ls
+```
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="editing 2 image.png" alt="List files" />
+
+3. Edit `server.properties` with nano:
+```
+nano server.properties
+```
+Here you can change ports, game settings, etc.
+
+<DocImage folder="images/HowToInstallMinecraftOnTrueNAS" name="editing 3 image.png" alt="Edit server.properties" />
+
+That's it! Enjoy your Minecraft server setup.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+

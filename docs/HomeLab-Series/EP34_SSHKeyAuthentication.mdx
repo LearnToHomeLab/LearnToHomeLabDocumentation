@@ -1,0 +1,104 @@
+---
+sidebar_position: 36
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Enable Linux SSH Key Authentication
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/4Ll2ONlEfcs?si=x-VAtM8gHIjOsfm-"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+
+Throughout this course, we have used username and password to SSH into machines. While acceptable for private services, for public exposure or best practice, SSH key authentication is essential. Without your private SSH key, remote login is effectively impossible.
+
+## Creating the SSH Key
+
+Create the SSH key on your client computer (never transfer your private key over the internet). You can keep a safe copy offline (e.g., USB drive).
+
+You can leave default settings for the key creation:
+
+<DocImage folder="images/EP34_SSHKeyAuthentication" name="ssh key example.png" alt="SSH key creation example" />
+
+Run this in your Windows command line:
+```
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+Your SSH key will be stored at:
+```
+C:\Users<your_username>.ssh\
+```
+
+## Uploading the SSH Key to the Linux Server
+
+In the same CLI run (replace placeholders):
+```
+type $env:USERPROFILE.ssh<your_ssh_key_name> | ssh <user>@<host_Ip_address> "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+```
+Verify on the server:
+```
+cd ~/.ssh
+nano authorized_keys
+```
+Navigate back to the root directory with:
+```
+cd ~
+```
+Set correct permissions:
+```
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+```
+
+## Disable Password Authentication for SSH
+
+Edit the SSH daemon config:
+```
+sudo nano /etc/ssh/sshd_config
+```
+
+In the #Authentication section set:
+```
+PasswordAuthentication no
+PermitRootLogin no
+```
+You may need to also edit:
+```
+sudo nano /etc/ssh/sshd_config.d/50-cloud-init.conf
+```
+Restart SSH:
+```
+sudo systemctl restart ssh
+```
+Log out:
+```
+exit
+```
+
+SSH back in without a password prompt:
+```
+ssh <username>@<server_ip>
+```
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

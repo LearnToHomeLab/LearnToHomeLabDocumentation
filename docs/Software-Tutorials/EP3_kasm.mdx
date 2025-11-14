@@ -1,0 +1,72 @@
+---
+sidebar_position: 3
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Install Kasm Remote Desktops
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/0oZLQZclnQs?si=j6HKS-eOJ-RwgywD"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+We will use the official KASM documentation for installation: [KASM Docs](https://kasmweb.com/docs/latest/index.html)
+
+## Installing KASM
+
+Create a VM on Proxmox with these minimum specs:
+
+|          |          |
+|----------|----------|
+| **CPU**   | 2 cores  |
+| **Memory**| 4 GB     |
+| **Storage** | 50 GB SSD |
+
+Download and run KASM install script:
+```
+cd /tmp
+curl -O https://kasm-static-content.s3.amazonaws.com/kasm_release_1.17.0.7f020d.tar.gz
+tar -xf kasm_release_1.17.0.7f020d.tar.gz
+sudo bash kasm_release/install.sh
+```
+
+After installation, access KASM web app at:
+```
+https://<WEBAPP_SERVER>:443
+```
+
+Default usernames are:
+
+- `admin@kasm.local`  
+- `user@kasm.local`
+
+You will be shown passwords after installation, like below:
+
+<DocImage folder="images/kasm" name="kasmpasswords.png" alt="Kasm passwords" />
+
+Explore the interface or watch KASM's official tutorial here:  
+[KASM Workspaces Video](https://www.youtube.com/watch?v=14JUXZITV1E&ab_channel=KasmWorkspaces)
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+

@@ -1,0 +1,195 @@
+---
+sidebar_position: 5
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to set up a Pfsense/OPNsense firewall
+
+<WarningBox>
+Remember this video/device/article is not required to be successful in this series. Having an enterprise-grade firewall will allow you hands-on experience to talk to in an interview and potentially unlock capabilities you may find yourself needing in the future as your homelab/home network expands.
+</WarningBox>
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/OiXauud3EUQ?si=MG3fV9DbhjNgS7jt" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowFullScreen
+  />
+</div>
+
+## Introduction:
+
+If you have found yourself here it is because you want to install an enterprise-grade firewall, and we will do just that. PfSense/OPNsense allows for a reliable network backbone, routing, VPN connections, security features, failover scenarios, and inter-VLAN routing. This tutorial is part 2 of our HomeLab series, teaching you how to maintain your own "enterprise" style network at home. The advantage of a homelab allows for real-world experience you can put on your resume and speak to in an interview when asked questions related to your technical expertise.
+
+## How to use this guide:
+
+LTH handles teaching very differently from other industry standards. This is because we believe they truly lack in teaching you. There will be very lengthy commands, and for the sake of time, go ahead and copy and paste those commands. HOWEVER, please read what the command does, or you will never learn. Linux is notorious for using abbreviations; without reading what it does, you will never understand what you are configuring.
+
+## Topology
+
+A network topology is the physical and logical arrangement of nodes and connections in a network:
+
+<DocImage folder="images/EP2_firewall" name="firewall_topology.png" alt="Description of your image" />
+
+## Required Items:
+
+The firewall being used in this guide: [firewall](https://tinyurl.com/ynvvvdrw)  
+Alternative: [Beelink U59 dual ethernet](https://amzn.to/3PloqUa)  
+**or you can use any mini PC of your choosing and equip the USB 3.0 ports with a** [USB to ethernet adapter](https://amzn.to/4a8eXrT)
+
+- [x] Firewall Appliance (this could be a mini-PC with two ethernet ports)  
+- [x] USB Thumb Drive
+
+## Walkthrough/Commands:
+
+The start of the tutorial:
+
+### Step 1:
+
+Etcher allows us to create a bootable flash drive, this is how we will get OPNsense on to the firewall appliance. Download Etcher [here](https://etcher.balena.io/). 
+
+## Step 1 Download OPNsense
+
+Download either PFsense or OPNsense (the process will be the same but for the purpose of this tutorial we will be using OPNsense). For Opnsense leave all the download selections as shown in the image. For PFsense you will select Architecture: AMD64 (64-bit) Installer: DVD Image (ISO) Installer.
+
+1 - Go to either [Opnsense.org/Downloads](https://opnsense.org/download/) or [Pfsense.org/Downloads](https://www.pfsense.org/download/)
+
+<DocImage folder="images/EP2_firewall" name="opnsense_1.png" alt="Description of your image" />
+
+2 - Next go to the folder where OPNsense or PfSense was downloaded <kbd>right click</kbd> details tab, and then copy the file name.
+
+<DocImage folder="images/EP2_firewall" name="opnsense_2.png" alt="Description of your image" />
+
+3 - You will then use the following command to verify the SHA256 hash, as seen in step 1 right below the download button. **!Remember that the SHA256 value will change with every update, so verify it against what is currently showing on their website!**
+```
+certUtil -hashfile (the file path of your ISO file) SHA256
+```
+Example
+```
+certUtil -hashfile C:\Users\TechTouch\Downloads\OPNsense-24.1-vga-amd64.img.bz2 SHA256
+```
+
+<DocImage folder="images/EP2_firewall" name="opnsense_3.png" alt="Description of your image" />
+
+Now move on to Step 2: Downloading Etcher and create a bootable USB flash drive.
+
+## Step 2 Download 7-zip/Install & Extract OPNsense
+
+First go ahead and install 7-Zip after you downloaded it. Then open it up!
+
+<DocImage folder="images/EP2_firewall" name="7zip step 1_1.2.1.png" alt="Description of your image" />
+
+Here you can see we went to our users download folder. `C:\Users\learn\downloads\` you will then select the *zipped* folder and click the blue bar extract button at the top.
+
+<DocImage folder="images/EP2_firewall" name="7zip step 2_1.2.2.png" alt="Description of your image" />
+
+You will be prompted with this window, you are totally okay with extracting it into the downloads folder.
+
+<DocImage folder="images/EP2_firewall" name="7zip step 3_1.2.3.png" alt="Description of your image" />
+
+## Step 3 Download Etcher (bootable USB application)
+
+1 - Etcher allows us to create a bootable flash drive, this is how we will get OPNsense on to the firewall appliance. Download Etcher [here](https://etcher.balena.io/). 
+
+<DocImage folder="images/EP2_firewall" name="etcher_1.png" alt="Description of your image" />
+
+2 - Pick the correct download for your operating system.
+
+<DocImage folder="images/EP2_firewall" name="etcher_2.png" alt="Description of your image" />
+
+3 - Select *flash from file*
+
+<DocImage folder="images/EP2_firewall" name="etcher_3.png" alt="Description of your image" />
+
+4 - Select your OPNsense or PfSense download.
+
+<DocImage folder="images/EP2_firewall" name="etcher_4.png" alt="Description of your image" />
+
+5 - Now select the USB thumb drive. **!WARNING THIS WILL DELETE EVERYTHING ON THE THUMB DRIVE!**
+
+<DocImage folder="images/EP2_firewall" name="etcher_5.png" alt="Description of your image" />
+
+6 - You can now remove the thumb drive from your device and plug it into your firewall appliance **!MAKE SURE YOUR APPLIANCE IS CURRENTLY TURNED OFF!**
+
+<DocImage folder="images/EP2_firewall" name="etcher_6.png" alt="Description of your image" />
+
+## Step 4 (boot to OPNsense on your firewall client)
+
+After you have plugged the USB drive into your firewall appliance turn it on while tapping the <kbd>Del</kbd> (delete) key until the BIOS comes up. 
+
+1 - use your **arrow keys** and get to the BIOS tab, select your USB device, then move over to the exit tab, **save changes and exit.**
+
+<DocImage folder="images/EP2_firewall" name="bios.png" alt="Description of your image" />
+
+2 - After your device is booted you should see this screen with the IP address of your device. **!YOU WILL NEED TO BE DIRECTLY CONNECTED TO THIS DEVICE OVER ETHERNET AND THEN GO TO THAT IP ADDRESS!**
+
+Take note: the below image shows (vtnet0) this is the port that is being used for the LAN interface, because your appliance has multiple ethernet switchports you may need to plug into each until you can access the website at that IP address.
+
+<DocImage folder="images/EP2_firewall" name="opnsense_start.png" alt="Description of your image" />
+
+3 - After you have connected to that IP you will see this screen. Follow the wizard.
+
+<DocImage folder="images/EP2_firewall" name="opn_1.png" alt="Description of your image" />
+
+4 - We are going to use Cloudflare DNS servers, they are usually much faster than ones provided by your ISP.
+```
+1.1.1.1
+```
+```
+1.0.0.1
+```
+
+<DocImage folder="images/EP2_firewall" name="opn_2.png" alt="Description of your image" />
+
+5 - Pick your respective time zone.
+
+<DocImage folder="images/EP2_firewall" name="opn_3.png" alt="Description of your image" />
+
+6 - If your internet service provider (ISP) uses MAC address security and want to avoid calling their support to give them your new MAC address you can simply copy your old router's MAC into the MAC address field. If you get a static IP address from your ISP you will also input that here.
+
+<DocImage folder="images/EP2_firewall" name="opn_4.png" alt="Description of your image" />
+
+7 - Here, you can pick whatever private IP range you like; default is fine, too. If you want a list of private IP ranges, you can find that [here](https://en.wikipedia.org/wiki/Private_network).
+
+<DocImage folder="images/EP2_firewall" name="opn_5.png" alt="Description of your image" />
+
+8 - Set a strong password here.
+
+<DocImage folder="images/EP2_firewall" name="opn_6.png" alt="Description of your image" />
+
+9 - You are all done, go ahead and reload!
+
+<DocImage folder="images/EP2_firewall" name="opn_7.png" alt="Description of your image" />
+
+10 - <kbd>left click</kbd> and go to your dashboard.
+
+<DocImage folder="images/EP2_firewall" name="opn_8.png" alt="Description of your image" />
+
+11 - You are all set, Opnsense/Pfsense is now setup and ready for use! Future videos will dive more into OPNsense configurations based on setting up our homelab, but you can find their documentation [here](https://docs.opnsense.org/index.html)
+
+<DocImage folder="images/EP2_firewall" name="opn_9.png" alt="Description of your image" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)
+
+[Discord](https://discord.gg/6MsHSJWZpH)
+
+[Patreon](https://www.patreon.com/c/learntohomelab)
+
+[Reddit](https://www.reddit.com/r/learntohomelab/)
+
+[Rumble](https://rumble.com/c/c-7585051)
+

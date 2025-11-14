@@ -1,0 +1,212 @@
+---
+sidebar_position: 27
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Installing JellyFin on TrueNAS
+
+## Introduction
+
+In this video we will cover:
+
+1. How to set up an SMB share on TrueNAS  
+2. How to install JellyFin on your TrueNAS machine  
+3. How to connect JellyFin to your SMB share  
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/mLXMLJVp1kA?si=W0NgkkqPExEx0Rx1"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Creating an SMB Share on TrueNAS
+
+If you have not set up TrueNAS before, please see our previous video [here](/HomeLab-Series/EP17_truenasscale.mdx) which also covers setting up a storage pool required for this tutorial.
+
+Login to TrueNAS and perform the following:
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.3.1.png" alt="TrueNAS dashboard" />
+
+### Create a Dataset
+
+Go to the Datasets tab and click "Add Dataset" on the top right.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.3.2.png" alt="Add dataset" />
+
+Name your dataset, select the SMB preset, give your SMB share a descriptive name like "smbshare," then click Save.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.4.1.png" alt="Dataset creation form" />
+
+### SMB Share
+
+Go to the Shares tab and confirm your SMB share is created and enabled.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.5.1.png" alt="SMB share list" />
+
+### Create Local Group
+
+Go to Credentials → Local Groups.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.7.1.png" alt="Local groups" />
+
+Click Add on the top right.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.8.1.png" alt="Add local group" />
+
+Give the group a name, enable Samba authentication, and save.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.9.1.png" alt="Local group settings" />
+
+### Create a Local User
+
+Go to Local Users tab.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.10.1.png" alt="Local users" />
+
+Click Add on top right.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.10.2.png" alt="Add local user" />
+
+Configure the user:
+
+1. Assign full name  
+2. Create username  
+3. Set password  
+4. Confirm password  
+5. Turn off "Create a New Primary Group"  
+6. Assign the previously created local group  
+7. Set the home directory to your JellyFin SMB share folder  
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.11.1.png" alt="Configure local user" />
+
+Scroll to the bottom and click Save.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.12.1.png" alt="Save user" />
+
+### Enable SMB on TrueNAS
+
+Navigate to System Settings → Services.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.14.1.png" alt="System services" />
+
+Make sure the SMB service is enabled and running.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.15.1.png" alt="SMB service enabled" />
+
+### Configure SMB Share ACLs
+
+Go back to Shares tab, click the Shield icon on the right of your SMB share to configure ACLs.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.16.1.png" alt="Edit ACL" />
+
+Select the pre-made ACL "nsf4_open" and click Continue.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.16.2.png" alt="Select ACL template" />
+
+Confirm the settings look correct then save.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.17.1.png" alt="ACL saved" />
+
+### Connecting SMB Share on Windows
+
+Connect with this path syntax:
+```
+\\<IP_address_of_SMB_server>\<smb_share_filename>
+```
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.19.1.png" alt="Connect SMB on Windows" />
+
+When prompted, enter the SMB local user's credentials.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.20.1.png" alt="SMB credentials prompt" />
+
+Create folders inside the share to organize your movies, pictures, and documents for JellyFin browsing.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.20.2.png" alt="Create folders in SMB share" />
+
+### Installing JellyFin Media Server
+
+Go to the Apps tab in TrueNAS and click Discover Apps.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.21.1.png" alt="Discover apps" />
+
+Search for JellyFin and click it.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.21.2.png" alt="Select JellyFin" />
+
+Click Install.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.21.3.png" alt="Install JellyFin" />
+
+Set application name and IP address (same as TrueNAS IP shown in your browser URL).
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.22.1.png" alt="JellyFin installation settings" />
+
+Under Additional Storage:
+
+1. Select SMB share as storage type  
+2. Set Mount Path as desired (e.g. /SMB)  
+3. Enter TrueNAS IP address  
+4. Enter SMB share name  
+5. Enter SMB local user name  
+6. Enter SMB user password  
+
+Click Save and wait for deployment status.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.22.2.png" alt="JellyFin deployment" />
+
+After deployment, click the web portal icon to open JellyFin.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.24.1.png" alt="Open JellyFin portal" />
+
+Select your language and click Next.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.24.2.png" alt="Select JellyFin language" />
+
+Create a user to log in and click Next.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.25.1.png" alt="Create JellyFin user" />
+
+Select content type (e.g. Movies), then add folders from your SMB share under the /SMB directory.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.26.1.png" alt="Select JellyFin content folders" />
+
+*Showing the /SMB directory:*
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.27.1.png" alt="/SMB folder contents" />
+
+Browse folders created earlier inside.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.27.2.png" alt="Folders inside SMB share" />
+
+Scroll down and click OK.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.28.1.png" alt="Confirm JellyFin folders" />
+
+Login with the JellyFin user you created.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.29.1.png" alt="JellyFin login screen" />
+
+You’re all set! Enjoy watching and streaming your content.
+
+<DocImage folder="images/EP24_jellyFin" name="Still 2025-03-03 084826_1.30.1.png" alt="JellyFin dashboard" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

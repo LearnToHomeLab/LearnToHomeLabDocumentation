@@ -1,0 +1,171 @@
+---
+sidebar_position: 33
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install Actual Budget in 2025
+
+This guide will help you install the open-source budgeting app Actual on your server using Docker and Docker Compose.
+
+You will need HTTPS enabled; using Nginx Proxy Manager for SSL is recommended. See our tutorial [here](https://www.learntohomelab.com/HomeLab-Series/EP26_nginxproxymanagerssl.mdx) and this companion video:
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/Y3viBQ8TR0Q?si=rnHTrnmsJBBt7CEC"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Step 1: Prepare Your Server
+
+Create a container or VM (Proxmox preferred). Allocate appropriate resources and install Ubuntu Server 24.04 LTS or newer.
+
+SSH into your server, and update all packages:
+```
+sudo apt update && sudo apt upgrade -y
+```
+
+## Step 2: Install Docker and Docker Compose
+
+Remove conflicting Docker packages:
+```
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
+Add Docker’s official GPG key and set up its repository:
+```
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+echo
+"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu
+$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" |
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+Then install Docker and Compose plugins:
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+Verify Docker installation:
+```
+sudo docker run hello-world
+```
+
+Check Docker Compose version:
+```
+docker compose version
+```
+
+## Step 3: Create Docker Compose File for Actual
+
+Create a directory for Actual:
+```
+mkdir actual && cd actual
+nano compose.yml
+```
+
+Paste the following into `compose.yml`:
+```
+services:
+  actual_server:
+    image: docker.io/actualbudget/actual-server:latest
+    ports:
+      # This line makes Actual available at port 5006 of the device you run the server on,
+      # i.e. http://localhost:5006. You can change the first number to change the port, if you want.
+      - '5006:5006'
+    volumes:
+      # Change './actual-data' below to the path to the folder you want Actual to store its data in on your server.
+      # '/data' is the path Actual will look for its files in by default, so leave that as-is.
+      - ./actual-data:/data
+    healthcheck:
+      # Enable health check for the instance
+      test: ['CMD-SHELL', 'node src/scripts/health-check.js']
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+```
+Save and exit (`Ctrl+O`, `Enter`, `Ctrl+X`).
+
+Start the container:
+```
+docker compose up -d
+```
+
+Find your server's IP address to access Actual:
+```
+ip a
+```
+
+Visit in browser:
+```
+http://<server-ip>:5006
+```
+
+## Step 4: Enable HTTPS with Nginx Proxy Manager
+
+Configure Nginx Proxy Manager (or other SSL-enabled reverse proxy) to proxy your Actual server and provide HTTPS. See our tutorial [here](https://www.learntohomelab.com/HomeLab-Series/EP26_nginxproxymanagerssl.mdx).
+
+## Step 5: Logging into Actual
+
+Actual requires only a password.
+
+Either start fresh or explore the demo to learn faster.
+
+## Step 6: Optional Features
+
+- Learn budgeting concepts at [Actual Budgeting Docs](https://actualbudget.org/docs/budgeting/).  
+- Americans can sync bank transactions using SimpleFIN Bridge ($15/year) [link](https://beta-bridge.simplefin.org/).  
+- Europeans can use GoCardless [link](https://actualbudget.org/docs/advanced/bank-sync/).
+
+## Tips for Budgeting with Actual
+
+- Keep categories simple and obvious.  
+- Group recurring bills together instead of one category per bill.  
+- For credit card payments, create a dedicated "Credit Card Payments" category for paying off balances; individual purchases remain in their relevant categories.  
+- Returned items should be added back in their original spending category to balance budgets.
+
+## Updating Actual
+
+Check container status:
+```
+docker compose ps
+```
+
+Pull latest image:
+```
+docker compose pull
+```
+Recreate container:
+```
+docker compose up -d
+```
+
+Make sure to save your work before updating.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+
+

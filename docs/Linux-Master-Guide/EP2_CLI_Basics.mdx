@@ -1,0 +1,233 @@
+---
+sidebar_position: 3
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Command Line Basics
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/A386XmKi6M8?si=bZ-bNqFeJjgQGbOp"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+Linux has two main ways of identifying a user’s access level: 
+- <kbd>$</kbd> indicates a normal user.  
+- <kbd>#</kbd> indicates the root or privileged user.
+
+| Command           | What it Does                                 | Why Use It                                  |
+|-------------------|---------------------------------------------|---------------------------------------------|
+| Echo              | Displays the text you type out               | Output messages or variables                |
+| PWD (print working directory) | Prints your current directory          | Know your current location                   |
+| LS (list directories) | Lists files and sub-directories            | Explore contents of directories              |
+| Touch             | Create new empty files                        | Quickly make files                           |
+| File              | Shows file type                              | Identify file formats                        |
+| Cat               | Displays contents of a file                   | View small files                             |
+| Nano              | Text editor                                  | Edit files easily                            |
+| Less              | Navigate through file page-by-page            | Read large files without loading all at once |
+| History           | Shows command history                        | Recall previous commands                     |
+| Cp (copy)         | Copies a file to new location                 | Duplicate files                             |
+| Mv (move)         | Moves or renames files                         | Organize files efficiently                   |
+| Mkdir (make directory) | Creates directories                        | Organize files and folders                  |
+| Rm (remove)       | Deletes files or directories                   | Remove unwanted files                        |
+| Find              | Searches files or directories by criteria     | Track down misplaced files                   |
+| Help              | Displays help for a command                     | Learn how to use commands                    |
+| Man               | Shows manual/documentation of a command         | In-depth help                               |
+| Whatis            | Gives short description of a command            | Quick explanation                           |
+| Alias/Unalias     | Creates/removes shortcuts for commands          | Simplify repetitive tasks                    |
+| Exit              | Closes the terminal or current shell            | End your session                            |
+
+## Updating Linux
+
+Always keep your system up-to-date:
+```
+sudo apt update && sudo apt upgrade -y
+```
+## Echo
+
+**Description:** Prints text or variables to the terminal. Useful for displaying messages or variable values.
+
+```
+echo "Hello, world!"
+```
+
+## PWD (print working directory)
+
+**Description:** Shows the full absolute path of your current directory.
+
+```
+pwd
+```
+
+## LS (list directories)
+
+**Description:** Lists files and directories in the current location. Add options for details or hidden files.
+
+```
+ls -l
+```
+
+## Touch
+
+**Description:** Creates a new, empty file or updates the timestamp of an existing file.
+
+```
+touch example.txt
+```
+
+## File
+
+**Description:** Shows the type of a file (text, directory, binary, etc.).
+
+```
+file example.txt
+```
+
+## Cat
+
+**Description:** Concatenates and displays the content of files in the terminal.
+
+```
+cat example.txt
+```
+
+## Nano
+
+Nano can be used as a text editor, which is usually found in most Linux distributions.
+
+```
+nano example.txt
+```
+
+## Less
+
+**Description:** Opens a file interactively so you can scroll through it, useful for long files.
+
+```
+less example.txt
+```
+
+## History
+
+**Description:** Displays a list of previously entered commands.
+
+```
+history
+```
+
+## Cp (copy)
+
+**Description:** Copies files or directories to a new location.
+
+```
+cp example.txt backup.txt
+```
+
+## Mv (move)
+
+**Description:** Moves or renames files and directories.
+
+```
+mv backup.txt archive.txt
+```
+
+## Mkdir (Make Directory)
+
+**Description:** Creates a new directory (folder).
+
+```
+mkdir myfolder
+```
+
+## Rm (remove file)
+
+**Description:** Deletes files or directories. Use with caution!
+
+```
+rm example.txt
+```
+
+## Rmdir (remove directory)
+
+```
+rmdir testdir
+```
+
+## Find
+
+**Description:** Searches for files and directories matching criteria (name, type, etc.).
+
+```
+find . -name "example.txt"
+```
+
+## Help (other tool name)
+
+**Description:** Shows brief help for a command, listing options and usage.
+
+```
+ls --help
+```
+
+## Man (other tool name)
+
+**Description:** Displays the full manual (documentation) for a command.
+
+```
+man ls
+```
+
+## Whatis (other tool name)
+
+**Description:** Gives a one-line description of a command.
+
+```
+whatis ls
+```
+
+## Alias/Unalias (name)
+
+**Description:** Creates or removes shortcuts for commands (aliases).
+
+```
+alias ll='ls -l'
+```
+
+To get rid of an alias type:
+
+```
+unalias ll
+```
+
+## Exit
+
+**Description:** Closes the current terminal session or shell.
+
+```
+exit
+```
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)
+
+[Discord](https://discord.gg/6MsHSJWZpH)
+
+[Patreon](https://www.patreon.com/c/learntohomelab)
+
+[Reddit](https://www.reddit.com/r/learntohomelab/)
+
+[Rumble](https://rumble.com/c/c-7585051)
+

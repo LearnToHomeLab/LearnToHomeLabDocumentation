@@ -1,0 +1,72 @@
+---
+sidebar_position: 37
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Enable and Use The Linux Firewall (UFW)
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/B8ClCMHRW-s?si=XGYOWlU6q5cemkNy"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+
+**UFW (Uncomplicated Firewall) controls network traffic between your Ubuntu machine and other devices.** It primarily filters incoming and outgoing connections to and from your machine, NOT internal communication on the machine.
+
+Before enabling UFW, identify the services and ports running on your machine:
+```
+sudo ss -lntup
+```
+This lists ports in use (in the _local address: port_ column) which you may need to allow in UFW.
+
+To avoid losing SSH access, allow OpenSSH first:
+```
+sudo ufw allow OpenSSH
+sudo ufw enable
+```
+Confirm UFW is active:
+```
+sudo ufw status
+```
+
+### Common UFW Commands
+
+| Command                          | Description                              | Command                                  | Description                          |
+| --------------------------------| ------------------------------------- | --------------------------------------- | ---------------------------------- |
+| `sudo ufw enable`                | Enable the firewall                    | `sudo ufw disable`                      | Disable the firewall               |
+| `sudo ufw status`                | Show firewall status                   | `sudo ufw status verbose`               | Show detailed firewall status     |
+| `sudo ufw status numbered`       | Show rules with numbers                | `sudo ufw allow [port]`                  | Allow traffic on a port            |
+| `sudo ufw deny [port]`            | Deny traffic on a port                 | `sudo ufw allow [port]/[proto]`          | Allow port with protocol (e.g., tcp) |
+| `sudo ufw allow from [IP]`        | Allow all traffic from an IP           | `sudo ufw allow from [IP] to any port [port] proto [proto]` | Allow from IP to specific port/proto |
+| `sudo ufw allow in on [iface] to any port [port]` | Allow a port on a specific interface | `sudo ufw delete allow [port]`            | Delete allow rule for a port       |
+| `sudo ufw delete [number]`        | Delete the rule by number              | `sudo ufw default deny incoming`         | Set default policy to deny incoming |
+| `sudo ufw default allow outgoing` | Set default policy to allow outgoing  | `sudo ufw reload`                        | Reload UFW to apply changes        |
+| `sudo ufw reset`                  | Reset UFW and remove all rules         | `sudo ufw logging on`                    | Enable UFW logging                 |
+| `sudo ufw show added`             | Show added rules                       | `sudo ufw --help`                       | Show UFW help and commands        |
+
+---
+
+How you configure UFW depends on your services and security needs. UFW adds an important layer of security to your infrastructure.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+

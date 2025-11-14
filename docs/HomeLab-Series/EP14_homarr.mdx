@@ -1,0 +1,193 @@
+---
+sidebar_position: 17
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install Proxmox Statistics on The Homarr Dashboard
+
+<DocImage folder="images/EP14_homarr" name="homarr outdated.png" alt="Description of your image" />
+
+[EP 22 - Homarr 1.0 Install/Upgrade:](/HomeLab-Series/EP22_homarr1.0upgrade.mdx)
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/aSRsk6VSVg4?si=HK3FFg47-WooiwdP" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowFullScreen
+  />
+</div>
+
+Here is the example of what we will be covering:
+
+<DocImage folder="images/EP14_homarr" name="2025-01-16 10_21_15-Default Board • Homarr.png" alt="Description of your image" />
+
+## Follow the steps on your own
+
+If you would like to follow the 13 steps on your own [here](https://homarr.dev/docs/integrations/hardware/) is a link to Homarrs documentation. 
+
+## Before getting started
+
+1. Make sure you login to your Homarr dashboard like we setup in the previous episode.
+
+2. Make sure you login to your Proxmox Machine to create the API key required for stats to be shown in Homarr.
+
+## Step by Step Instructions
+
+1. Navigate to the Proxmox portal, click on Datacenter
+
+2. Expand Permissions, click on Groups
+
+3. Click the Create button
+
+4. Name the group something informative, like api-users (our case we did ytlearngroup)
+
+<DocImage folder="images/EP14_homarr" name="steps1-4.png" alt="Description of your image" />
+
+5. Click on the Permissions "folder"
+
+Click Add -> Group Permission
+
+<DocImage folder="images/EP14_homarr" name="steps 5.png" alt="Description of your image" />
+
+6. 
+
+    Path: /
+
+    Group: group from Step 4 above
+
+    Role: PVEAuditor
+
+    Propagate: Checked
+
+<DocImage folder="images/EP14_homarr" name="steps 6.png" alt="Description of your image" />
+
+7. Expand Permissions, click on Users
+
+8. Click the Add button
+
+    User name: something informative like api
+
+    Realm: Proxmox VE authentication server
+
+    Password: create a secure password for the user
+
+    Confirm Password: re-enter the password
+
+    Group: group from Step 4 above
+
+<DocImage folder="images/EP14_homarr" name="steps 7-8.png" alt="Description of your image" />
+
+9. Expand Permissions, click on API Tokens
+
+10. Click the Add button
+
+    User: user from Step 8 above
+
+    Token ID: something informative like the application or purpose like homarr
+
+    Privilege Separation: unchecked
+
+<DocImage folder="images/EP14_homarr" name="steps 9-10.png" alt="Description of your image" />
+
+11. Copy the Secret that is shown in Step 10 because it is only shown once. 
+
+<WarningBox>
+NOTICE THIS IS THE STEP WHERE YOU CAN GRAB THE CORRECT INTEGRATION KEY FORMAT!
+</WarningBox>
+
+You will copy the TokenID into a notepad ADD an <kbd>=</kbd> sign and then paste the secret key after that.
+```
+<User>@pve!<Token ID>=<Secret>
+```
+Example:
+```
+ytuser@pve!homarr=5b5467-0260-48ab-a8f5-03753d332145
+```
+
+<DocImage folder="images/EP14_homarr" name="Steps 11.png" alt="Description of your image" />
+
+12. Go back to the "Permissions" menu
+
+    Click Add -> API Token Permission
+
+<DocImage folder="images/EP14_homarr" name="steps 12.png" alt="Description of your image" />
+
+13. 
+
+    Path: /
+
+    API Token: select the API token created in Step 10
+
+    Role: PVE Auditor
+
+    Propagate: Checked
+
+<DocImage folder="images/EP14_homarr" name="steps 13.png" alt="Description of your image" />
+
+## Adding your API to Homarr's Dashboard
+
+Open your Homarr Dashboard
+
+Select the Writing / edit icon.
+
+<DocImage folder="images/EP14_homarr" name="steps 1 homarr.png" alt="Description of your image" />
+
+Then the Add tile button
+
+<DocImage folder="images/EP14_homarr" name="steps 2 homarr.png" alt="Description of your image" />
+
+Then select "Apps"
+
+<DocImage folder="images/EP14_homarr" name="steps 3 homarr.png" alt="Description of your image" />
+
+You will then need to grab the IP address of your server and paste it to internal and external.
+
+<DocImage folder="images/EP14_homarr" name="steps 4 homarr.png" alt="Description of your image" />
+
+Move over to the integrations tab and this is where you will select your integration as Proxmox and paste your Proxmox API key you made a minute ago. Then select "Save".
+
+<DocImage folder="images/EP14_homarr" name="steps 5 homarr.png" alt="Description of your image" />
+
+After that you will need to add a Widget like you just added an app.
+
+<DocImage folder="images/EP14_homarr" name="steps 6 homarr.png" alt="Description of your image" />
+
+Scroll down until you find System Health Monitoring and add it.
+
+<DocImage folder="images/EP14_homarr" name="steps 7 homarr.png" alt="Description of your image" />
+
+Find the newly placed widget on your Dashboard, click the gear icon on the top right to edit it.
+
+<DocImage folder="images/EP14_homarr" name="steps 8 homarr.png" alt="Description of your image" />
+
+Lastly, change your settings to match the below screenshot, save, and wait a couple minutes for your data to appear and that is it. (9)
+
+<DocImage folder="images/EP14_homarr" name="steps 9 homarr.png" alt="Description of your image" />
+
+## Closing thoughts
+
+That is it, if you have any other questions do not forget to hop in our discord! 
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)
+
+[Discord](https://discord.gg/6MsHSJWZpH)
+
+[Patreon](https://www.patreon.com/c/learntohomelab)
+
+[Reddit](https://www.reddit.com/r/learntohomelab/)
+
+[Rumble](https://rumble.com/c/c-7585051)

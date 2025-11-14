@@ -1,0 +1,122 @@
+---
+sidebar_position: 34
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Set up CloudFlare Tunnels in 2025
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/wyKkeb3w5lI?si=lZfB9wOiqsqGqjyC"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Introduction
+
+A Cloudflare Tunnel creates a secure, outbound-only connection between your home network and Cloudflare’s global network. It enables exposing services running on your homelab without opening ports or complex firewall adjustments. This simplifies remote access from anywhere.
+
+<WarningBox emoji="⚠️" title="Important">
+It is recommended to install the Cloudflare Tunnel on a dedicated VM, although you can install it on an existing VM as shown in this tutorial.
+</WarningBox>
+
+## Creating a Cloudflare Tunnel
+
+1. Visit [Cloudflare.com](https://www.cloudflare.com/) and log in (Google account option available).
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.5.1.png" alt="Cloudflare dashboard" />
+
+2. Purchase a domain if you don't have one already (around $11/year).
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.6.1.png" alt="Cloudflare buy domain" />
+
+3. Navigate to *Zero Trust* in the sidebar.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.8.1.png" alt="Cloudflare Zero Trust" />
+
+4. Go to *Networks*, then *Tunnels*.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.10.1.png" alt="Cloudflare Tunnels" />
+
+5. Click *Add a Tunnel*.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.10.2.png" alt="Add a tunnel" />
+
+6. Select the recommended *Cloudflared* option.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.10.3.png" alt="Cloudflared option" />
+
+7. Name your tunnel.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.10.4.png" alt="Name your tunnel" />
+
+8. Choose your OS (e.g., Debian).
+
+9. Copy the installation commands given.
+
+10. SSH into your chosen VM:
+```
+ssh <username>@<server_ip>
+```
+
+Paste and run the installation commands.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.13.1.png" alt="SSH into VM" />
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.13.2.png" alt="Tunnel install commands" />
+
+11. Verify the tunnel connection is established.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.14.1.png" alt="Tunnel connected" />
+
+12. Create a route for your service by selecting subdomain, domain, and entering service protocol + local IP (e.g., KASM using HTTPS on local VM IP).
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.15.1.png" alt="Configure service tunnel" />
+
+13. Edit the tunnel settings (click three dots → edit), under *Additional Application Settings* → *TLS*, enable *No TLS Verify*, then save.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.16.1.png" alt="Tunnel TLS settings" />
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.17.1.png" alt="Enable No TLS Verify" />
+
+14. Finally, access your service via the created public URL.
+
+<DocImage folder="images/EP31_cloudflaretunnels" name="Still 2025-05-22 203133_1.17.2.png" alt="Access service via tunnel" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+## Previous Video
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/0oZLQZclnQs?si=_xH0nqPaHDKnHn4z"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+
+

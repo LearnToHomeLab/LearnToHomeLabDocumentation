@@ -1,0 +1,49 @@
+---
+sidebar_position: 39
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Remove Unnecessary/Unused Linux Packages
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/ZhWuQGhrsaM?si=CCc_nQW4KJl0I07V"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+Removing unnecessary or unused packages is important to reduce system bloat and potential security vulnerabilities.
+
+On Debian-based servers, you can use apt package manager commands:
+```
+sudo apt autoremove
+sudo apt autoclean
+sudo apt clean
+```
+
+- `autoremove` removes packages that were automatically installed and are no longer needed.  
+- `autoclean` removes obsolete packages from the cache.  
+- `clean` removes all cached package files.
+
+For further cleanup, the `deborphan` tool can help identify orphaned packages for removal.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+

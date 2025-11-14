@@ -1,0 +1,176 @@
+---
+sidebar_position: 28
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install The Pterodactyl Game Panel in One Click!
+
+Pterodactyl is an amazing game panel that has been around for the last ten years. It is a project worth spotlighting.
+
+Check it out [here](https://pterodactyl.io/).
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/T8Eu_5xi-Wo?si=AOsPIXB7tlJ0HBYW"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## What You Need to Get Started
+
+1. Create a VM or have Ubuntu Server installed on a ready machine.  
+2. Head over to the Pterodactyl-Installer script [here](https://github.com/pterodactyl-installer/pterodactyl-installer).
+
+## How to Install Pterodactyl
+
+Create a VM with at least the minimum specs shown below—remember, all game servers share allocated resources.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.4.1.png" alt="VM specs" />
+
+SSH into your VM:
+```
+ssh <username>@<ip_address>
+```
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.5.1.png" alt="SSH into VM" />
+
+Switch to root:
+```
+sudo su
+```
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.5.2.png" alt="Become root" />
+
+Run the installer script:
+```
+bash <(curl -s https://pterodactyl-installer.se)
+```
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.5.3.png" alt="Run installer" />
+
+Choose option 2 to install the game panel and wings.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.5.4.png" alt="Select install option" />
+
+When prompted for database name and username, accept defaults and create your own password.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.5.6.png" alt="Database setup" />
+
+Select your timezone by ctrl+clicking the link, find your zone, and paste it.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="timezones_1.5.1.png" alt="Timezone selection" />
+
+Enter a valid email (twice) for account creation and messaging.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.5.7.png" alt="Email input" />
+
+Create an admin account by filling relevant info.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.5.8.png" alt="Admin account setup" />
+
+Set domain: Use FQDN if public-facing, else use machine/VM IP.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.5.9.png" alt="Domain setup" />
+
+Choose No to auto-configuring UFW unless public-facing.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="no ufw_1.5.1.png" alt="UFW setup" />
+
+Confirm settings and continue with “Y”. Wait for installation to complete.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="check settings_1.5.2.png" alt="Installation confirmation" />
+
+Afterward, open the panel in browser via your FQDN or IP and login with admin credentials.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.7.1.png" alt="Panel login" />
+
+Back in terminal, continue wings installation (“Y”).
+
+Answer questions:
+
+1. Auto-configure UFW: Yes if public-facing, No if not.  
+2. Auto-setup DB for hosts: No.  
+3. Setup Let’s Encrypt: No unless public-facing.  
+4. Continue installation: Yes.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.10.2.png" alt="Wings installation prompts" />
+
+Open the link in CLI for wings setup docs.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.11.1.png" alt="Wings docs link" />
+
+Create a node: Gear icon (top right) → Locations → Create new location → Return to Nodes → Create new node.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.18.1.png" alt="Create node" />
+
+Assign IP and port ranges (e.g., 1000-2000).
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.23.1.png" alt="Port range assignment" />
+
+Edit node config:
+```
+nano /etc/pterodactyl/config.yml
+```
+
+Paste config from Nodes → Configurations tab.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.27.1.png" alt="Node config edit" />
+
+Exit nano with Ctrl+X, save with Y, press Enter.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.29.1.png" alt="Save node config" />
+
+Start wings and check for errors:
+```
+sudo wings --debug
+```
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.31.1.png" alt="Run wings debug" />
+
+Set wings to run in background:
+```
+sudo systemctl enable --now wings
+```
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.35.1.png" alt="Enable wings service" />
+
+## Create Your First Server
+
+Go to Servers tab → Create New → Follow instructions (pay special attention to Nest Configuration & Startup Configuration, such as RAM allocation).
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.36.1.png" alt="Create new server" />
+
+Wait for server to install. Reload browser when installation banner disappears.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.38.1.png" alt="Server install complete" />
+
+Return to “Pterodactyl” top-left → select your server → Click Start.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.39.2.png" alt="Start server" />
+
+You’re done! Connect to your game server and enjoy.
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.42.1.png" alt="Game server ready" />
+
+We’re in!
+
+<DocImage folder="images/EP25_Pterodactylinstall" name="Still 2025-03-06 133057_1.42.2.png" alt="Connected to game server" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+

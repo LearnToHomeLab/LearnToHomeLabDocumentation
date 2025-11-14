@@ -1,0 +1,160 @@
+---
+sidebar_position: 22
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Push Wazuh Alerts to Your Discord Server
+
+In this episode, we will cover how to push Wazuh alerts to your Discord server! This integration is extremely useful because most of us already use Discord. Why monitor a Wazuh dashboard when you can monitor your network directly through Discord?
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/NcXIl3VsHHY?si=BahQXNm_w4iKsuR7"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Example of Discord Alerts
+
+Here is an example of what we’ll create in this episode:
+
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.1.1.png" alt="Example Discord alert screenshot" />
+
+## Create a Discord Webhook
+
+1. Open Discord.  
+2. Go to the server you want to use for Wazuh alerts.  
+3. Create a new text channel.
+
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.1.png" alt="Creating Discord channel" />
+
+1. Right-click your server.  
+2. Open server settings.  
+3. Choose “Integrations.”
+
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.2.png" alt="Opening Discord integrations page" />
+
+Click “Create a Webhook.”
+
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.3.png" alt="Creating webhook" />
+
+1. Click “New Webhook.”  
+2. Name it something like “WazuhAlerts.”  
+3. Choose the channel created earlier.  
+4. Copy the webhook URL and save it; we’ll use it soon.
+
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.4.png" alt="Webhook setup in Discord" />
+
+## Configure Wazuh Dashboard Integration
+
+Login to your Wazuh dashboard and navigate to:
+
+(Server Management / Settings)
+
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.5.png" alt="Wazuh settings page" />
+
+Click “Edit Configuration” in the top right corner.
+
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.6.png" alt="Editing Wazuh configuration" />
+
+Paste the code below **after** the `<global></global>` section:
+```
+ <integration>
+     <name>custom-discord</name>
+     <hook_url>https://discord.com/api/webhooks/XXXXXXXXXXX</hook_url>
+     <alert_format>json</alert_format>
+ </integration>
+```
+Then paste your Discords Webhook in the <hook_url> </hook_url> tags.
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.7.png" alt="Wazuh integration config" />
+1. Click Save.
+2. Restart the Wazuh Manager.
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.8.png" alt="Restarting Wazuh" />
+## SSH into your Wazuh Dashboard Machine
+Next we need to SSH into your Wazuh Dashboard Machine/VM (etc.) to configure the following settings.
+```
+ssh username@ip_address
+```
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.9.png" alt="SSH into Wazuh machine" />
+After logging in, run:
+```
+sudo su
+```
+Then move to the integrations directory:
+```
+cd /var/ossec/integrations
+```
+List existing files:
+```
+ls -l
+```
+Download the custom Discord integrations:
+```
+wget https://raw.githubusercontent.com/maikroservice/wazuh-integrations/main/discord/custom-discord
+wget https://raw.githubusercontent.com/maikroservice/wazuh-integrations/main/discord/custom-discord.py
+```
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.10.png" alt="Downloading integration files" />
+To verify downloads:
+```
+ls -l
+```
+If files appear white, they lack execution permissions. Apply the correct ones:
+```
+sudo chmod 750 /var/ossec/integrations/custom-*
+sudo chown root:wazuh /var/ossec/integrations/custom-*
+```
+Check again:
+```
+ls -l
+```
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 114021_1.3.11.png" alt="Fixed file permissions" />
+Install pip dependencies (ignore the “running as root” warning):
+```
+# Debian / Ubuntu
+sudo apt-get install python3-pip
+pip3 install requests
+```
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.4.1.png" alt="Installing pip for Wazuh script" />
+Restart Wazuh controls:
+```
+/var/ossec/bin/wazuh-control restart
+```
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.12.png" alt="Restarting Wazuh controls" /> <DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.3.11.png" alt="Integration restart verification" />
+
+## Verify Discord Alerts
+Go to your Discord channel and verify that Wazuh restarted successfully with a confirmation alert.
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.4.3.png" alt="Discord confirmation alert" />
+Test the alert by attempting to SSH into one of your Wazuh-monitored machines with incorrect credentials. You should see a Discord notification within seconds.
+
+<DocImage folder="images/EP19_wazuhdiscordalerts" name="Still 2025-02-03 110900_1.5.1.png" alt="Discord failed login alert" />
+
+## Conclusion
+
+That is it! I hope you guys enjoyed, if you would like to learn more please see the links down below. 
+
+[How to setup Discord Webhooks](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
+
+[Wazuh external integration configurations](https://documentation.wazuh.com/current/user-manual/manager/integration-with-external-apis.html)
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)
+
+[Discord](https://discord.gg/6MsHSJWZpH)
+
+[Patreon](https://www.patreon.com/c/learntohomelab)
+
+[Reddit](https://www.reddit.com/r/learntohomelab/)
+
+[Rumble](https://rumble.com/c/c-7585051)

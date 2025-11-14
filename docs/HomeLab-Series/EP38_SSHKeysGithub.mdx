@@ -1,0 +1,105 @@
+---
+sidebar_position: 40
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Upload SSH Keys to GitHub and Manage Your SSH Keys
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/a4zrfomA26s?si=nQpi0OY65LnljLmV"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+When installing Ubuntu Server, you may have noticed an option to import SSH keys; that is where this step comes into play. In the previous SSH section (section 2), you learned how to create and upload SSH keys to your server. You can find that episode [here](https://www.learntohomelab.com/HomeLab-Series/EP34_SSHKeyAuthentication.mdx) if you need to create a key first. Adding the SSH key during Ubuntu Server installation from your GitHub account avoids most steps.
+
+## Upload SSH Key to GitHub
+
+1. Log in to GitHub [here](https://github.com/).
+
+2. In the upper-right corner, click your profile photo, then select **Settings**.
+
+3. In the sidebar under **Access**, click **SSH and GPG keys**.
+
+4. Click **New SSH key**.
+
+5. Add a descriptive title (e.g., "Personal laptop").
+
+6. Select the key type as **authentication**.
+
+7. Paste your **public key** in the **Key** field. Make sure to copy the file with the `.pub` extension, **not** your private key.
+
+Your public keys are typically located at:
+```
+C:\Users<your_username>.ssh\
+```
+## Download Keys from GitHub to a Linux Server
+
+On an existing Linux server, to pull your SSH keys from GitHub’s profile, run:
+```
+curl https://github.com/<username>.keys >> ~/.ssh/authorized_keys
+```
+
+## Manage Multiple SSH Keys
+
+Create a SSH config file in your `.ssh` folder to manage multiple keys:
+```
+New-Item -Path $env:USERPROFILE.ssh\config -ItemType File -Force
+notepad $env:USERPROFILE.ssh\config
+```
+Add a block for each server or service like this:
+```
+# This block defines how to connect to a specific server
+Host <hostname you pick>                # This is what you use in the CMD to connect
+    HostName <server ip>                # IP address or domain name of the server
+    User <username on that server>      # Username to log in as
+    IdentityFile ~/.ssh/<your_private_key>  # Full path to the private key
+    Port 22                             # Optional: SSH port (default is 22)
+    PreferredAuthentications publickey  # Optional: forces public key authentication
+    IdentitiesOnly yes                  # Only use the IdentityFile specified, not all agent keys
+```
+
+Ensure permissions on the `config` file:
+
+1. Right-click on the config file in `.ssh`.
+2. Go to the **Security** tab.
+3. Click **Advanced**.
+4. Select **Disable Inheritance**.
+5. Leave only your user permissions, then apply changes.
+
+## SSH Login Using Hostname
+
+To login, simply use:
+```
+ssh <hostname-you-picked>
+```
+Example from video:
+```
+ssh githubsshkeys
+```
+
+<DocImage folder="images/EP38_SSHKeysGithub" name="EP38_SSHKeysGithub.png" alt="SSH keys config example" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
+
+

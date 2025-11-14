@@ -1,0 +1,155 @@
+---
+sidebar_position: 21
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# NextCloud on TrueNas
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <div style={{
+    backgroundColor: '#8CD2F4',
+    color: 'black',
+    padding: '20px',
+    borderRadius: '10px',
+    display: 'flex',
+    alignItems: 'center',
+  }}>
+    <div style={{
+      width: '50px',
+      height: '30px',
+      borderRadius: '50%',
+      backgroundColor: 'white',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: '15px',
+      fontSize: '20px',
+      color: '#231F20',
+    }}>!</div>
+    <p>This Article you are about to read is a stand alone tutorial but is also apart of our homelab series if you are following that.</p>
+  </div>
+</div>
+
+------------------------------------
+
+## Warning 
+
+<WarningBox>
+If you are following this series from start to finish, this episode is a "repeat" in the manner that we have already covered NextCloud but this time we are hosting it on TrueNas and not Proxmox. The advantage you get here is your pictures are now saved within a RAID which gives you some fault tolerance to a failed drive so you don't lose your treasured pictures or vacations! 
+</WarningBox>
+
+(In reality, this is how I do it) but I wanted to share the Proxmox way for smaller homelabs or people with smaller budgets where they cannot afford multiple devices. 
+
+***SO YOU CAN SKIP THIS EPISODE IF YOU ARE FOLLOWING THE COURSE AND WANTED TO USE THE PROXMOX WAY***
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/dClxLAW4SY0?si=GIKhNQbVT87LI8bN" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowFullScreen
+  />
+</div>
+
+## Installing NextCloud Steps
+
+Go ahead and login to your TrueNas dashboard you can also learn how to install TrueNas from our previous episode [here](/HomeLab-Series/EP17_truenasscale.mdx)
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.3.1.png" alt="Description of your image" />
+
+Select the "Apps" tab on the right and then click on "Check Available apps"
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.3.2.png" alt="Description of your image" />
+
+Next search for (NextCloud) and select it. 
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.3.3.png" alt="Description of your image" />
+
+Click the blue install button.
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.3.4.png" alt="Description of your image" />
+
+Now a lot of this CAN be left the same but we have a couple things WE MUST FILL OUT. 
+
+1. (Application name) give your NextCloud Container a name.  
+2. (Admin User) Create a username to login to NextCloud with.  
+3. (Admin Password) Set the password you are going to use to login.  
+4. (Host) This will be the IP address of your TrueNas machine, you can see the IP address of your TrueNas machine in your browsers URL. The example like ours is 192.168.50.221.  
+5. (Redis Password) Create a password.  
+6. (Database Password) Create a password.  
+7. (CPU) You can raise or lower how much of the CPU you want this NextCloud container to have access to.  
+8. (Memory in MB) You can raise or lower how much of the RAM you want this NextCloud container to have access to, ***more is better.***
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.3.5.png" alt="Description of your image" />
+
+**Second screenshot of the settings page settings that need to be changed as explained in the numbered list above.**
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.3.6.png" alt="Description of your image" />
+
+**Last screenshot of the settings page, select install.**
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.3.7.png" alt="Description of your image" />
+
+Wait until you see the status shown as running. You can then access your NextCloud instance by clicking the WebUI button.
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.4.1.png" alt="Description of your image" />
+
+If you need to delete your NextCloud Container you can also select it on the far left and an actions box will open, click that for options like delete.
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.4.2.png" alt="Description of your image" />
+
+After selecting the WebUI button you will be on the login page, go ahead and put in the admin credentials you just created a minute ago. 
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.4.4.png" alt="Description of your image" />
+
+We can create new folders like the (TestFolder) shown below by clicking the (New) button at the top. 
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.5.1.png" alt="Description of your image" />
+
+When you are in that folder you can click the new button in the middle of the screen to add pictures and documents. 
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.5.2.png" alt="Description of your image" />
+
+After images are within the folder you can see the new button is moved to the top. 
+
+You can also add people from up top to access the whole folder or you can give people permissions for each file by selecting the icons on the far right of the image. 
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.5.3.png" alt="Description of your image" />
+
+You can share folders with others by sending them a link or controlling what users can access a folder. 
+
+Remember if you do not have tailscale setup, only users on the local network of the NAS will have access. 
+
+<DocImage folder="images/EP18_trunasnextcloud" name="Still 2025-01-30 171223_1.5.4.png" alt="Description of your image" />
+
+## Conclusion
+
+It is that simple, what did you think? 
+
+I honestly love how simple it is to run your own personal Cloud for images/Documents! I hope you guys subscribe to our YouTube Channel for more content!
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)
+
+[Discord](https://discord.gg/6MsHSJWZpH)
+
+[Patreon](https://www.patreon.com/c/learntohomelab)
+
+[Reddit](https://www.reddit.com/r/learntohomelab/)
+
+[Rumble](https://rumble.com/c/c-7585051)

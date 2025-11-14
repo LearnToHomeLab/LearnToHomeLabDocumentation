@@ -1,0 +1,61 @@
+---
+sidebar_position: 5
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Learn To Upgrade Your Proxmox Cluster's RAM
+
+Hey guys, in this video, learn how to:
+
+1. Properly shut down VMs and containers in Proxmox.  
+2. Ensure VMs and containers auto-boot after restart.  
+3. Upgrade RAM on Proxmox nodes.  
+4. Verify all services are back online.
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/XTPxEbMmdY8?si=Ghzlfc5L7qjqMqvO"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Container Auto Boot in Proxmox
+
+Log into your Proxmox node or cluster and ensure **start at boot** is set to **yes** for containers.
+
+<DocImage folder="images/ProxmoxRamUpgrade" name="image 1.png" alt="Container auto-start setting" />
+
+## Virtual Machine Auto Boot in Proxmox
+
+Similarly, set **start at boot** to **yes** for each virtual machine.
+
+<DocImage folder="images/ProxmoxRamUpgrade" name="image 2.png" alt="VM auto-start setting" />
+
+## Change Your RAM
+
+Physically replace or upgrade the RAM on your Proxmox node, then power on the machine.
+
+## Verify Services Are Online
+
+Log back into Proxmox dashboard and confirm containers and VMs have green arrow indicators showing they are running.
+
+<DocImage folder="images/ProxmoxRamUpgrade" name="image 3.png" alt="Confirm VMs running" />
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

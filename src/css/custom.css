@@ -27,3 +27,9 @@
   --ifm-color-primary-lighter: #ed3039;
   --ifm-color-primary-lightest: #f0535a;
 }
+
+/* Hide the Homepage Header Title */
+.hero__title {
+  display: none !important;
+}
+

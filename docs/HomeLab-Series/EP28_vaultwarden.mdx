@@ -1,0 +1,152 @@
+---
+sidebar_position: 31
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install Vaultwarden in 2025
+
+This guide follows the documentation found [here](https://github.com/dani-garcia/vaultwarden).
+
+## Prerequisites
+
+You will need to secure your Vaultwarden site with an SSL certificate to prevent man-in-the-middle attacks and enable features requiring secure contexts, like websocket code block auto-copy. We have a video on setting up SSL with Nginx Proxy Manager, watch it [here](https://www.youtube.com/embed/DjKom4B4USo?si=2mTOOYuxy4Zwk7-l) and the article is [here](https://www.learntohomelab.com/HomeLab-Series/EP26_nginxproxymanagerssl.mdx).
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/DjKom4B4USo?si=2mTOOYuxy4Zwk7-l"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Create a Container/VM in Proxmox
+
+Configure your CT with 512MB RAM, 2 CPU cores, and 10GB storage.
+
+1. Login with username `root` and your CT password.  
+2. Get your IP address with:
+```
+ip a
+```
+
+<DocImage folder="images/EP28_vaultwarden" name="Still 2025-04-19 115016_1.7.1.png" alt="Get CT IP address" />
+
+## Installing Vaultwarden Video
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/HNW9jKKz-Xw?si=7EpeqaphNn4lLAhL"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Installing Docker & Compose
+
+Follow official Docker documentation [here](https://docs.docker.com/engine/install/ubuntu/).
+
+Remove conflicting packages:
+```
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
+
+<DocImage folder="images/EP28_vaultwarden" name="Still 2025-04-19 115234_1.7.2.png" alt="Remove conflicting packages" />
+
+Add Docker's GPG key and repo:
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+Install Docker packages:
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+Verify Docker installation:
+```
+sudo docker run hello-world
+```
+
+Verify docker compose version:
+```
+docker compose version
+```
+
+## Create a Compose File
+
+Create `compose.yml`:
+```
+nano compose.yml
+```
+Paste this:
+```
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://vw.domain.tld"
+    volumes:
+      - ./vw-data/:/data/
+    ports:
+      - 80:80
+```
+
+Start container in detached mode:
+```
+docker compose up -d
+```
+
+## Set Up Your SSL Certificate
+
+If you haven’t done this, watch our previous video on setting up SSL with Nginx Proxy Manager [here](https://www.youtube.com/watch?v=DjKom4B4USo).
+
+## After Logging Into Vaultwarden
+
+1. Open Vaultwarden via your configured URL.  
+2. Create a username and password, then login.  
+3. Install the browser extension via the link in Vaultwarden.  
+4. In Chrome, find the Vaultwarden extension, select "Accessing," choose self-hosted option, and enter your Vaultwarden URL.
+
+<DocImage folder="images/EP28_vaultwarden" name="Still 2025-04-19 115234_1.19.1.png" alt="Vaultwarden browser extension setup" />
+
+5. You can now save passwords on your websites, generate complex passwords, and manage them with Vaultwarden.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+
