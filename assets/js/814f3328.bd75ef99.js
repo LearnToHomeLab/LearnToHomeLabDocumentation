@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkLearn_To_Homelab=globalThis.webpackChunkLearn_To_Homelab||[]).push([[7472],{5513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"New Site!","permalink":"/blog/welcome","unlisted":false,"date":"2025-11-14T21:43:54.000Z"}]}')}}]);
