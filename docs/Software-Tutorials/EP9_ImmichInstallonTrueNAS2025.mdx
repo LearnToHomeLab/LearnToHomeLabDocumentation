@@ -1,0 +1,129 @@
+---
+sidebar_position: 9
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Install Immich on TrueNAS in 2025
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/eO64ordErKg?si=iUMiMTr_ant-v-lF"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Installing Immich
+
+Immich requires that we create three datasets (Immich, pgdata, data). A dataset is a file system that can be created within a storage pool, similar to a folder but with advanced features like individual permissions, encryption, and the ability to create snapshots.
+
+## Create Datasets on TrueNAS
+
+First thing you want to do is create a dataset for Immich, it can be left as generic. We will then create two more datasets within that Immich folder (dataset). 
+
+1. Login to TrueNAS and select Datasets on the left. 
+2. Select your data pool
+3. Select add dataset from the top right. 
+
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="create data set.png" alt="create dataset in TrueNAS " />
+
+We need to create a main Data Set for Immich like Shown Below:
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="data set naming.png" alt="creating dataset called immich " />
+
+
+We need to create another dataset WITHIN our Immich dataset like we just created. You will do this by selecting the Immich dataset FIRST, then selecting add a data set again on the top right.
+
+For our first dataset, we will call it pgData you can keep the default preset Generic as permissions can be set during the installation of the Immich app (pgdata stands for postgre data).
+
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="first data set.png" alt="create your pgdata set for immich " />
+
+Create a second data set UNDER the Immich dataset called _data_ that will be given the _data set_ preset of _apps_.
+
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="data dataset.png" alt="data dataset" />
+
+## Install Immich app on TrueNAS
+
+1.  To install Immich, select _apps_ from the far right menu.
+2.  Then select discover apps on the top right.
+3.  Search _Immich_ in the search bar.
+4.  Select It.
+5.  Then select _Install Immich_
+
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="install immich on truenas.png" alt="install immich on truenas" />
+
+## Configure the Install Settings on TrueNAS for Immich
+
+Here is a list of the setting we MUST change for Immich to work, if you miss some of these settings, it may fail to install and turn on.
+
+### Application Name
+
+1.  Name your applicaiton
+    
+    ### Immich Configuration
+    
+2.  Select your timezone
+3.  Select _enable machine learning_ leave as _default machine learning image_ unless you have an Nvidia GPU installed then you can select _cuda machine learning iamge_
+4.  Set a database password.
+5.  Set a redis password
+6.  Select SSD or HDD under _database storage type+_
+
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="immich configuration settings on truenas.png" alt="immich configuration settings on truenas " />
+    
+    ### Network Configuration
+    
+7.  Select _add_ under _Host IPs_
+
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="immich network configuration settings on truenas.png" alt="immich network configuration settings on truenas" />
+    
+    ### Storage Configuration
+    
+    make sure under _type_ you select _host path_.
+8.  Select your dataset for _uploads_ under _Data Storage_
+9.  Select your dataset _pgdata_ under _Postgres Data Storage_
+10. _Select Automatic Permissions_ under PostGres Data Storage
+
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="immich storage configuration on truenas settings.png" alt="immich storage configuration on truenas settings" />
+    
+    ### Resource Configuration
+    
+    Immich reccomends at least 8 threads and 6Gb of Ram. Set these below. As you can see 2 CPU threads and roughly 8 Gbs of RAM has been working fine for me.
+11. Set CPUs
+12. Set Memory.
+
+<DocImage folder="images/EP9_ImmichInstallonTrueNAS2025" name="resource configuration settigns for immich on truenas.png" alt="resource configuration settigns for immich on truenas " />
+
+Then when you are done select Install at the bottom.
+
+## Logining into Immich
+
+To login to Immich you will go to the IP address of your TrueNAS Machine and the port 30041.
+
+```
+http://<ip address>:30041
+```
+
+Go ahead and create an account and login to your Immich cloud environment. If you would like to understand how to use Immich more, continue watching your videos linked at the top of this article where we will show you how to use it with your phone.
+
+## Using Immich on your phone
+
+One last thing, if you want Immich to upload photos automatically from your sleected albums, you need to go into your phone settings, search for Immich, then go to the battery settings and turn it to _unrestricted_. If you do not do this, Immich will be closed by your phones operating system and be unable to run backups automatically.
+
+
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
