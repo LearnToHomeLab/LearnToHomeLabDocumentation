@@ -1,0 +1,83 @@
+---
+sidebar_position: 10
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Install KitchenOwl on TrueNAS
+
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+}}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/tbo89GCUOak?si=C60WdY1bAlFbv062"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div> 
+
+Do you ever struggle with meal prepping, creating a grocery list, or how much food you should buy each week so you don’t waste money on food that just goes bad? Well KitchenOwl is a self-hosted grocery list and recipe manager that is super easy and simple to use.
+
+## Installing KitchenOwl
+
+1.  Login to your TrueNAS device.
+2.  Select the apps tab on the left.
+3.  On the top right select discover apps.
+4.  Search for KitchenOwl.
+5.  Click Install on KitchenOwl.
+
+## Application Settings
+
+Change the following settings so your KitchOwl instance will run.
+
+1.  Pick your application name.
+2.  Select your timezone.
+3.  Create a password for your database.
+4.  Create a JWT Key (this can be set to whatever you want, we use an 8 character password)
+    
+    ### Network Configuration
+    
+5.  Select add on Host IP’s
+    
+    ### Resource Configuration
+    
+6.  You can leave this section default, and click install.
+
+## How to use KitchenOwl
+
+If you want greater detail on how to use this app, make sure you follow our tutorial video at the top of this walkthrough but below is where you will find certain things within the application.
+
+## Creating an account
+
+you will login to your Kitchen Owl instance at your TrueNAS servers ip and the port 30211.
+
+```
+<ip address>:30211
+```
+
+After you login, click the plus icon on the bottom right, and create a household to store all your recipes.
+
+## Changing your KitchOwl Theme
+
+To change your theme, go to settings on the far left and you will be presented with the theme options right at the top.
+
+## Recipes Tab 
+On this page you can add recipes manually or automatically by linking to a website with a recipe you would like to add.
+
+## Meal Planner
+On this tab, you can select a recipe you would like to cook and assign it to a specific day.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
