@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkLearn_To_Homelab=globalThis.webpackChunkLearn_To_Homelab||[]).push([[3017],{3789:e=>{e.exports=JSON.parse('{"tags":[{"label":"LTH_News","permalink":"/odinProject/tags/lthnews","description":"Latest news related to LTH and sister companies","count":1},{"label":"Rivviet_News","permalink":"/odinProject/tags/rivviet-news","count":1}]}')}}]);

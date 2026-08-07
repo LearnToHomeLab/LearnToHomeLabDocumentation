@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkLearn_To_Homelab=globalThis.webpackChunkLearn_To_Homelab||[]).push([[7487],{5489:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Welcome to my Journey of the Odin Project and Rivviet","permalink":"/odinProject/welcome","unlisted":false,"date":"2026-08-06T01:16:36.740Z"}]}')}}]);

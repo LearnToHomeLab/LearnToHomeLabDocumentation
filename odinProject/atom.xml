@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://learntohomelab.com/odinProject</id>
+    <title>Learn To HomeLab Blog</title>
+    <updated>2026-08-06T01:16:36.740Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="http://learntohomelab.com/odinProject"/>
+    <subtitle>Learn To HomeLab Blog</subtitle>
+    <icon>http://learntohomelab.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Welcome to my Journey of the Odin Project and Rivviet]]></title>
+        <id>http://learntohomelab.com/odinProject/welcome</id>
+        <link href="http://learntohomelab.com/odinProject/welcome"/>
+        <updated>2026-08-06T01:16:36.740Z</updated>
+        <summary type="html"><![CDATA[Introducing Rivviet: Data Sovereignty, Open Source, and What Comes Next]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="introducing-rivviet-data-sovereignty-open-source-and-what-comes-next">Introducing Rivviet: Data Sovereignty, Open Source, and What Comes Next<a href="http://learntohomelab.com/odinProject/welcome#introducing-rivviet-data-sovereignty-open-source-and-what-comes-next" class="hash-link" aria-label="Direct link to Introducing Rivviet: Data Sovereignty, Open Source, and What Comes Next" title="Direct link to Introducing Rivviet: Data Sovereignty, Open Source, and What Comes Next" translate="no">​</a></h2>
+<p>My name is Abe, and I am the CEO and Co-Founder of "Learn To HomeLab" and our software company, "Rivviet."</p>
+<p>This blog post marks an exciting next step for us as a company. Below is the motto we live by at Learn To HomeLab:</p>
+<blockquote>
+<p>“Empowering you with knowledge, building a stronger community, and fostering collaboration.”</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="introducing-the-rivviet-motto">Introducing the Rivviet Motto<a href="http://learntohomelab.com/odinProject/welcome#introducing-the-rivviet-motto" class="hash-link" aria-label="Direct link to Introducing the Rivviet Motto" title="Direct link to Introducing the Rivviet Motto" translate="no">​</a></h2>
+<p>Rivviet has been an idea in the making for many years. My goal was to create a software company built for the people—one guided by your wants and needs, rooted in open source, driven by direct collaboration between employees and end users, and committed to putting privacy and security first through self-hosting, decentralization, and transparency.</p>
+<p>To put it simply, I want Rivviet to be a software company that not only supports your needs, but also defends individual rights and digital ownership. With that said, I am proud to introduce our motto:</p>
+<p>Our full motto is <strong>"Empowering Data Sovereignty Through Open Collaboration,"</strong> paired with our primary tagline, <strong>"Data Sovereignty. Open Collaboration."</strong></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-comes-next">What Comes Next?<a href="http://learntohomelab.com/odinProject/welcome#what-comes-next" class="hash-link" aria-label="Direct link to What Comes Next?" title="Direct link to What Comes Next?" translate="no">​</a></h2>
+<p>We have a long journey ahead of us. As many of you know, I am not a programmer by trade, but rather a cybersecurity professional and security engineer. My goal over the next year is to learn to code through The Odin Project and use that knowledge to collaborate with all of you to build our first open-source software project for the homelab community.</p>
+<p>I invite you to follow along as I share updates on my experience navigating The Odin Project while launching a software company.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-us-on-social-media">Follow Us on Social Media<a href="http://learntohomelab.com/odinProject/welcome#follow-us-on-social-media" class="hash-link" aria-label="Direct link to Follow Us on Social Media" title="Direct link to Follow Us on Social Media" translate="no">​</a></h2>
+<p>Learn To Homelab:<br>
+<a href="https://www.youtube.com/@learntohomelab" target="_blank" rel="noopener noreferrer" class="">YouTube</a><br>
+<a href="https://discord.gg/6MsHSJWZpH" target="_blank" rel="noopener noreferrer" class="">Discord</a><br>
+<a href="https://shop.learntohomelab.com/" target="_blank" rel="noopener noreferrer" class="">Apparel</a><br>
+<a href="https://www.patreon.com/c/learntohomelab" target="_blank" rel="noopener noreferrer" class="">Patreon</a><br>
+<a href="https://www.reddit.com/r/learntohomelab/" target="_blank" rel="noopener noreferrer" class="">Reddit</a><br>
+<a href="https://rumble.com/c/c-7585051" target="_blank" rel="noopener noreferrer" class="">Rumble</a></p>
+<p>Rivviet:<br>
+<a href="https://rivviet.com/" target="_blank" rel="noopener noreferrer" class="">Rivviet</a><br>
+<a href="https://www.youtube.com/@Rivviet" target="_blank" rel="noopener noreferrer" class="">YouTube</a></p>]]></content>
+        <author>
+            <name>Abe P.</name>
+            <uri>https://www.linkedin.com/in/abrampeterson/</uri>
+        </author>
+        <category label="LTH_News" term="LTH_News"/>
+        <category label="Rivviet_News" term="Rivviet_News"/>
+    </entry>
+</feed>
