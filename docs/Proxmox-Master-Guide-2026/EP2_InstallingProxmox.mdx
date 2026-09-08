@@ -1,0 +1,68 @@
+---
+sidebar_position: 1
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+
+# How to Install Proxmox VE 9 in 2026
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/XD5-Fn0hr6w?si=LwfiSI7PE0tICPqU"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Follow The Series Here:
+
+<a
+  href="https://youtube.com/playlist?list=PLAvgoEDVC5qEVyx_ilmxNOHRWovkRp8Kr&si=FcTn-a61E8wMZ5jN"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <DocImage
+    folder="images/EP1_IntroductionToProxmox92026"
+    name="clickthisimagetofollowourplaylist.png"
+    alt="Click this picture to follow our Proxmox 2026 Mastery Guide"
+  />
+</a>
+
+## What You Need
+
+1. Download Etcher, which makes your USB device a bootable ISO [here](https://etcher.balena.io/)
+2. Download the latest version of Proxmox VE [here](https://www.proxmox.com/en/downloads)
+3. A USB stick to flash Proxmox to
+
+Please watch the video above which covers everything you need to know about installing Proxmox 9, but below is the command you need to validate the hash of the Proxmox file:
+
+Remember, go to the file location of your Proxmox download, right click in there and select "open in terminal"
+
+<DocImage folder="images/EP1_IntroductionToProxmox92026" name="open in  terminal.png" alt="proxmox homelab topology" />
+
+Then paste the command below, and start to type the first three letters of the Proxmox file name then click your tab key on your keyboard, and it will autocomplete!
+```
+certUtil -hashfile (your file name goes here) SHA256
+```
+
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

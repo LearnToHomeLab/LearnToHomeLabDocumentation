@@ -1,0 +1,94 @@
+---
+sidebar_position: 18
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 18: Configuring & Verifying SSH (Exam)
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## Configuring & Verifying SSH (Exam)
+In this episode, we focus on **Configuring & Verifying SSH (Exam)**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Construct the Complete Cisco IOS SSHv2 Stack
+2. Lock Down Inbound VTY Transport to SSH Only
+3. Verify Remote Session Encryption from PC Terminal
+
+### Construct the Complete Cisco IOS SSHv2 Stack
+> Configure 1) Hostname, 2) IP domain-name, 3) Local user, 4) 2048-bit RSA keys with `crypto key generate rsa`, 5) `ip ssh version 2`.
+
+Replaces cleartext Telnet with cryptographically encrypted remote management.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Lock Down Inbound VTY Transport to SSH Only
+> Apply `transport input ssh` across all VTY lines to explicitly block cleartext Telnet traffic on TCP port 23.
+
+Enforces enterprise compliance policies mandating encrypted in-transit management.
+
+```cisco
+Switch# configure terminal
+Switch(config)# hostname SW-CORE-SSH
+SW-CORE-SSH(config)# ip domain-name cisco.com
+SW-CORE-SSH(config)# username secadmin privilege 15 secret SSHSecureKey#1
+SW-CORE-SSH(config)# crypto key generate rsa modulus 2048
+SW-CORE-SSH(config)# ip ssh version 2
+SW-CORE-SSH(config)# line vty 0 15
+SW-CORE-SSH(config-line)# login local
+SW-CORE-SSH(config-line)# transport input ssh
+SW-CORE-SSH(config-line)# end
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show ip ssh` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show ip ssh
+! Confirm operational readiness and healthy state
+```
+
+### Verify Remote Session Encryption from PC Terminal
+> Establish an SSH session from a host PC (`ssh -l <user> <ip>`) and inspect status with `show ip ssh` and `show ssh`.
+
+Validates functional encrypted reachability from network endpoints.
+
+<WarningBox>
+  Always verify that configuration changes are committed to NVRAM using 'copy running-config startup-config'. Mismatched parameters, unassigned VLANs, or missing 'no shutdown' commands will disrupt link forwarding.
+</WarningBox>
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

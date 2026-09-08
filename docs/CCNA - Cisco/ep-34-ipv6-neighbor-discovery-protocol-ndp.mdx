@@ -1,0 +1,87 @@
+---
+sidebar_position: 34
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 34: IPv6 Neighbor Discovery Protocol (NDP)
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## IPv6 Neighbor Discovery Protocol (NDP)
+In this episode, we focus on **IPv6 Neighbor Discovery Protocol (NDP)**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Analyze IPv6 Neighbor Discovery Protocol (NDP) Protocols & Physical Standards
+2. Evaluate Packet Headers and Protocol Interactions
+3. Diagnose Layer 1 and Layer 2 Operational Faults
+
+### Analyze IPv6 Neighbor Discovery Protocol (NDP) Protocols & Physical Standards
+> Examine the underlying RFC definitions, cabling specifications, mathematical conversions, or encapsulation standards governing IPv6 Neighbor Discovery Protocol (NDP).
+
+Essential for designing high-performance enterprise cabling, addressing schemes, and campus infrastructures.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Evaluate Packet Headers and Protocol Interactions
+> Trace frame and packet headers across Layers 1 through 4 to understand protocol handshakes, addressing boundaries, and transmission parameters.
+
+Used to predict traffic forwarding decisions and interpret network analyzer captures.
+
+```cisco
+! Verification and evidence collection
+Router# show interfaces
+Router# show ip arp
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show interfaces` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show interfaces
+! Confirm operational readiness and healthy state
+```
+
+### Diagnose Layer 1 and Layer 2 Operational Faults
+> Audit physical interface counters, duplex mismatches, and address resolution failures using Cisco IOS diagnostic commands.
+
+Primary troubleshooting workflow when resolving link flapping, packet drops, or endpoint isolation.
+
+<WarningBox>
+  Always verify that configuration changes are committed to NVRAM using 'copy running-config startup-config'. Mismatched parameters, unassigned VLANs, or missing 'no shutdown' commands will disrupt link forwarding.
+</WarningBox>
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

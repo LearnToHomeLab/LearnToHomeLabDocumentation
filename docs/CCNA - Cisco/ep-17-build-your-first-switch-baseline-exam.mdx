@@ -1,0 +1,100 @@
+---
+sidebar_position: 17
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 17: Build Your First Switch Baseline (Exam)
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## Build Your First Switch Baseline (Exam)
+In this episode, we focus on **Build Your First Switch Baseline (Exam)**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Synthesize Complete Device Management Baseline
+2. Enforce Multi-Line Security Controls
+3. Perform Final Baseline Verification and NVRAM Commit
+
+### Synthesize Complete Device Management Baseline
+> Integrate hostname, MOTD legal banner, enable secret, local admin account, and encrypted passwords.
+
+Standard staging template executed on every switch before rack deployment.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Enforce Multi-Line Security Controls
+> Lock console and all 16 VTY lines using `login local`, `exec-timeout 5 0`, and `logging synchronous`.
+
+Prevents unauthorized local physical access and remote session hijacking.
+
+```cisco
+Switch# configure terminal
+Switch(config)# hostname SW-ACCESS-BASE01
+SW-ACCESS-BASE01(config)# enable secret CiscoSecureCCNA!2026
+SW-ACCESS-BASE01(config)# username netadmin privilege 15 secret AdminKey#99
+SW-ACCESS-BASE01(config)# service password-encryption
+SW-ACCESS-BASE01(config)# banner motd #AUTHORIZED ACCESS ONLY#
+SW-ACCESS-BASE01(config)# line con 0
+SW-ACCESS-BASE01(config-line)# login local
+SW-ACCESS-BASE01(config-line)# exec-timeout 5 0
+SW-ACCESS-BASE01(config-line)# logging synchronous
+SW-ACCESS-BASE01(config-line)# line vty 0 15
+SW-ACCESS-BASE01(config-line)# login local
+SW-ACCESS-BASE01(config-line)# exec-timeout 5 0
+SW-ACCESS-BASE01(config-line)# logging synchronous
+SW-ACCESS-BASE01(config-line)# end
+SW-ACCESS-BASE01# copy run start
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show running-config` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show running-config
+! Confirm operational readiness and healthy state
+```
+
+### Perform Final Baseline Verification and NVRAM Commit
+> Audit the running configuration and execute `copy running-config startup-config`.
+
+Guarantees complete disaster recovery readiness upon power failure.
+
+<WarningBox>
+  Always verify that configuration changes are committed to NVRAM using 'copy running-config startup-config'. Mismatched parameters, unassigned VLANs, or missing 'no shutdown' commands will disrupt link forwarding.
+</WarningBox>
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

@@ -1,0 +1,94 @@
+---
+sidebar_position: 16
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 16: Pre-Deployment Access Audit (Test 2)
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## Pre-Deployment Access Audit (Test 2)
+In this episode, we focus on **Pre-Deployment Access Audit (Test 2)**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Audit Management Plane Hardening
+2. Deploy 'service password-encryption' to Obfuscate Passwords
+3. Validate Remote Authentication and Save Final Baseline
+
+### Audit Management Plane Hardening
+> Verify that all console and VTY lines enforce `login local`, synchronous logging, and strict inactivity timeouts.
+
+Pre-flight security checklist before connecting switches to enterprise LANs.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Deploy 'service password-encryption' to Obfuscate Passwords
+> `service password-encryption` applies a Type 7 reversible cipher to cleartext line passwords.
+
+Prevents casual observation of passwords in configuration dumps.
+
+```cisco
+Switch# configure terminal
+Switch(config)# service password-encryption
+Switch(config)# line con 0
+Switch(config-line)# exec-timeout 5 0
+Switch(config-line)# login local
+Switch(config-line)# line vty 0 15
+Switch(config-line)# exec-timeout 5 0
+Switch(config-line)# login local
+Switch(config-line)# end
+Switch# copy run start
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show running-config | section line` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show running-config | section line
+! Confirm operational readiness and healthy state
+```
+
+### Validate Remote Authentication and Save Final Baseline
+> Test authentication from remote terminals and commit changes to NVRAM with `copy run start`.
+
+Ensures compliance and persistence across production maintenance windows.
+
+<WarningBox>
+  Always verify that configuration changes are committed to NVRAM using 'copy running-config startup-config'. Mismatched parameters, unassigned VLANs, or missing 'no shutdown' commands will disrupt link forwarding.
+</WarningBox>
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

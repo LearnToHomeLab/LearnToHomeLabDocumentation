@@ -1,0 +1,76 @@
+---
+sidebar_position: 9
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 09: Saving Configs: Running vs Startup
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## Saving Configs: Running vs Startup
+In this episode, we focus on **Saving Configs: Running vs Startup**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Compare Cisco Hardware Memory Architecture (RAM, NVRAM, Flash, ROM)
+2. Commit Changes with 'copy running-config startup-config'
+
+### Compare Cisco Hardware Memory Architecture (RAM, NVRAM, Flash, ROM)
+> RAM stores running-config; NVRAM stores startup-config; Flash stores IOS images and `vlan.dat`.
+
+Essential for understanding where network state survives power cycles.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Commit Changes with 'copy running-config startup-config'
+> Copies the active RAM configuration to NVRAM so it reloads on bootup.
+
+Mandatory standard operating procedure following any verified change window.
+
+```cisco
+Switch# copy running-config startup-config
+Destination filename [startup-config]? [Enter]
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show startup-config` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show startup-config
+! Confirm operational readiness and healthy state
+```
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

@@ -8,9 +8,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
- /** @type {import('@docusaurus/types').Config} */
+/** @type {import('@docusaurus/types').Config} */
 const config = {
-   title: 'Learn To HomeLab',
+  title: 'Learn To HomeLab',
   // tagline: 'Information Technology Teaching and Reviews',
   favicon: 'img/favicon.ico',
 
@@ -28,13 +28,38 @@ const config = {
   projectName: 'LearnToHomeLabDocumentation', // Usually repo name.
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+
+  // Markdown options
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   // Internationalization
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
   },
+
+  plugins: [
+    [
+      '@docusaurus/plugin-content-blog',
+      {
+        id: 'odinProject',
+        routeBasePath: 'odinProject', // URL path: /odinProject
+        path: 'odinProject',          // Root folder name
+        showReadingTime: true,
+        feedOptions: {
+          type: ['rss', 'atom'],
+          xslt: true,
+        },
+        onInlineTags: 'warn',
+        onInlineAuthors: 'warn',
+        onUntruncatedBlogPosts: 'warn',
+      },
+    ],
+  ],
 
   presets: [
     [
@@ -84,6 +109,11 @@ const config = {
             label: 'Tutorials',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
+          {
+            to: '/odinProject',
+            label: 'The Odin Project (learn to code with me)',
+            position: 'left',
+          },
           {
             href: 'https://github.com/LearnToHomeLab',
             label: 'GitHub',
@@ -142,6 +172,10 @@ const config = {
               {
                 label: 'The Data Center Project',
                 href: 'https://thedatacenterproject.com/',
+              },
+              {
+                label: 'Rivviet Software',
+                href: 'https://rivviet.com/',
               },
             ],
           },

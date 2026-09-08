@@ -1,0 +1,228 @@
+---
+sidebar_position: 17
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+
+# How to Install a TeamSpeak6 Server in 2026
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/55qOEgHT8Ww?si=ZgKiBlhbQvT0sCRH"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Installing TeamSpeak 6 Server
+
+We are going to follow their documentation [here](https://github.com/teamspeak/teamspeak6-server)
+
+## One Major Issue:
+
+Teamspeak 6 free version only allows you to have 32 members (connected at any one given time! This does not mean you can only have 32 members join your server, it just means talking and connected to the server in a given moment), even if you self host the server.
+
+<DocImage folder="images/EP17_TeamSpeak6Server" name="teamspeak 6 license comparison.png" alt="teamspeak 6 license comparison" />
+
+### Create a Proxmox VM
+
+First thing you need to go is login to your preferred hypervisor and create a VM. We are creating our VM on Proxmox.
+
+Specs:
+
+1.  Ubuntu Server 24.04 LTS
+2.  4 Cores
+3.  8GB of RAM
+4.  50GB of Storage
+
+However we need to Install Docker First:
+
+# Installing Docker
+
+1.  Install using the apt repo.
+
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+2.  Install the Docker packages.
+
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Verify that the installation is successful by running the `hello-world` image:
+
+```
+sudo docker run hello-world
+```
+
+Verify the compose version:
+
+```
+docker compose version
+```
+
+## Setting up TeamSpeak 6 Compose File
+
+The first thing we want to do is create a folder for our Docker files:
+
+```
+mkdir teamspeak6
+```
+
+Then we want to change into that directory with:
+
+```
+cd teamspeak6
+```
+
+We then need to create our docker compose file:
+
+```
+nano docker-compose.yml
+```
+
+Then we need to paste in the following:
+
+```
+services:
+  teamspeak:
+    image: teamspeaksystems/teamspeak6-server:latest
+    container_name: teamspeak-server
+    restart: unless-stopped
+    ports:
+      - "9987:9987/udp"   # Voice Port
+      - "30033:30033/tcp" # File Transfer
+      # - "10080:10080/tcp" # Web Query
+    environment:
+      - TSSERVER_LICENSE_ACCEPTED=accept
+    volumes:
+      - teamspeak-data:/var/tsserver
+
+volumes:
+  teamspeak-data:
+    name: teamspeak-data
+```
+
+Now we want to start our server with:
+
+```
+sudo docker compose up -d
+```
+
+You can ensure your server is running with:
+
+```
+sudo docker compose ps
+```
+
+## How to Connect to Your Teamspeak 6 Server
+
+Download the TeamSpeak 6 Client [here](https://teamspeak.com/en/downloads/)
+
+On the top left of your Discord Window, type in the IP address of your server, and you will connect:
+
+<DocImage folder="images/EP17_TeamSpeak6Server" name="teamspeak 6 adding an IP address to connect to your server.png" alt="teamspeak 6 adding an IP address to connect to your server" />
+
+## Finding Your Teamspeak 6 Admin Privilege Key
+
+From within your teamspeak directory, paste the following command:
+
+```
+sudo docker compose logs | grep -i "privilege\|token\|admin"
+```
+
+You will find it present:
+
+<DocImage folder="images/EP17_TeamSpeak6Server" name="finding your teamspeak 6 admin key.png" alt="finding your teamspeak 6 admin key" />
+
+Now we can add our account as a server Admin, you do this by right clicking on the server, and selecting “Use privilege key”
+
+<DocImage folder="images/EP17_TeamSpeak6Server" name="adding team speak 6 privilege key.png" alt="adding team speak 6 privilege key" />
+
+Then type that key from the command line into the box that it pops you into:
+
+<DocImage folder="images/EP17_TeamSpeak6Server" name="add priv key box.png" alt="add priv key box" />
+
+## Useful Docker Commands
+
+TeamSpeaks documentation does give a list of commands below which you may find useful:
+
+```
+# Running the server in detached mode using the example compose file
+docker compose -f example-compose-sqlite.yaml up -d
+
+# Check server logs (e.g. ServerAdmin privilege key)
+docker compose -f example-compose-sqlite.yaml logs -f
+
+# Manage the compose
+docker compose -f example-compose-sqlite.yaml stop     # Stop the server
+docker compose -f example-compose-sqlite.yaml start    # Start it again
+docker compose -f example-compose-sqlite.yaml restart  # Restart in one step
+
+# Clean up
+docker compose -f example-compose-sqlite.yaml down     # Remove the container (data is kept in the volume)
+docker volume rm teamspeak-data                        # Remove the data volume (permanently deletes all server data!)
+```
+
+## How to Make more Admin Keys in Teamspeak 6 
+
+To create more admin keys in Teamspeak 6, click your server name at the top when logged on, then in the far left menu column, there will be “privilege keys”
+
+<DocImage folder="images/EP17_TeamSpeak6Server" name="How to make admin keys in teamspeak 6.png" alt="How to make admin keys in teamspeak 6" />
+
+## Port Forward Teamspeak 6 Server Ports
+
+The following ports will need to be port forwarded for Teamspeak 6 Server to work:
+
+1.  9987 UDP (Voice)
+2.  30033 TCP (File Transfers)
+3.  10011 TCP (ServerQuery)
+
+How to port forward on OPNsense:
+
+OPNsense port forwarding allows external internet traffic to reach internal network services by navigating to Firewall > NAT > Port Forward and creating a new rule. Key settings include setting the Interface to WAN, defining the Protocol (TCP/UDP), setting the Destination Port, and entering the internal Redirect Target IP.
+
+You can read more about it [here](https://docs.opnsense.org/manual/nat.html#id1)
+
+### ASUS Port Forwarding: 
+
+You can read how to port forward on an Asus router [here](https://www.asus.com/support/faq/114093/)
+
+### TP-Link Port Forwarding:
+
+You can read how to port forward on a TPP-Link router [here](https://www.tp-link.com/us/support/faq/1379/)
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

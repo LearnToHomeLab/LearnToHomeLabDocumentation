@@ -1,0 +1,77 @@
+---
+sidebar_position: 2
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 02: Switch Hostname & Running Config
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## Switch Hostname & Running Config
+In this episode, we focus on **Switch Hostname & Running Config**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Configure System Hostname According to RFC and Enterprise Naming Standards
+2. Inspect Active Dynamic State in Volatile DRAM
+
+### Configure System Hostname According to RFC and Enterprise Naming Standards
+> The `hostname <name>` global configuration command defines system identity across CLI prompts, syslog events, and CDP neighbors.
+
+Applied as the foundational step to identify physical switches in racks, CLI prompts, and syslog output.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Inspect Active Dynamic State in Volatile DRAM
+> The running-config represents the immediate, operational state running in volatile memory.
+
+Audited using `show running-config` or pipe filters like `show running-config | include hostname` to confirm active settings before saving.
+
+```cisco
+Switch# configure terminal
+Switch(config)# hostname SW-CAMPUS-ACC01
+SW-CAMPUS-ACC01(config)# end
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show running-config | include hostname` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show running-config | include hostname
+! Confirm operational readiness and healthy state
+```
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

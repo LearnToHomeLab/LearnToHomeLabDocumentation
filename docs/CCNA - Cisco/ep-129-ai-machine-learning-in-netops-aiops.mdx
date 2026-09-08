@@ -1,0 +1,86 @@
+---
+sidebar_position: 129
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 129: AI & Machine Learning in NetOps (AIOps)
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## AI & Machine Learning in NetOps (AIOps)
+In this episode, we focus on **AI & Machine Learning in NetOps (AIOps)**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Understand AI & Machine Learning in NetOps (AIOps) in Network Automation and SDN
+2. Interpret Telemetry Payloads and REST-Based Interactions
+3. Evaluate Idempotency, Configuration Drift, and AIOps
+
+### Understand AI & Machine Learning in NetOps (AIOps) in Network Automation and SDN
+> Explore centralized controller architecture (Cisco Catalyst Center), REST APIs, JSON encoding, and configuration management.
+
+Replaces error-prone manual box-by-box CLI administration with centralized, programmatic intent-based networking.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Interpret Telemetry Payloads and REST-Based Interactions
+> Examine JSON key-value pairs, arrays, HTTP verbs (GET, POST, PUT, DELETE), status codes, and RESTCONF URIs.
+
+Used by modern network engineers to query device operational state and push automated configurations at scale.
+
+```cisco
+! Programmatic API call
+curl -k -u 'admin:password' -X GET https://192.168.1.1/restconf/data/ietf-interfaces:interfaces
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show running-config | include restconf` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show running-config | include restconf
+! Confirm operational readiness and healthy state
+```
+
+### Evaluate Idempotency, Configuration Drift, and AIOps
+> Compare Ansible playbooks against imperative scripting, and analyze predictive AI telemetry anomalies.
+
+Ensures deterministic configuration compliance across multi-vendor enterprise infrastructure.
+
+<WarningBox>
+  Always verify that configuration changes are committed to NVRAM using 'copy running-config startup-config'. Mismatched parameters, unassigned VLANs, or missing 'no shutdown' commands will disrupt link forwarding.
+</WarningBox>
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

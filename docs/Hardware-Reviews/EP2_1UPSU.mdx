@@ -1,0 +1,104 @@
+---
+sidebar_position: 2
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Make your Own 1U PSU for your 10" HomeLab
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/MZnGkR3W56A?si=Qg5hUSppBqg3PQoP"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+In this video I will give you the details and links to every part you need to build your very own 1U 10 inch mini rack power supply. In our case we are using a 250W laptop power supply at 19.5V. If your device requires a lower voltage, you will be able to use DC to DC converts to set a lower voltage for other devices, this allows you to use one power brick but power devices that use different voltages. In our example we will be powering our cooling fans which are 12V off our 19.5V power supply with a DC to DC Bucker Converter.  
+
+## Power Nomenclature  
+
+To understand how electricity works, it helps to use the classic water pipeline analogy. Think of electricity flowing through a wire the same way water flows through a pipe.
+
+## What Are Volts?
+
+Volts are the **water pressure**. It is the force pushing the electrical charge through the circuit. You cannot compromise on voltage because it determines the physical force acting on a device's internal components. The device has no control over how much voltage it receives; it is completely at the mercy of the power supply.
+
+If Voltage is too high: The excessive "pressure" forces too much current through circuits that aren't designed to handle it. This results in extreme heat, fried microchips, and literal smoke.
+
+### What Are Amps?
+
+Amps are the flow rate. It is the actual volume of water (electrical charge) moving past a specific point per second. The common misconception is that a power supply "forces" Amps or Watts into a device. In reality, devices pull (or draw) amperage based on what they need. The power supply just needs to ensure it has enough in the tank to meet that demand.  
+<br/>Going back to the water analogy: Think of the Amperage rating on a power brick as the size of a water reservoir, and the device as a faucet.
+
+#### The Amperage Rule: Equal or Greater Than
+
+If a mini PC requires 3 Amps to run, it acts as a restriction that only allows 3 Amps of current to flow at a given voltage.
+
+1.  If you plug it into a 12V / 3A power supply, it works perfectly.
+2.  If you plug it into a 12V / 5A power supply, it also works perfectly. The device will only pull the 3 Amps it needs, leaving the other 2 Amps unused.
+3.  If you plug it into a 12V / 1A power supply, the device will try to pull 3 Amps, causing the power supply to overheat, shut down, or blow a fuse because it can't keep up with the demand.
+
+### What Are Watts?
+
+Watts are the total power delivered. It is the combination of pressure and flow rate. It tells you how much actual work can be done (like spinning a water wheel).
+
+Because Wattage is just Volts multiplied by Amps (W = V \* A), it follows the exact same logic as amperage.
+
+If your device needs 36W to run (12V \* 3A), using a 60W or 100W power supply is completely safe, provided the voltage matches. The device will only draw 36W worth of energy.
+
+### Summary Cheat Sheet
+
+|     |     |     |
+| --- | --- | --- |
+| **Electrical Property** | **Analogy** | **Rules for Matching Power Supplies** |
+| **Voltage (Volts)** | Water Pressure | **Must match exactly.** Too low = won't work. Too high = fries the device. |
+| **Amperage (Amps)** | Flow Rate / Volume | **Must be equal or greater.** The device only takes what it needs; extra capacity is safe. |
+| **Wattage (Watts)** | Total Power Output | **Must be equal or greater.** Determined by the device's actual power draw. |
+
+## Polarity
+
+In physics and electronics, **polarity** simply refers to the direction of a force or flow within a system. It means that there are two distinct, opposite points—usually called poles—and a relationship exists between them.
+
+Because electricity and magnetism are closely linked, polarity shows up in three main ways: **Direct Current (DC)**, **Alternating Current (AC)**, and **Magnets**.
+
+In a DC system, **polarity is strict.** Think of it like a one-way street. If you put batteries into a flashlight backward, or wire a DC motor with reversed polarity, it either won't work at all (because protective diodes block the reversed flow) or the component will run backward (like a fan blowing air out instead of sucking it in).
+
+In Alternating Current (AC) circuits—the kind of power that comes out of your wall outlets—the electricity doesn't flow in one constant direction. Instead, it rapidly constantly switches directions back and forth (60 times a second in North America, or 60hz).
+
+Because the direction is constantly changing, standard wall outlets don't have a permanent "positive" and "negative." Instead, they use:
+
+- **Hot:** The wire where the voltage is constantly fluctuating up and down.
+- **Neutral:** The reference wire that completes the loop back to the source (staying at roughly 0V).
+
+Even though the current is alternating, **outlet polarity still matters for safety.** Standard appliance plugs are often "polarized" (one prong is wider than the other) so you can only plug them in one way. This ensures that internal safety features, like an On/Off switch, are placed on the dangerous **Hot** side of the circuit rather than the **Neutral** side.
+
+## 3D Chassis
+
+This will be 3D printed on at least a 256³ bed sized printer. The files can be found VIA our patreon linked [here](https://www.patreon.com/posts/1u-10-inch-psu-6-159495586?source=storefront) all the details and files can be found there.
+
+## Parts needed
+
+All the parts you need will also be found on our Patreon article found [here](https://www.patreon.com/posts/1u-10-inch-psu-6-159495586?source=storefront)
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
+
+

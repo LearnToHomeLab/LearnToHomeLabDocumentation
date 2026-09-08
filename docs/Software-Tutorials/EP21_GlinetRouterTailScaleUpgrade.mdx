@@ -1,0 +1,69 @@
+---
+sidebar_position: 21
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Upgrade TailScale on ANY GL.iNet Router
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/U5iSuWYBgqs?si=B7SgsbtWIDDZ9nhU"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+If you would like to look at the latest commands on how to upgrade to the latest version of TailScale click [here](https://github.com/Admonstrator/glinet-tailscale-updater)
+
+In this video we will use the below command to upgrade our GL.iNet travel router to the latest version:
+```
+wget -q https://get.admon.me/tailscale -O update-tailscale.sh ; sh update-tailscale.sh
+```
+
+## Steps To Get Started
+1. Plug your GL.iNet router into Power
+2. Plug in an internet connection
+3. Login via the GUI usually at IP address (192.168.50.1) or you can check the sticker on the bottom of your router
+4. Then go to System / General on the far left. Ensure SSH is turned on and set to port 22 under "Access Control" section
+5. Open up a terminal on your computer and login to your router with the following command:
+```
+ssh root@192.168.50.1
+```
+6. Type yes and then enter if this is your first time SSHing into your GL.iNet router.
+7. Then type the same password you used to login to the GUI earlier. 
+8. paste the below command into the CLI then press enter.
+```
+wget -q https://get.admon.me/tailscale -O update-tailscale.sh ; sh update-tailscale.sh
+```
+9. "Do you want to enable TailScale SSH" type "N" then press enter
+10. "Do you want to make the installation permanent" type "Y" then enter
+
+That is it, you are on the latest version of TailScale! 
+
+## Checking Your TailScale version
+
+Use the below command to verify what version of TailScale your GL.iNet router is on:
+```
+tailscale --version
+```
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)    
+[Discord](https://discord.gg/6MsHSJWZpH)    
+[Apparel](https://shop.learntohomelab.com/)     
+[Patreon](https://www.patreon.com/c/learntohomelab)    
+[Reddit](https://www.reddit.com/r/learntohomelab/)    
+[Rumble](https://rumble.com/c/c-7585051)

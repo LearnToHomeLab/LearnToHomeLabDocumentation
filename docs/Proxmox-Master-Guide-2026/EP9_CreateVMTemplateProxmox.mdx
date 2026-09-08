@@ -1,0 +1,255 @@
+---
+sidebar_position: 8
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Create a VM Template In Proxmox
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/b-AgopnNK8s?si=Ns2IHNnSdFlSp4-3"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+In this video we will go over how to create a VM template in Proxmox so you do not need to repeat this step every single time you want to create a new service within your Proxmox environment.
+
+## Create a VM
+
+The first thing you need to do is create a VM on one of your Proxmox nodes, in our case we will be using Ubuntu 25.x Server. As a general outline we will keep the template as 4 cores, 4 gigabytes of ram, and 50 gigabytes of storage. Remember you can change your specs later.
+
+## VM Configuration
+
+  
+<br/>In our case, we are going to configure the important items that MUST change, but other than that, leave the VM a nice blank slate.  
+
+### Install Cloud Init
+
+Cloud-init is the industry-standard open-source tool used to initialize, configure, and customize cloud instances (virtual machines) during their very first boot. It enables automation by setting up SSH keys, user accounts, networking, and installing packages, turning generic OS images into customized servers automatically.
+
+Install it with:
+
+```
+sudo apt update && sudo apt upgrade -y
+sudo apt install cloud-init -y
+```
+
+Check the version with:
+
+```
+cloud-init --version
+```
+
+To ensure it runs during the boot process perform the following commands:
+
+```
+sudo systemctl enable cloud-init-local.service
+sudo systemctl enable cloud-config.service
+sudo systemctl enable cloud-final.service
+```
+
+### Remove SSH Keys
+
+Removing SSH host keys from a VM before turning it into a template is a critical step for security and uniqueness. If you don't remove them, every VM you create from that template will share the exact same identity, which causes several technical and security issues.
+
+When something like a host key is absent, on the start up of future virtual machines, they will be automatically created. Before that we need to use SSH service not SSH sockets. SSH service is always running, where sockets will only run an SSH client if it sees a connection attempt. The issue with SSH sockets is cloud-init cannot make a session to add keys automatically because it will fail. SSH socket is looking for keys to already be there.
+
+```
+sudo systemctl stop ssh.socket
+sudo systemctl disable ssh.socket
+sudo systemctl enable ssh.service
+```
+
+We need to do is change into the SSH directory:
+
+```
+cd /etc/ssh
+```
+
+Then we need to delete all files for SSH with the wild card command:
+
+```
+sudo rm ssh_host_*
+```
+
+### Edit Machine Host Id File 
+
+A host ID for an Ubuntu server is a unique identifier used to lock software licenses to a specific machine, or a numerical value derived from your server's IP address and used by the operating system for identification.
+
+You can see your host ID by performing the following:
+
+```
+cat /etc/machine-id
+```
+
+We cannot actually delete this file because it is a critical file for the operating system to function but we can empty the content of the file with:
+
+```
+sudo truncate -s 0 /etc/machine-id
+```
+
+You can then check the file to ensure it is empty with the below command again:
+
+```
+cat /etc/machine-id
+```
+
+There is another file that references this file and we need to ensure that connection is symbolically linked. We can see the link below (you will know it’s linked because it will point to our previous file location (→ ./etc/machine-id)) or with the (L) showing as linked at the beginning of the file permissions:
+
+```
+ls -l /var/lib/dbus/machine-id
+```
+
+#### In the Case It Is Not Symbolically Linked 
+
+If it is not linked, we need it to be linked. We can link it with this command:
+
+```
+sudo ln -s /etc/machine-id /var/lib/dbus/machine-id
+```
+
+## Install QEMU Agent
+
+Proxmox QEMU Guest Agent is a small, built-in background daemon that runs inside a virtual machine. It facilitates direct, secure communication between the Proxmox hypervisor and the VM’s operating system. It allows Proxmox to directly read and display the internal IP address of your Ubuntu server within the Proxmox Web GUI. It enables the "Shutdown" command in the Proxmox web interface to perform a graceful, OS-level shutdown. Without it, Proxmox is forced to use an emergency power-off (like pulling the plug) or ACPI signals.
+
+It instructs Ubuntu to flush its memory cache and freeze its file system right before Proxmox takes a snapshot or backup. This ensures your databases and running services remain uncorrupted. The agent automatically syncs the internal clock of your Ubuntu server with the Proxmox host, preventing severe time drift
+
+To install this agent, perform the following:
+
+```
+cd ~ 
+sudo apt install qemu-guest-agent -y
+```
+
+1.  Navigate to the VM in Proxmox web GUI.
+2.  Select the _Options_ tab
+3.  On the _Qemu Guess Agent_ select it then enable it.
+
+## Clean the VM Image
+
+The next thing we want to do is just clean up any bloat of our template with the following command:
+
+```
+sudo apt clean
+```
+
+As well as any orphaned packages:
+
+```
+sudo apt autoremove -y
+```
+
+We then need to clean the cloudinit files:
+
+```
+sudo cloud-init clean
+```
+
+## Things You May Want to Do 
+
+1.  Have certain apps pre-downloaded on your image
+2.  Have certain users already created
+3.  Security and compliance like certain universal firewall rules
+4.  Universal networking settings like a VLAN
+5.  Configuration agents, maybe some type of end point device management software.
+6.  Centralized endpoint monitoring software.
+
+## Power down the VM 
+
+Now we have our template, we want to power it down so we can save the template in Proxmox, perform the following command:
+
+```
+sudo poweroff
+```
+
+## Creating the Proxmox Template
+
+:::warning
+This is a one way process, this means when it becomes a template you can never undo this. You cannot edit this template going forward.
+:::
+
+Before doing that:
+
+:::warning
+If you are new to this process, you can actually clone this VM, then use that clone to create a template, edit the original VM in case your template had a mistake.
+:::
+
+1.  Right-click on the VM
+2.  Select _Convert to template_
+3.  Confirm = yes
+4.  Now in our Node tree, we can see a new Icon that looks like a piece of paper/monitor. That is the symbol Proxmox uses for a template.
+5.  Select your template, from its settings tree select _hardware_
+6.  Under hardware tab select the CD/DVD drive because that has our install ISO image still attached to the template.
+7.  Select edit
+8.  Select _Do not use any media_ and press _ok_
+9.  Next under hardware select _add_
+10. From the dropdown select _CloudInit Drive_
+11. Bus/Device = SCSI
+12. Storage: _select your drive location where you want the VM to be created_
+13. Select _cloud-init_ from the template tree settings.
+    1.  Under this tab you can change the following default settings:
+        1.  User
+        2.  Password
+        3.  DNS Domain
+        4.  DNS Servers
+        5.  SSH Public Key
+14. Then select _regenerate template_ at the top if you changed any of those Cloud-Init Settings.
+
+## How to Use Your VM Template  
+
+To use your new template, simply right-click on it, and select _clone_. You will then be presented with a template creation box where you will assign:
+
+1.  VM name
+2.  mode: (set to _full Clone_)
+3.  Resource pool for your new VM.
+4.  Target Storage: (set this to where you want the VM to run and be saved from).
+5.  Under your new VM, before you start it perform the following:
+    1.  We noticed some VMs may not get an IP address to fix that do the following:
+    2.  Select the Cloud-Init Tab
+    3.  Select _IP Config (net0)_
+    4.  Edit it
+    5.  Enable DHCP (if not already selected)
+6.  Start the VM
+7.  Login to the VM
+
+## Change the Hostname
+
+The one issue you may notice is that the VM hostname is the exact same across all VMs you create using the clone, we can change that on each new one we make when using the template.
+
+```
+sudo nano /etc/hostname
+```
+
+The next file we need to edit is, the name should be found on line two after a local IP of 127.0.1.1:
+
+```
+sudo nano /etc/hosts
+```
+
+Then we need to reboot our machine with:
+
+```
+sudo reboot
+```
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

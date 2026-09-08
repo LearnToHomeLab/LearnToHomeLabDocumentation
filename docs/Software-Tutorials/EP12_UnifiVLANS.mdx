@@ -1,0 +1,70 @@
+---
+sidebar_position: 12
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Create VLANS in UniFi OS
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/obVFjMuEe0I?si=-LFEdkIeg38gzs61"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Creating VLAN in UOS Server
+
+The first thing you want to do is login to your UOS Server (UniFi Operating System). 
+
+After you login, click the gear icon found on the bottom right:
+<DocImage folder="images/UniFiVlans" name="step 1.png" alt="Unifi network main dashboard " />
+
+Next, select Networks from the menu on the left.
+<DocImage folder="images/UniFiVlans" name="step 2.png" alt="Unifi UOS server settings page" />
+
+Under networks you will be able to  create a new virutal network, so click that.
+<DocImage folder="images/UniFiVlans" name="step 3.png" alt="unifi UOS server networks page" />
+
+Next, you will create a VLAN by giving it a name and a VLAN ID, then click Add at the bottom.
+<DocImage folder="images/UniFiVlans" name="step 4.png" alt="creating a vlan in unifi" />
+
+## How to Add VLANS to Unifi Switches
+
+To add a VLAN to your specific switch and switch port of your choosing, select devices from the left window.
+<DocImage folder="images/UniFiVlans" name="step 5.png" alt="selecting the devices tab on the right" />
+
+Then from your list of devices, select the one you want to add the VLAN to.
+<DocImage folder="images/UniFiVlans" name="step 6.png" alt="selecting a unifi switch for vlan assignment" />
+
+On your selected device, select Port Manager from the right side window.
+<DocImage folder="images/UniFiVlans" name="step 7.png" alt="selecting the unifi port manager" />
+
+When in the port manager you can assign the VLAN with:
+1. Pick the Port
+2. Select the VLANS column
+3. Select the VLAN ID from the drop down
+<DocImage folder="images/UniFiVlans" name="step 8.png" alt="selecting the VLAN ID from the port settings" />
+
+That is it, now you have VLANs within your Unifi Network!
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

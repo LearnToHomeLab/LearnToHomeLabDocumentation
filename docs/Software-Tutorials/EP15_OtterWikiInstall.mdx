@@ -1,0 +1,175 @@
+---
+sidebar_position: 15
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Is Otter Wiki The Best Light Weight Self Hosted Wiki?
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/_tve1Y7itvc?si=Fk682AeT-zBK1KeO"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Installing Docker
+
+1.  Install using the apt repo.
+
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+2.  Install the Docker packages.
+
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Verify that the installation is successful by running the `hello-world` image:
+
+```
+sudo docker run hello-world
+```
+
+Verify the compose version:
+
+```
+docker compose version
+```
+
+## Installing Otter Wiki
+
+First we are going to create a folder directory for all the files:
+
+```
+mkdir otterwiki
+```
+
+Then we need to change into that directory
+
+```
+cd otterwiki
+```
+
+Now we need to create a compose file to store the Otter Wiki Docker Config file:
+
+```
+sudo nano docker-compose.yaml
+```
+
+Paste in the following content within that file:
+
+```
+services:
+  otterwiki:
+    image: redimp/otterwiki:2
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ./app-data:/app-data
+```
+
+That is all you need, super simple. You can start up Otter Wiki with:
+
+```
+sudo docker compose up -d
+```
+
+Now go to your website within your URL browser:
+
+```
+http://<VM IP>:8080
+```
+
+## Advanced Configuration
+
+Otter Wiki offers numerous advanced features, you can check out those features [here](https://otterwiki.com/Configuration) but again you do not need to do anything you find from here down if you want a basic install.
+
+As a highlight, here are some key features:
+
+Adding services can be done with the below command, this example allows you to set the port, data volumes, and a mail server.
+
+```
+services:
+  otterwiki:
+    image: redimp/otterwiki:2
+    restart: unless-stopped
+    ports:
+    - 8080:80
+    volumes:
+    - ./app-data:/app-data
+    environment:
+      MAIL_DEFAULT_SENDER: no-reply@example.com
+      MAIL_SERVER: smtp.server.tld
+      MAIL_PORT: 465
+      MAIL_USERNAME: otterwiki@example.com
+      MAIL_PASSWORD: somepassword
+      MAIL_USE_SSL: True
+```
+
+### Branding
+
+| Variable | Example | Description |
+| --- | --- | --- |
+| `SITE_NAME` | `'Otterwiki'` | The `SITE_NAME` displayed on every page and email |
+| `SITE_LOGO` | `'/Home/a/logo.png'` | Customize navbar logo url (can be a page attachment) |
+| `SITE_DESCRIPTION` | `'A minimalistic wiki powered by python, markdown and git.'` | The default description used in `<meta>` tags |
+| `SITE_ICON` | `'/Home/a/favicon-32x32.png'` | Configure via an url to the image that is displayed as favicon (tab icon, URL icon, bookmark icon). This can be an attachment |
+
+### Permission configuration
+
+| Variable | Example | Description |
+| --- | --- | --- |
+| `READ_ACCESS` | `'ANONYMOUS'` | Read access to wiki pages and attachments |
+| `WRITE_ACCESS` | `'REGISTERED'` | Write access to wiki pages |
+| `ATTACHMENT_ACCESS` | `'APPROVED'` | Write acccess to attachments |
+| `DISABLE_REGISTRATION` | `False` | With `DISABLE_REGISTRATION=True` new users can not sign-up for a new account |
+| `AUTO_APPROVAL` | `False` | With `AUTO_APPROVAL=True` users are approved on registration |
+| `EMAIL_NEEDS_CONFIRMATION` | `True` | With `EMAIL_NEEDS_CONFIRMATION=True` users have to confirm their email address |
+| `NOTIFY_ADMINS_ON_REGISTER` | `True` | Notify admins if a new user is registered |
+
+### Sidebar Preferences
+
+| Variable | Example | Description |
+| --- | --- | --- |
+| `SIDEBAR_MENUTREE_MODE` | `'SORTED'` | Mode of the sidebar, see below. |
+| `SIDEBAR_MENUTREE_MAXDEPTH` | `unlimited` | Limit the depth of the pages displayed by any number.sudo |
+
+
+
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

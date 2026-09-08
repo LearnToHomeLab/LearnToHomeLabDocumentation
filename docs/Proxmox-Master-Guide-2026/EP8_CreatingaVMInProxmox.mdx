@@ -1,0 +1,209 @@
+---
+sidebar_position: 7
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Create a VM In Proxmox
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/08mD8wh73WI?si=E8YgxD-B1DLCQJoL"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+In this episode we will cover how to create your very first VM in Proxmox. In this case of these series, we use Ubuntu Server but if you prefer something else, this will virtually work the same. Do note, we are talking about a Linux Server NOT a Linux desktop.
+
+## How To Download Ubuntu Server to Proxmox
+
+1.  The first thing you want to do is go to Ubuntu’s releases site, it can be found [here](https://releases.ubuntu.com/) we are going to use the latest LTS version of Linux Ubuntu Server, you will see that list right at the top of the page. Please select the latest one, in our case it will be 26.04.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="ubuntu server download page.png" alt="ubuntu server download page" />
+
+2.  Scroll down until you find the one that says _live-server-amd64-iso_ The beginning version will depend on when you are watching this video but it needs to be the live server with the .ISO file extension.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="ubuntu server iso image.png" alt="ubuntu server iso image" />
+
+3.  Right click on it and select _copy link address_
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="copy link address.png" alt="copy link address" />
+
+4.  Back in Proxmox, select the drop down arror next to your Node name:
+    1.  Then select the _local_ storage pool.
+    2.  From the right tree menu, select ISO images.
+    3.  Select _Download from URL_
+    4.  Paste the URL then click _query URL_
+    5.  Then click _Download_
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="query url for download in proxmox.png" alt="query url for download in proxmox" />
+
+After that is done, you should see a TASK OK at the very bottom
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="TASK 200 OK for ubuntu server download.png" alt="TASK 200 OK for ubuntu server download" />
+
+## Setting Up Your First VM in Proxmox
+
+After that is done, you can click the X icon on the top right to leave the output task feed. At the very top right you will see a button that says _Create VM_ go ahead and click that.
+
+### General Tab
+
+1.  On the first screen you need to select the node you want to install the VM on (there will only be multiple options if you have a cluster setup).
+2.  You will need to name your VM, it is best practice to do something memorable like the service name. If I am installing a GSM Video game Server like Minecraft, I will want to name my VM _Minecraft Server_
+3.  Then click _next_
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="general tab in proxmox vm creation.png" alt="general tab in proxmox vm creation" />
+    
+    ### OS Tab
+    
+4.  On the next screen, select the _ISO image:_ section and select your Ubuntu Server ISO we installed earlier
+5.  Then click next
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="os tab.png" alt="os tab" />
+
+### System Tab
+
+You can skip the system TAB, we will not be making any changes here.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="system tab.png" alt="system tab" />
+
+### Disks Tab
+
+This tab is very important, you need to set your _Disk size (GiB):_ to the appropriate amount. Based on Ubuntu’s documentation, Ubuntu Server itself needs 25 GBs. So you will then need to add however much on top of that for your services. For example, GSM Server for Minecraft recommends at least 10 GBs, so you will need to assign at least 35 GBs of storage to this VM!
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="disk tab.png" alt="disk tab" />
+
+### CPU Tab
+
+This tab works just like the Disks Tab, you need to look into your services you are trying to host, and then set their recommended CPU core count. Most services use 2-4 cores.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="CPU tab.png" alt="CPU tab" />
+
+### Memory Tab
+
+You guessed it, research the services you are trying to host and how much Ubuntu Server recommends and add those two numbers together.
+
+:::info
+Proxmox shows memory in MiB, which is a binary unit. When setting VM RAM, convert your target amount into MiB so the number matches what Proxmox expects. For example, 1 GiB equals 1024 MiB, and 1 GB equals about 953.674 MiB. For most cases, it is fine to round up slightly for safety. In most cases like buying ram, you will see it advertised as GB but in reality it is actually GiB (Gigabyte and Gibibyte respectively). also seen as 1,000 vs 1,024 respectively.
+:::
+
+The equation: _&lt;GB of Ram Required&gt; X 1024_ that is what you will input into the box.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="calculation for ram.png" alt="calculation for ram" />
+
+So for 8 GB of ram required, we will input 8192
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="8gib of ram.png" alt="8gib of ram" />
+
+### Network Tab
+
+We will skip this tab, leave everything as is.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="network tab.png" alt="network tab" />
+
+### Confirm Tab
+
+This tab is used to check all your settings before clicking _Finish_
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="confirm tab.png" alt="confirm tab" />
+
+## Logging Into Your VM
+
+You will notice your VM pops up on the far right below your node name.
+
+1.  Select your VM
+2.  Then from the VM settings tree select _console_
+3.  Select _Start Now_
+4.  Click enter
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="live installer ubuntu server.png" alt="live installer ubuntu server" />
+
+5.  Select your Language
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="language selection.png" alt="language selection" />
+
+6.  Select your Keyboard
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="keyboard selection.png" alt="keyboard selection" />
+
+7.  Select Enter on the _Choose the type of installation_ page, no changes here.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="installer type.png" alt="installer type" />
+
+8.  On the _Network configuration_ page, note down the IP address of your VM.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="network configuration.png" alt="network configuration" />
+
+9.  On the _Proxy Configuration_ you can input one if you need to, but we will leave this blank and just click enter.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="proxy configuration.png" alt="proxy configuration" />
+
+10. On the _Ubuntu archive mirror configuration_ wait until you see _This mirror location passed tests_ then click enter.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="archive location.png" alt="archive location" />
+
+11. On the _Guided storage configuration_ page, click tab until you get down to the _done_ button being highlighted, then press enter. we are not going to change anything here.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="guided storage config.png" alt="guided storage config" />
+
+12. On the _Storage configuration_ we are going to leave this as is, click tab on your keyboard until the done button is highlighted and click enter.
+
+:::warning
+Under this area, do notice the red box. You can tab over these, click the drop down menu and edit them. For example, maybe Ubuntu-VG is trying to use the full 35 GiB of storage, but you need 10 GiB for your Minecraft storage, you can edit these now to ensure there is enough _free space_ for your services.
+:::
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="storage configuration.png" alt="storage configuration" />
+
+13. Set your _Profile configuraiton_ settings now. Your name will be either the same login name or real name if you prefer. Server name is what will show up in DNS records. I recommend your server name match your VM name (it cannot have spaces). username and password is what you will use to login.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="create an ubuntu server profile.png" alt="create an ubuntu server profile" />
+
+14. On the _Upgrade to Ubuntu Pro_ screen, just click continue at the bottom by pressing enter.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="ubuntu pro.png" alt="ubuntu pro" />
+
+15. This step is very important, ensure you click _enter_ when hovering over the _Install OpenSSH Server_ box, this will allow you to SSH into your machine. You can also import an SSH key if you would like. You can read about adding a GitHub SSH key [here](https://learntohomelab.com/docs/HomeLab-Series/EP38_SSHKeysGithub)
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="install openssh on Ubuntu Server.png" alt="install openssh on Ubuntu Server" />
+
+16. On the _Featured Server Snaps_ screen, you can skip it and click done at the bottom.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="server feature snaps.png" alt="server feature snaps" />
+
+17. On the _Installing System_ screen, you just need to wait until the updates are done
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="installing screen.png" alt="installing screen" />
+
+When they are done, you should see something like
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="reboot after install screen.png" alt="reboot after install screen" />
+
+During reboot, you will see remove install media then press enter, we virtually mounted the installer so all we need to do is click enter
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="remove installer media.png" alt="remove installer media" />
+
+There you have it, you can no login with the credentials you made in step 13.
+
+<DocImage folder="images/EP8_CreatingaVMInProxmox" name="login to your new ubuntu server.png" alt="login to your new ubuntu server" />
+
+I would go into more detail after logging in, in this tutorial but that is totally dependent on what services you plan to install. You can check our channel out on hundreds of services and how to install them within a VM after you have a VM setup like we just did.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

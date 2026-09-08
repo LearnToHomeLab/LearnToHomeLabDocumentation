@@ -1,0 +1,93 @@
+---
+sidebar_position: 3
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 03: Reading CLI Errors & The Do Command
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## Reading CLI Errors & The Do Command
+In this episode, we focus on **Reading CLI Errors & The Do Command**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Interpret the Cisco IOS Caret (^) Error Locator
+2. Resolve Incomplete and Ambiguous Command Errors
+3. Finish Incomplete Commands using Context-Sensitive Help
+4. Unlock Privileged Show Commands from Config Mode with 'do'
+
+### Interpret the Cisco IOS Caret (^) Error Locator
+> When a command contains a typo, Cisco IOS outputs `% Invalid input detected at '^' marker`, pointing an arrow directly under the first invalid character.
+
+Pinpoints syntax typos and unrecognized tokens instantly.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Resolve Incomplete and Ambiguous Command Errors
+> `% Incomplete command` indicates missing required parameters; `% Ambiguous command` indicates non-unique abbreviations.
+
+Teaches operators how to supply mandatory parameters or supply sufficient unique characters.
+
+```cisco
+Switch(config)# interface gi0/1
+Switch(config-if)# do show ip interface brief
+Switch(config-if)# do show vlan brief
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `do show ip interface brief` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# do show ip interface brief
+! Confirm operational readiness and healthy state
+```
+
+### Finish Incomplete Commands using Context-Sensitive Help
+> Append `?` directly to incomplete commands to see remaining required arguments or optional keywords.
+
+Allows engineers to complete complex multi-parameter commands without checking documentation.
+
+### Unlock Privileged Show Commands from Config Mode with 'do'
+> Prefixing commands with `do` (e.g. `do show ip interface brief`) executes Privileged EXEC commands from within any configuration sub-mode without exiting.
+
+Saves time during repetitive configuration and verification cycles.
+
+<WarningBox>
+  Always verify that configuration changes are committed to NVRAM using 'copy running-config startup-config'. Mismatched parameters, unassigned VLANs, or missing 'no shutdown' commands will disrupt link forwarding.
+</WarningBox>
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

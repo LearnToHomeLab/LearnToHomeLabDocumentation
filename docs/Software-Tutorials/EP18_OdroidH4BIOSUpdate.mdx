@@ -1,0 +1,104 @@
+---
+sidebar_position: 18
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+
+# How to Update the BIOS on the Odroid H4 Series
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/vr70zqIDMq0?si=gOw0cazInUnksnzt"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Useful Links
+
+1.  If you would like to read Odroid’s documentation on how to update your BIOS step by step, check it out [here](https://wiki.odroid.com/odroid-h4/hardware/h4_bios_update)
+
+2.  You can find the latest BIOS version for the Odroid H4 series [here](https://dn.odroid.com/ODROID-H4/bios/?C=D;O=A)
+3.  Download Rufus [here](https://rufus.ie/en/)
+
+## Update your BIOS
+
+1.  Ensure you download the latest BIOS version
+2.  Ensure you download the SHA256 file to verify the files integrity.
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="bios version list.png" alt="bios version list" />
+
+To verify the files integrity:
+
+1.  Open your downloads folder location (usually your downloads folder)
+2.  Right click in some “white space” and select “Open in terminal”
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="open in terminal.png" alt="open in terminal" />
+3.  Use this command to verify the hash of the file (ensure you are checking the .zip file) and not the .SHA256 file.
+
+```
+certUtil -hashfile (your file name goes here) SHA256
+```
+
+Example:
+
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="terminal certutil hash check.png" alt="terminal certutil hash check" />
+
+After you know the file is safe to install, format your USB device using rufus with the following settings:
+
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="rufus settings.png" alt="rufus settings" />
+
+Then delete the two following files from the USB device that Rufus adds by default:
+
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="delete rufus files.png" alt="delete rufus files" />
+
+Now you need to extract the BIOS .zip file
+
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="extract all files.png" alt="extract all files" />
+
+Then drag and drop the extracted files on to your USB device
+
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="drag and drop files.png" alt="drag and drop files" />
+
+1.  Unplug the USB device, and plug it into a POWERED off Odroid H4 device.
+2.  Power on the device with a keyboard plugged in, and spam the DEL key on your keyboard until the bios comes up.
+3.  Select your bootable USB device from the “Save & Exit Screen”
+
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="select boot override in bios.png" alt="select boot override in bios" />
+
+4.  Enter “fs1:” on your keyboard to select your USB drive.
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="4.png" alt="enter fs1: command" />
+5.  Then type ls, and ensure you are on the right USB device, you will see the files you dragged and dropped on to the USB device.
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="5.png" alt="verify files on USB" />
+6.  After that, type “fb” and your install process will begin:
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="6.png" alt="type fb and then enter into the terminal" />
+7.  After a clean install, you will see “FPT Operation Successful” at the end, you can remove the USB device, pull the power cord, wait a couple seconds, plug it back in, and power your device on with the power button located on the back.
+<DocImage folder="images/EP18_OdroidH4BIOSUpdate" name="7.png" alt="wait to see FPT Operation successful in the terminal" />
+
+You can then remove the power cord, remove the USB device, and then plug power back in. Turn the device on and spam your DEL key until the BIOS comes up, then make the following BIOS changes as shown below!
+
+##   Turn off Hibernate
+
+Advanced / ACPI Settings / ‘Enable Hibernation'‘ ensure it is set to off.
+
+## Set Power Settings
+
+Advanced / Power & Performance / CPU - Power Management Control / ‘Boot performance mode’ ensure it is set to \[Turbo Performance\].
+
+## Wake on LAN
+
+Chipset / PCH-IO Configuration / ‘State After G3’ ensure you set it to ‘S0 State’
+
+1.  G3 (G3 State) means the Mechanical Off
+2.  S0 State: System will boot directly as soon as power is applied.
+3.  S5 State: System keeps in power-off state until the power button is pressed.

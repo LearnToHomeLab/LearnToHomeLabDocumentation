@@ -1,0 +1,225 @@
+---
+sidebar_position: 3
+---
+
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Zimaboard 2 Review
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/P9KawBOvR9E?si=Jh-9-vIbvnhGwBtK"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+# Setting up Your Zimaboard 2
+
+Hey guys,
+
+In today's video we are going to cover unboxing your Zimaboard 2, putting everything together, and getting started with the software side of the device. This includes creating a RAID array for your hard drives, installing apps from the App Store, and installing custom Docker Compose files.
+
+## Setting Your Device Up
+
+Please watch the video linked above if you have any questions on putting your Zimaboard 2 and the NAS enclosure together.
+
+## Logging into Your Zimaboard 2
+
+Depending on your device, you could plug a monitor into it to grab the IP, or log into your firewall/router to get the IP address. In our case we run OPNsense, so we grabbed the IP address from our leases within OPNsense.
+
+  <DocImage folder="images/Zimaboard2_8gb" name="IP_address_OPNsense.png" alt=" " />
+
+## Using Zimaboard 2 Software
+
+After you put that IP into a browser, you will be guided through creating an account, logging into your device, and creating your RAID. You can watch the video above (check the timestamps in the description) on how to set up your RAID storage.
+
+### Installing Your First App
+
+Installing your first app is pretty easy. Simply click the **App Store** icon on the top right:
+
+  <DocImage folder="images/Zimaboard2_8gb" name="app store location.png" alt=" " />
+
+From within the App Store, click **Install** on any application:
+
+  <DocImage folder="images/Zimaboard2_8gb" name="app store.png" alt=" " />
+
+After the app installs, you will be able to access it directly from your main dashboard:
+
+  <DocImage folder="images/Zimaboard2_8gb" name="Linkwarden.png" alt=" " />
+
+Click on your freshly created application, complete the initial setup/account creation, and start using it!
+
+  <DocImage folder="images/Zimaboard2_8gb" name="Link_Warden_Dashboard.png" alt=" " />
+
+## Installing a Custom Docker Compose App
+
+If the App Store does not have the application you want, but the project provides a Docker Compose configuration, you can use the Custom Docker Install feature in ZimaOS.
+
+From within the App Store, click **Install a customized app** (or **Add a containerized application**) on the top right.
+
+  <DocImage folder="images/Zimaboard2_8gb" name="containerized application.png" alt=" " />
+
+In the popup window, click the **Import (arrow box)** icon in the top right corner to switch to the Docker Compose YAML editor:
+
+  <DocImage folder="images/Zimaboard2_8gb" name="select arrow box icon.png" alt=" " />
+
+A text window will appear where you can paste your Docker Compose file:
+
+  <DocImage folder="images/Zimaboard2_8gb" name="docker compose pop up window.png" alt=" " />
+
+In our example, we are deploying **Docmost**. You can reference Docmost's official documentation [here](https://docmost.com/docs/installation).
+
+Before submitting the Compose file, update the following mandatory variables:
+
+- `APP_URL`: Replace with your Zimaboard IP address and port (e.g., `http://192.168.50.174:3000`) or your custom reverse proxy domain.
+- `APP_SECRET`: Replace with a long, random secret key of at least 32 characters (e.g., generated using `openssl rand -hex 32`). Leaving the default value will cause the app to fail to start.
+  
+  :::info
+  If you are not running Linux or need a quick way to generate a secret, you can use a [Random Hex Code Generator](https://numbergenerator.org/random-32-digit-hex-codes-generator) to create a 32-character string.
+  :::
+  
+- `POSTGRES_PASSWORD`: Replace `STRONG_DB_PASSWORD` with a secure password.
+- `DATABASE_URL`: Update the database connection password to match your `POSTGRES_PASSWORD`, and ensure `?schema=public` is appended at the end.
+
+  <DocImage folder="images/Zimaboard2_8gb" name="docmost config compose file edits.png" alt=" " />
+
+Here is our fully working configuration file with container names and a dedicated bridge network defined (which ensures internal DNS resolution works out of the box). Paste this into the Compose box and click **Submit**
+
+<WarningBox>
+  To note: From the above file example to our file down below we added the following section and it is required for apps to work within ZimaOS.   
+
+  Do note: The second line under networks: can be named and should be named based on the applications name.
+  ```
+  networks:
+  docmost-net:
+    driver: bridge
+  ```
+</WarningBox>
+
+
+```
+services:
+  docmost:
+    image: docmost/docmost:latest
+    container_name: docmost
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    environment:
+      APP_URL: "http://192.168.50.174:3000"
+      APP_SECRET: "97A35973B02A9950660CF3C13603DE9C"
+      DATABASE_URL: "postgresql://docmost:Password1@db:5432/docmost?schema=public"
+      REDIS_URL: "redis://redis:6379"
+    ports:
+      - "3000:3000"
+    volumes:
+      - docmost:/app/data/storage
+    networks:
+      - docmost-net
+
+  db:
+    image: postgres:18
+    container_name: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: docmost
+      POSTGRES_USER: docmost
+      POSTGRES_PASSWORD: Password1
+    volumes:
+      - db_data:/var/lib/postgresql
+    networks:
+      - docmost-net
+
+  redis:
+    image: redis:8
+    container_name: redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - docmost-net
+
+networks:
+  docmost-net:
+    driver: bridge
+
+volumes:
+  docmost:
+  db_data:
+  redis_data:
+```
+
+### Mapping Host Storage Volumes
+
+After submitting the Compose file, ZimaOS will display the configuration screen with tabs for each service (`docmost`, `db`, and `redis`). Because the template uses named volumes, you need to map each one to an actual folder path on your RAID storage.
+
+  <DocImage folder="images/Zimaboard2_8gb" name="volumes section.png" alt=" " />
+
+Click the file picker icon to the right of the **ZimaOS** host field:
+
+  <DocImage folder="images/Zimaboard2_8gb" name="explore volume locations.png" alt=" " />
+
+Select your primary storage pool (e.g., `raid1-2tb`):
+
+  <DocImage folder="images/Zimaboard2_8gb" name="raid storage location.png" alt=" " />
+
+1. Create a root directory named `AppData` if you don't already have one.
+2. Inside `AppData`, create a folder named `docmost`.
+3. Inside the `docmost` folder, create three subdirectories:
+  - `storage` (for file uploads and attachments)
+  - `db_data` (for PostgreSQL database files)
+  - `redis_data` (for Redis cache data)
+
+  <DocImage folder="images/Zimaboard2_8gb" name="docmost folders.png" alt=" " />
+
+Back in the **Manual App Installation** window, assign each container tab to its respective host directory:
+
+- `docmost` **tab**: `/media/raid1-2tb/AppData/docmost/storage` -> `/app/data/storage`
+- `db` **tab**: `/media/raid1-2tb/AppData/docmost/db_data` -> `/var/lib/postgresql`
+- `redis` **tab**: `/media/raid1-2tb/AppData/docmost/redis_data` -> `/data`
+
+  <DocImage folder="images/Zimaboard2_8gb" name="volume location complete.png" alt=" " />
+
+Once all three tabs have their paths mapped, click **Install** at the bottom right.
+
+  <DocImage folder="images/Zimaboard2_8gb" name="waiting for install.png" alt=" " />
+
+---
+
+## Checking for Docker Compose Errors
+
+If a container fails to start or gets stuck in a restart loop, inspect the container logs:
+
+1. On the dashboard screen, hover over the app icon and click the three dots (`...`).
+2. Select **Settings**.
+3. Click **Terminal and Logs** at the top right of the modal.
+4. Switch to the **Logs** tab.
+
+  <DocImage folder="images/Zimaboard2_8gb" name="docmost logs.png" alt=" " />
+
+### Common Troubleshooting Issues
+
+- `Error: getaddrinfo ENOTFOUND redis`: This occurs when containers cannot find each other by name. Docker's default `bridge` network disables automatic DNS name resolution. To resolve this, ensure all services in the stack are attached to an explicit custom network (e.g., `docmost-net`) and that their `container_name` values match the hostnames specified in your environment variables (`db` and `redis`).
+- **PostgreSQL 18 Mount Target Error**: PostgreSQL 18+ manages major versions via cluster subdirectories and expects the volume mount point to be `/var/lib/postgresql`. If pointed to `/var/lib/postgresql/data`, the initialization script will exit with an error.
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)  
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)  

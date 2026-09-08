@@ -1,0 +1,87 @@
+---
+sidebar_position: 76
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 76: Fixing Port-Channel Negotiation Errors
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## Fixing Port-Channel Negotiation Errors
+In this episode, we focus on **Fixing Port-Channel Negotiation Errors**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Understand Fixing Port-Channel Negotiation Errors Layer 2 Switching Mechanics
+2. Configure Fixing Port-Channel Negotiation Errors on Cisco Catalyst Switches
+3. Verify Operational State and Isolate Switching Faults
+
+### Understand Fixing Port-Channel Negotiation Errors Layer 2 Switching Mechanics
+> Master how campus switches process frames, populate CAM tables, insert 802.1Q tags, elect Spanning Tree roots, or bundle EtherChannels.
+
+Deployed across campus access and distribution layers to provide high-bandwidth, loop-free Layer 2 forwarding.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Configure Fixing Port-Channel Negotiation Errors on Cisco Catalyst Switches
+> Implement production-grade Cisco IOS commands across interface ranges, VLAN databases, trunk links, and port-channel bundles.
+
+Applied during campus provisioning to enforce VLAN segmentation, trunk security, and link aggregation.
+
+```cisco
+! Switch configuration
+Switch(config)# interface GigabitEthernet0/1
+Switch(config-if)# switchport mode access
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show vlan brief` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show vlan brief
+! Confirm operational readiness and healthy state
+```
+
+### Verify Operational State and Isolate Switching Faults
+> Inspect operational status using targeted show commands to detect native VLAN mismatches, STP port blocking, or negotiation failures.
+
+Critical for eliminating switching loops, broadcast storms, and unexpected err-disable port lockouts.
+
+<WarningBox>
+  Always verify that configuration changes are committed to NVRAM using 'copy running-config startup-config'. Mismatched parameters, unassigned VLANs, or missing 'no shutdown' commands will disrupt link forwarding.
+</WarningBox>
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

@@ -22,3 +22,11 @@ Both LearnToHomeLab and The Data Center Project promote **community empowerment 
 
 Learn To HomeLab (LTH) for short, is an organization that oversees multiple other projects. Some of the other projects we own, operate, influence, or support can be found below:
 
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

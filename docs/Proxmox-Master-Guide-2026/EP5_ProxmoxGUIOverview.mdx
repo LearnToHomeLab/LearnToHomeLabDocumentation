@@ -1,0 +1,95 @@
+---
+sidebar_position: 4
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Proxmox GUI Overview
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/gdF_Ge70jhQ?si=dt7BRKjEx9lHvnHy"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Proxmox VE GUI Overview
+
+The Proxmox VE interface is the main place you manage your virtual machines, containers, storage, networking, backups, and cluster settings. Once you log in through your browser, you’ll see a dashboard-style layout that is designed to keep global settings, host settings, and guest settings separated in a predictable way.
+
+At a high level, the interface is built around four parts: the top header, the resource tree on the left, the main content panel in the middle, and the task log at the bottom. If you understand those four parts, the rest of the interface becomes much easier to navigate.
+
+## How the interface is organized
+
+The **header** sits at the top of the page and contains quick actions such as creating a VM or container, opening documentation, and accessing your user menu. The **resource tree** on the left is where you choose what you want to manage, such as the datacenter, a specific node, a VM, a container, or a storage target.
+
+The large panel in the middle changes based on what you click in the tree, and this is where most of your work happens. The bottom area shows task activity, which is useful when you want to confirm that something finished successfully or troubleshoot an error.
+
+## Datacenter section
+
+To get to **Datacenter**, click the top-level Datacenter item in the left resource tree. This section contains cluster-wide settings and gives you an overall view of the environment.
+
+The Datacenter menus commonly include **Search**, **Summary**, **Cluster**, **Options**, **Storage**, **Backup**, **Replication**, **Permissions**, **HA**, **ACME**, **Firewall**, **Metric Server**, **Notifications**, and **Support**.
+
+For beginners, the most important Datacenter areas are **Summary**, **Storage**, **Backup**, **Permissions**, and **Options**. Summary shows the overall environment status, Storage shows shared or configured storage, Backup is where scheduled backup jobs are managed, Permissions is where users and roles are controlled, and Options contains datacenter-wide behavior settings.
+
+## Node section
+
+To get to a **Node**, click the server name under Datacenter in the left tree. A node represents one physical Proxmox host, and this is where you manage the host itself rather than an individual VM or container.
+
+The Node menus usually include **Search**, **Summary**, **Notes**, **Shell**, **System**, **Updates**, **Firewall**, **Disks**, **Ceph**, **Replication**, **Task History**, and **Subscription**.
+
+For a new user, the most useful node tabs are **Summary**, **System**, **Updates**, **Shell**, **Disks**, and **Task History**. Summary shows host status and resource usage, System is where you review or adjust host settings, Updates is where you apply package updates, Shell gives you command-line access, Disks helps you inspect local storage devices, and Task History helps you review what has been done on the node.
+
+## VM and container section
+
+To get to a **virtual machine or container**, expand a node in the left tree and click the guest object listed underneath it. This is where you manage the operating system instance itself, whether it is a KVM VM or an LXC container.
+
+Guest menus typically include **Summary**, **Console**, **Hardware** or **Resources**, **Options**, **Task History**, **Backup**, **Replication**, **Snapshots**, **Firewall**, and **Permissions**.
+
+For beginners, the most important tabs are **Summary**, **Console**, **Hardware/Resources**, and **Backup**. Summary shows the current state of the guest, Console lets you interact with it directly, Hardware or Resources is where you add or adjust CPU, memory, disks, and network devices, and Backup is where you protect the guest with backup jobs or manual backups.
+
+## Storage section
+
+To get to **Storage**, click **Datacenter** and then select a storage entry from the storage list. Storage is where Proxmox keeps things such as VM disks, ISO images, backup files, and container templates, depending on how that storage is configured.
+
+The main Storage menus are usually **Summary**, **Content**, and **Permissions**.
+
+For a beginner, the most important place is **Content**, because that is where you see what the storage contains and where you can usually upload or manage images, templates, and backups. Summary gives you a quick view of capacity and usage, while Permissions shows who can access that storage.
+
+## Top header actions
+
+To use the top header, look across the top bar after logging in. This area includes quick access items like **Create VM**, **Create CT**, documentation links, and user/account controls.
+
+The **Create VM** button starts the virtual machine creation wizard, while **Create CT** starts the container creation wizard. If you are teaching a beginner, this is a good place to explain the difference between a VM and a container before they create anything.
+
+The header also includes console access options such as **noVNC**, **SPICE**, and **xterm.js**. These are useful to mention early because they are part of normal daily use once someone begins managing guests.
+
+## Resource tree views
+
+The default way to browse Proxmox is **Server View**, which organizes the environment by datacenter, nodes, and guests. Proxmox also provides **Folder View**, **Pool View**, and **Tag View** for different ways of organizing the same infrastructure.
+
+For most beginners, Server View is the easiest starting point because it matches how they will think about the system at first. Once they understand that, you can introduce the other views as optional ways to group or filter objects.
+
+
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

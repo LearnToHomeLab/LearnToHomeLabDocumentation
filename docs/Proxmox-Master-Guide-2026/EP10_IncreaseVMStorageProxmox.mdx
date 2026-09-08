@@ -1,0 +1,101 @@
+---
+sidebar_position: 9
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Expand Your VM Storage on Proxmox
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/gyIUOs8GTuE?si=Zx4sGVpjUtKb7LBo"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+To expand the storage of your VM on Proxmox perform the following tasks:
+
+1. Login to Proxmox
+2. Select your VM
+3. Select The Hardware Tab
+4. Select _Hard Disk_ section
+5. Select _Disk Action_ at the top of the window
+6. Select _Resise Disk_ this will increase the total storage from its current amount + whatever you type in this box. So if it started with 50 and you type 10, after it loads, you will see it shows 60.
+7. Reboot your VM
+
+## Adding the Extra Storage to the VM
+
+When you expand a virtual disk in Proxmox, the Ubuntu Server VM doesn't automatically absorb that space. Since modern Ubuntu Server installations default to using LVM (Logical Volume Manager), the extra space has to be passed up through three layers: the physical partition, the LVM volume group, and finally the filesystem.
+
+## Expanding Storage in Ubuntu Server
+
+After we expanded the storage for the VM in the Proxmox GUI, we need to let the operating system see that change and give it the ability to use that extra space that has now be alotted to it.
+
+The first thing we will use is the _lsblk_ command, this will allow us to verify the new space is there.
+
+```
+lsblk
+```
+
+Ubuntu Server typically puts the LVM stack on the third partition (/dev/sda3). We use a built-in cloud utility called growpart to expand the partition safely to the end of the new space.
+
+Run the following command (replace /dev/sda and 3 with your specific disk and partition number if yours differs from lsblk):
+
+```
+sudo growpart /dev/sda 3
+```
+
+Tell LVM the partition grew
+
+```
+sudo pvresize /dev/sda3
+```
+
+Finally, expand the Logical Volume to take up 100% of that newly available free space, and use the -r flag to automatically resize the underlying filesystem (whether it is ext4 or XFS) at the exact same time.
+
+Your default root volume path is typically _/dev/ubuntu-vg/ubuntu-lv_ or _/dev/mapper/ubuntu--vg-ubuntu--lv_. You can find it by typing **_df -h_**
+
+```
+df -h
+```
+
+:::info
+In our case after doing the _lsblk_ command we can see we specifically have our storage mapped at ubuntu—vg-ubuntu—lv
+:::
+
+```
+sudo lvextend -l +100%FREE -r /dev/mapper/ubuntu--vg-ubuntu--lv
+```
+
+Run df -h to verify that your root partition successfully shows the new expanded storage pool.
+
+```
+df -h
+```
+
+You can also check it with
+
+```
+lsblk
+```
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

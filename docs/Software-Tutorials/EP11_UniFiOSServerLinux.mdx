@@ -1,0 +1,173 @@
+---
+sidebar_position: 11
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Install UniFi OS Server on Linux
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/fd-HQ-0yamk?si=i2BtqQA1MGzlN42-"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+The UniFi OS Server is the new standard for self-hosting UniFi, replacing the legacy UniFi Network Server. While the Network Server provided basic hosting functionality, it lacked support for key UniFi OS features like Organizations, IdP Integration, or Site Magic SD-WAN. With a fully unified operating system, UniFi OS Server now delivers the same management experience as UniFi-native–including CloudKeys, Cloud Gateways, and Official UniFi Hosting–and is fully compatible with Site Manager for centralized, multi-site control.
+
+The documentation for this tutorial aligns with UniFi documentation which can be found [here](https://help.ui.com/hc/en-us/articles/34210126298775-Self-Hosting-UniFi)
+
+## Requirements
+
+We first need to install a handful of packages that UniFi server requires which can be done on a fresh install of Ubuntu Linux Server:
+
+1.  Download the latest version of Linux
+2.  Ensure your VM or Node has at least 50 GBs of space, UniFi requires 20.
+3.  We are going to use 4 cores, and 4 GBs of RAM for this tutorial.
+
+First create the file:
+
+```
+sudo nano install-unifi-requirements.sh
+```
+
+Then paste in:
+
+```
+#!/bin/bash
+
+# UniFi OS Server Requirements Installation Script
+# Targets Ubuntu 23.04+ / Debian 12+ 
+# Installs: systemd (usually pre-installed), podman 4.3.1+, slirp4netns 1.2+
+
+set -e  # Exit on any error
+
+echo "=== Updating system packages ==="
+sudo apt-get update && sudo apt-get upgrade -y
+
+echo "=== Installing Podman and slirp4netns ==="
+sudo apt-get install -y podman slirp4netns
+
+echo "=== Verifying installations ==="
+echo "Podman version:"
+podman --version
+
+echo "slirp4netns version:"
+slirp4netns --version
+
+echo "libc version:"
+ldd --version | head -n1
+
+echo "systemd status:"
+systemctl --version
+
+echo "=== Checking minimum requirements ==="
+if podman version | grep -q "4.3.1"; then
+    echo "✓ Podman 4.3.1+ detected"
+else
+    echo "⚠ Podman version may be below 4.3.1 requirement"
+fi
+
+if slirp4netns --version | grep -q "1.2"; then
+    echo "✓ slirp4netns 1.2+ detected" 
+else
+    echo "⚠ slirp4netns version may be below 1.2 requirement"
+fi
+
+if ldd --version | grep -q "2.31"; then
+    echo "✓ libc 2.31+ detected"
+else
+    echo "⚠ libc version may be below 2.31 requirement"
+fi
+
+echo "=== UniFi OS Server requirements installation complete! ==="
+echo "Next steps: Download UniFi OS Server from Ubiquiti releases page"
+```
+
+and then give the script execute permissions:
+
+```
+sudo chmod +x install-unifi-requirements.sh
+```
+
+Then we can run the script with:
+
+```
+./install-unifi-requirements.sh
+```
+
+## Installing UniFi OS Server
+
+Refresh package list and install required packages:
+
+```
+sudo apt-get update && sudo apt-get install podman slirp4netns
+```
+
+Obtain the UniFi OS Server download link address from Releases, or the [Download page](https://ui.com/download) by right clicking the download and selecting copy link address. It should look something like this: *https://fw-download.ubnt.com/data/unifi-os-server/8b93-linux-x64-4.2.23-158fa00b-6b2c-4cd8-94ea-e92bc4a81369.23-x6](https://ui.com/download)*
+
+For the current latest release it will be:
+
+```
+wget https://fw-download.ubnt.com/data/unifi-os-server/2f3a-linux-x64-4.3.6-be3b4ae0-6bcd-435d-b893-e93da668b9d0.6-x64
+```
+
+Make the installer executable, first type the following to see what the file is named:
+
+```
+ls
+```
+
+then based on that file name you can type the below command, the first 3 letters of the file name, then press tab to auto complete, then click enter to run the command:
+
+```
+chmod +x <type file name, then press tab to complete, and enter to run it>
+```
+
+Run the installer with the below command, again typing sudo ./, the file name, enter:
+
+```
+sudo ./<file name>
+```
+
+## Install Complete
+
+In the next few minutes, you will see !!! INSTALLATION COMPLETE !!!, wait a minute or two, then go to the IP address that is shown in your console, it should look like this:
+
+```
+UOS Server is running at: https://<your server IP>:11443/
+```
+
+You can then following their fresh install GUI to get started.
+
+If you need to give the user permissions, you will also see a prompt at the end of the command line like:
+
+> To grant permission for a user to run 'uosserver' commands:  
+> \-> Add the user to the 'uosserver' group:  
+> usermod -aG uosserver  
+> \-> Then log out and log back in for the changes to take effect
+
+## Adding Unifi Devices
+
+Within the web portal, go to the two circles icon on the left, you should see devices in there already, and if a device is on the network but not adopted, when you click on it, it should give you instructions on how to add it.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

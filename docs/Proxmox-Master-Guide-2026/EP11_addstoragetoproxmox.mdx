@@ -1,0 +1,75 @@
+---
+sidebar_position: 10
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Add Storage Capacity on Proxmox
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/2G1ysSGajFM?si=ZtgUUqCiscj86fXn"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+Please see the video above for more details, I did however want to leave the differences between each storage type below for your easy reference.
+
+For a single secondary drive dedicated to running VMs/LXCs with local snapshots and Proxmox Backup Server (PBS) integration, **LVM-Thin** is the most ideal storage type.
+
+## Why LVM-Thin is the Best Fit
+* **Native, Instant Snapshots:** Supports fast block-level snapshots and clones for both VMs and LXC containers without filesystem nesting overhead.
+* **Storage Efficiency:** Allocates space dynamically as VMs write data (thin provisioning), allowing efficient disk utilization.
+* **Low Overhead & High IOPS:** Operates directly at the block layer without the CPU, memory cache (ARC), or write-amplification penalties that single-disk ZFS incurs on consumer SSDs.
+* **PBS Compatibility:** PBS handles backups at the QEMU block dirty-bitmap layer, making it completely agnostic to whether you use LVM-Thin or ZFS.
+
+## How Other Options Compare
+
+* **LVM-Thin**
+  * **Snapshots:** ✔️ Native
+  * **PBS Backups:** ✔️ Storage-agnostic dirty bitmap
+  * **Performance & Wear:** Minimal overhead; low SSD write wear
+  * **Verdict:** Best choice for a single drive.
+* **Single-Disk ZFS**
+  * **Snapshots:** ✔️ Native
+  * **PBS Backups:** ✔️ Supported
+  * **Performance & Wear:** Higher RAM usage; high write amplification on non-enterprise SSDs
+  * **Verdict:** Overkill for 1 drive (no RAID redundancy benefits to offset wear).
+* **Directory (ext4/XFS)**
+  * **Snapshots:** ✔️ (Requires `qcow2`)
+  * **PBS Backups:** ✔️ Supported
+  * **Performance & Wear:** Extra filesystem layer overhead
+  * **Verdict:** Good for storing ISOs/templates, but suboptimal for VM performance.
+* **Standard LVM**
+  * **Snapshots:** ❌ No snapshots in PVE
+  * **PBS Backups:** ✔️ Supported
+  * **Performance & Wear:** Near zero overhead
+  * **Verdict:** Avoid if you need snapshots.
+
+## Quick Setup in Proxmox VE Web UI
+
+1. Go to your **Node** -> **Disks** -> **LVM-Thin**.
+2. Click **Create: Thinpool**.
+3. Select your secondary drive, name the volume group/pool (e.g., `nvme-thin` or `data2`), and click **Create**.
+4. The new storage pool will automatically appear under your node, ready for VM/LXC disks with full snapshot support.
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

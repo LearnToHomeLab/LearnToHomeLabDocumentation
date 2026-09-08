@@ -1,0 +1,107 @@
+---
+sidebar_position: 10
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# Ep 10: Switch Baseline Audit (Test 1)
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+## Don't Forget To Use Our Link
+[If you kinds find this course useful and want 10% off your first year, use our link to sign up for 10% off!](https://switchlab.dev/learntohomelab)
+
+## Switch Baseline Audit (Test 1)
+In this episode, we focus on **Switch Baseline Audit (Test 1)**. We examine the core networking principles, Cisco IOS CLI syntax, verification show commands, and common troubleshooting traps according to the official CCNA 200-301 certification blueprint.
+
+<InfoBox emoji="ℹ️" title="Throughout this course">
+  During each episode, you will see the topology map with a red box highlighting the specific device or segment being configured. Follow along carefully with the CLI syntax shown below.
+</InfoBox>
+
+## Learning Objectives
+1. Audit a Misconfigured Switch Baseline
+2. Correct Device Hostname to Enterprise Naming Standard
+3. Provision Required Broadcast Domains in the VLAN Database
+4. Restore Administratively Disabled Desk Ports
+5. Commit Baseline Configuration to NVRAM
+
+### Audit a Misconfigured Switch Baseline
+> Inspect active configuration, interface line states, and VLAN allocations to detect configuration discrepancies.
+
+Conducted during network staging, site turn-ups, and practical exam challenges.
+
+<InfoBox emoji="📌" title="Key Exam Concept">
+  Review protocol interactions, default timers, and packet/frame header fields before deploying this feature in production.
+</InfoBox>
+
+### Correct Device Hostname to Enterprise Naming Standard
+> Deploy the correct `hostname <name>` command to align prompt identity with corporate standards.
+
+Establishes accurate switch identification across monitoring tools and logs.
+
+```cisco
+Switch# configure terminal
+Switch(config)# hostname SW-FLOOR1
+SW-FLOOR1(config)# vlan 10
+SW-FLOOR1(config-vlan)# name Accounting
+SW-FLOOR1(config-vlan)# exit
+SW-FLOOR1(config)# interface GigabitEthernet0/1
+SW-FLOOR1(config-if)# switchport mode access
+SW-FLOOR1(config-if)# switchport access vlan 10
+SW-FLOOR1(config-if)# no shutdown
+SW-FLOOR1(config-if)# end
+SW-FLOOR1# copy run start
+```
+
+| Verification Command | Purpose & Key Output Fields to Inspect |
+| :--- | :--- |
+| `show interfaces status` | Verify operational status, administrative flags, and active state |
+
+```cisco
+Device# show interfaces status
+! Confirm operational readiness and healthy state
+```
+
+### Provision Required Broadcast Domains in the VLAN Database
+> Instantiate missing department VLANs and assign appropriate descriptive tags.
+
+Prepares the access layer for host IP segmentation.
+
+### Restore Administratively Disabled Desk Ports
+> Locate the disabled access port, assign it to the required VLAN, and bring it up with `no shutdown`.
+
+Restores network connectivity to user workstations.
+
+### Commit Baseline Configuration to NVRAM
+> Execute `copy run start` to ensure the repaired baseline configuration persists across reboots.
+
+Guarantees operational continuity in production environments.
+
+<WarningBox>
+  Always verify that configuration changes are committed to NVRAM using 'copy running-config startup-config'. Mismatched parameters, unassigned VLANs, or missing 'no shutdown' commands will disrupt link forwarding.
+</WarningBox>
+
+## Follow Us on Social Media
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

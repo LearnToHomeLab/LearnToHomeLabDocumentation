@@ -1,0 +1,61 @@
+---
+sidebar_position: 6
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How To Update Proxmox
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/YNwX4lqFDgU?si=jKB2Ae7gjWRXL6xg"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+In this episode we will cover how to update Proxmox. Please follow the steps below.
+
+1.  Access your Proxmox Node via its assigned IP address and the port _:8006_
+2.  After you login, select your node from the left menu.
+3.  Under the Nodes Tree menu, select _updates_
+4.  Click the _Refresh_ button from the top menu to ensure you have the latest updates.  
+<DocImage folder="images/EP7_UpdatingProxmoxVE" name="4 proxmox updates.png" alt="proxmox updates page" />
+5.  Ensure you get a _Task Ok_ Before exiting the popup.
+<DocImage folder="images/EP7_UpdatingProxmoxVE" name="5 task ok for updates in proxmox.png" alt="check for updates in proxmox" />
+6.  Click _\>\_Upgrade_ from the top menu.
+<DocImage folder="images/EP7_UpdatingProxmoxVE" name="6 upgrade proxmox.png" alt="TASK Ok for Updates" />
+7.  You will get a terminal popup asking you if you want to continue. Press enter.
+<DocImage folder="images/EP7_UpdatingProxmoxVE" name="7 click continue in proxmox terminal.png" alt="click enter for install to start" />
+
+8. After you are done updating, look for any informational warnings like the one below in the red box. You may need to restart your node depending on the updates.
+
+:::warning
+In the case you do need to restart your node, ensure any critical services are running (moved to) on another node before restarting.
+:::
+
+<DocImage folder="images/EP7_UpdatingProxmoxVE" name="8 reboot proxmox due to kernal updates.png" alt="proxmox update warning" />
+
+9.  You can reboot your machine via the _reboot_ button found in the top right of your GUI:
+<DocImage folder="images/EP7_UpdatingProxmoxVE" name="9 how to reboot proxmox via the gui.png" alt="proxmox reboot button" />
+
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)

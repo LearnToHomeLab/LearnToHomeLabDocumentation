@@ -1,0 +1,67 @@
+---
+sidebar_position: 5
+---
+import WarningBox from '/src/components/HomepageFeatures/WarningBox';
+import InfoBox from '/src/components/HomepageFeatures/InfoBox';
+import DocImage from '/src/components/HomepageFeatures/DocImage';
+
+# How to Update Proxmox Repositories
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/H_uBGSgncSw?si=dJJ51ZZ_cIHs7ZjP"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
+
+Welcome to Episode 6, in this episode we will cover how to enable the correct repositories in Proxmox when you are using either the free version or the paid support version. For 99% of you, you will be using the free version, but in the off chance you are watching this on behalf of your company to setup a Proxmox environment, we will cover that too.
+
+## Steps:
+
+1.  Select your Node from the left menu
+2.  Under the Device tree, select repositories.
+3.  Select _Add_ right below the blue header that says “APT Repositories
+<DocImage folder="images/EP6_RepositoriesInProxmox" name="proxmox repository page.png" alt="proxmox repository page" />
+4.  From the drop down select _No-Subscription_, then click add.  
+<DocImage folder="images/EP6_RepositoriesInProxmox" name="proxmox repository selection menu.png" alt="proxmox repository selection menu" />
+5.  The next thing you want to do is disable any file category that contains “enterprise” found within the _components_ column. As of this video, it should be two items  
+<DocImage folder="images/EP6_RepositoriesInProxmox" name="disable the enterprise repositories.png" alt="disable the enterprise repositories" />
+
+## Uploading a Subscription Key to Proxmox
+
+Here are a couple reasons you may need to add a subscription key:
+
+1.  You are doing this on behalf of a company which requires professional support for Proxmox.
+2.  You want more thoroughly vetted updates (prevents potential stability issues (although very uncommon for Proxmox as an issue).
+3.  Much lower cost compared to competition like VMWare.
+
+### Uploading your Key
+
+Uploading your key is simple, just do the following, and then ensure you have all the enterprise repositories enabled.
+
+1.  Select your node from the left menu.
+2.  Select _Subscriptions_ at the bottom of the Node menu tree.
+3.  Select _Upload Subscription Key_
+4.  Paste in your Subscription Key.  
+<DocImage folder="images/EP6_RepositoriesInProxmox" name="Upload Proxmox subscription key.png" alt="Upload Proxmox subscription key" />
+
+
+## Follow Us on Social Media
+
+[YouTube](https://www.youtube.com/@learntohomelab)  
+[Discord](https://discord.gg/6MsHSJWZpH)  
+[Apparel](https://shop.learntohomelab.com/)   
+[Patreon](https://www.patreon.com/c/learntohomelab)  
+[Reddit](https://www.reddit.com/r/learntohomelab/)  
+[Rumble](https://rumble.com/c/c-7585051)
